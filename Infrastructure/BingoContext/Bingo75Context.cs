@@ -6,6 +6,7 @@ namespace Infrastructure.BingoContext;
 public class Bingo75Context(DbContextOptions options): DbContext(options)
 {
     public DbSet<Bingo75Card> Bingo75Cards { get; set; }
+    public DbSet<Room> Rooms { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
