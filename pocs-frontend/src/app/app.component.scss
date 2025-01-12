@@ -1,0 +1,46 @@
+@use '@angular/material' as mat;
+
+.example-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 100px 200px;
+}
+
+
+.my-custom-div {
+  padding: 0 30px;
+  color-scheme: light;
+  @include mat.theme((
+    color: mat.$cyan-palette,
+  ));
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
+
+.image-container {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  p {
+    font-size: 100px;
+    position: absolute;
+  }
+}
+
+.rotating-image {
+  width: auto;
+  height: auto;
+  animation: rotate 3s linear;
+}
+
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
