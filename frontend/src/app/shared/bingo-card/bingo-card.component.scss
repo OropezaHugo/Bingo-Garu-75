@@ -4,7 +4,8 @@ $secondary-color: #fca311;
 .card-div {
   background-color: $primary-color;
   padding: 1rem;
-  width: 100%;
+  width: max(100%, 300px);
+  place-content: center;
   .card-header-div {
     display: flex;
     flex-direction: row;
@@ -15,6 +16,7 @@ $secondary-color: #fca311;
 }
 .card-title {
   margin: 0;
+  font-size: 2rem;
   color: $secondary-color;
 }
 .card-number-box {
@@ -29,15 +31,17 @@ $secondary-color: #fca311;
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  max-width: 90%;
+  width: 90%;
   aspect-ratio: 1;
-  gap: 1rem;
+  gap: 2px;
   place-items: center;
 }
 
 .box {
   border: 0;
   padding: 0.5rem;
+  width: 90%;
+  height: 90%;
   border-radius: 0.5rem;
   font-weight: bold;
   font-size: 1.5rem;
