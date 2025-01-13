@@ -1,0 +1,17 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+
+
+.dialog-tittle {
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+  color: $primary-color;
+}
+
+.dialog-subtitle {
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+  color: $secondary-color;
+}

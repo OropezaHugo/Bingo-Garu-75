@@ -1,0 +1,10 @@
+<div class="bingo-pattern-grid">
+  @for (box of pattern(); track $index) {
+    @if (box) {
+      <button class="marked-box" (click)="clickBox($event, $index)">
+      </button>
+    } @else {
+      <button class="unmarked-box" (click)="clickBox($event, $index)"></button>
+    }
+  }
+</div>
