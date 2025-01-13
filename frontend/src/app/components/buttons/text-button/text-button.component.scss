@@ -1,0 +1,40 @@
+$colorPrimary:#d6d6d6;
+$colorSecondary: #B9FBC0;
+
+.text-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &.default {
+    color: $colorPrimary;
+  }
+
+  &.font-large {
+    font-size: 2%;
+  }
+
+  &.font-medium {
+    font-size: 1.5rem;
+  }
+
+  &.font-small {
+    font-size: 1rem;
+  }
+
+  &.weight-default {
+    font-weight: 500;
+  }
+
+  &:hover {
+    color: $colorSecondary;
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    color: #d6d6d6;
+    cursor: not-allowed;
+  }
+}

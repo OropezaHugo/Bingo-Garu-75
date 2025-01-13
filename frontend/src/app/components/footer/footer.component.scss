@@ -1,0 +1,27 @@
+$colorPrimary: #7B2CBF;
+$text: #fff;
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $colorPrimary;
+  color: $text;
+  padding: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .nav-item {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    app-text-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+  }
+}
