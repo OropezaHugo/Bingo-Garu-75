@@ -4,6 +4,7 @@ using Infrastructure.BingoContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Bingo75Context))]
-    partial class Bingo75ContextModelSnapshot : ModelSnapshot
+    [Migration("20250112210103_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,17 +58,18 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("AutomaticRaffle")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RaffleNumbers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("RandomPatterns")
                         .HasColumnType("bit");
+
+                    b.Property<int>("SerialId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("SharePrizes")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SerialId");
 
                     b.ToTable("Games");
                 });
@@ -236,6 +240,17 @@ namespace Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Core.Entities.Card", b =>
+                {
+                    b.HasOne("Core.Entities.Serial", "Serial")
+                        .WithMany()
+                        .HasForeignKey("SerialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Serial");
+                });
+
+            modelBuilder.Entity("Core.Entities.Game", b =>
                 {
                     b.HasOne("Core.Entities.Serial", "Serial")
                         .WithMany()

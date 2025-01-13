@@ -1,0 +1,56 @@
+
+<mat-stepper [linear]="false" #stepper [animationDuration]="'1000'">
+  <mat-step >
+    <ng-template matStepLabel>App theme</ng-template>
+    <div class="example-buttons">
+      <p>
+        the light-dark theme affects every text
+      </p>
+      <button mat-flat-button >Flat button with app theme</button>
+      <button mat-stroked-button>Stroke button with app theme</button>
+      <button mat-raised-button>raised button with app theme</button>
+      <mat-form-field appearance="outline">
+        <mat-label>input outlined with app theme</mat-label>
+        <input matInput placeholder="placeholder">
+      </mat-form-field>
+      <button mat-stroked-button matStepperNext>next</button>
+      <button mat-stroked-button matStepperPrevious>previous</button>
+    </div>
+  </mat-step>
+  <mat-step >
+    <ng-template matStepLabel>Custom theme</ng-template>
+    <div class="my-custom-div example-buttons">
+      <p>
+        the light-dark theme affects every text
+      </p>
+      <button mat-flat-button class="my-custom-button-overrides">
+        Flat button with custom theme and custom overrides
+      </button>
+      <button mat-flat-button >Flat button with custom theme</button>
+      <button mat-stroked-button >Stroke button with custom theme</button>
+      <mat-form-field appearance="outline" style="margin: 10px">
+        <mat-label>input outlined with custom theme</mat-label>
+        <input matInput placeholder="placeholder">
+      </mat-form-field>
+      <button mat-raised-button >raised button with custom theme</button>
+      <button class="my-custom-button-overrides">
+        automatic custom only applies to material components
+      </button>
+      <button mat-stroked-button matStepperNext>next</button>
+      <button mat-stroked-button matStepperPrevious>previous</button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Commig soon</ng-template>
+    <div class="image-container">
+      <img src="./arroba-truco.png" alt="image" [@rotate]="rotationState">
+      <p> L </p>
+    </div>
+    <button mat-stroked-button matStepperNext>next</button>
+    <button mat-stroked-button matStepperPrevious>previous</button>
+    <button mat-flat-button (click)="rotate()" >change image state</button>
+  </mat-step>
+</mat-stepper>
+
+
+<router-outlet />
