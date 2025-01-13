@@ -1,0 +1,29 @@
+$primary-color: #7b2cbf;
+$secondary-color: #939393;
+
+.bingo-pattern-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  max-width: 90%;
+  aspect-ratio: 1;
+  gap: 1px;
+  place-items: center;
+}
+
+
+.box {
+  padding: 1rem;
+  border: 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.marked-box {
+  @extend .box;
+  background-color: $primary-color;
+}
+
+.unmarked-box {
+  @extend .box;
+  background-color: $secondary-color;
+}
