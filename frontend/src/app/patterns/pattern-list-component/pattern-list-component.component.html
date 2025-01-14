@@ -1,0 +1,25 @@
+<h1 class="pattern-section-title">Patrones existentes</h1>
+<button matTooltip="añadir patron" mat-icon-button (click)="openCreatePatternDialog()"><mat-icon>add</mat-icon></button>
+<mat-form-field appearance="outline">
+  <mat-label>Buscar Por Nombre</mat-label>
+  <input (keyup)="filterPatterns($event)" matInput placeholder="Buscar Por Nombre">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+
+<div class="created-patterns-div">
+
+  @for (pattern of shownPatterns; track $index) {
+    <div class="pattern-data-div">
+      <app-pattern-card [editable]="false" [pattern]="pattern.pattern"></app-pattern-card>
+      <h3 class="pattern-name-text">{{pattern.name}}</h3>
+      <div class="existent-pattern-actions">
+        <button mat-flat-button (click)="addToGame(pattern)" >añadir a la partida</button>
+        <button mat-icon-button (click)="openEditPatternDialog(pattern)" matTooltip="editar patron"><mat-icon>edit</mat-icon></button>
+      </div>
+
+    </div>
+  }
+</div>
+
+

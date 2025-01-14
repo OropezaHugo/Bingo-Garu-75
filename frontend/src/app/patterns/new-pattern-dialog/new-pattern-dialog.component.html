@@ -9,7 +9,7 @@
     <mat-label>Nombre del patron</mat-label>
     <input matInput [(ngModel)]="dialogModel().name" />
   </mat-form-field>
-  <app-pattern-card [pattern]="dialogModel().pattern"></app-pattern-card>
+  <app-pattern-card [editable]="true" [pattern]="dialogModel().pattern"></app-pattern-card>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="dialogRef.close()">Cancelar</button>

@@ -8,9 +8,13 @@ import {Component, input} from '@angular/core';
 })
 export class PatternCardComponent {
 
+  editable = input.required<boolean>()
   pattern = input.required<boolean[]>();
 
   clickBox(event: MouseEvent, boxIndex: number) {
-    this.pattern()[boxIndex]= !this.pattern()[boxIndex];
+    if (this.editable()) {
+      this.pattern()[boxIndex]= !this.pattern()[boxIndex];
+    }
+
   }
 }
