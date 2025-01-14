@@ -1,39 +1,110 @@
-$colorPrimary: #7B2CBF;
+$background-color: #7b2cbf;
 $text: #fff;
+$background-drawer: #FCA311;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+$accent-light: #9d4edd;
+$accent-dark: #5a189a;
+$orange-light: #fcb542;
+$orange-dark: #e89200;
+
+.drawer-container {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 80px;
+  background-color: $text;
+}
+
+.drawer {
+  width: 250px;
+  background-color: $background-color;
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .nav-item {
+      margin-bottom: 15px;
+    }
+  }
+}
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: $colorPrimary;
-  height: 100px;
+  background: linear-gradient(to right, $background-color, $accent-light);
+  padding: 20px 40px;
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  box-shadow: 0 2px 10px $shadow-color;
 
   .logo {
     display: flex;
     align-items: center;
-    margin-left: 50px;
+    transition: transform 0.3s ease;
+
+    &.clickable {
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
 
     .logo-icon {
-      font-size: 3.5rem;
-      margin-right: 10px;
+      font-size: clamp(1.5rem, 2vw, 3.5rem);
+      margin-right: 15px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
     }
 
     .logo-text {
       color: $text;
-      font-size: 3.5rem;
-      font-family: "Georgia", serif;
+      font-size: clamp(1.2rem, 1.8vw, 3.5rem);
+      font-family: "Poppins", sans-serif;
       font-weight: bold;
-
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 0.5px;
     }
   }
 
   .nav-links {
     display: flex;
     align-items: center;
+    gap: 1rem;
 
     .nav-item {
-      margin-right: 100px;
+      position: relative;
+      margin-right: 2rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: $background-drawer;
+        transition: width 0.3s ease;
+      }
+
+      &:hover::after {
+        width: 100%;
+      }
     }
   }
 }
