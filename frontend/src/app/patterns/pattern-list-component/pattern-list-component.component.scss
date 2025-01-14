@@ -1,0 +1,30 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+
+.pattern-name-text {
+  color: $secondary-color;
+}
+.pattern-section-title {
+  color: $primary-color;
+}
+.existent-pattern-actions {
+  display: flex;
+  flex-direction: row;
+}
+
+.created-patterns-div {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  gap: 1rem;
+}
+.pattern-data-div {
+  display: flex;
+  flex-direction: column;
+  max-width: 196px;
+}
+
+.pattern-name-text {
+  height: 3rem;
+}

@@ -1,0 +1,19 @@
+
+<div class="lobby-actions">
+  <button class="icon-button-settings" mat-icon-button (click)="openSettingsDialog()"><mat-icon>settings</mat-icon></button>
+  <button  mat-stroked-button>Iniciar Partida</button>
+</div>
+
+<h1 class="pattern-section-title">Patrones seleccionados</h1>
+<div class="selected-patterns-div">
+  @for (pattern of selectedPatterns; track $index) {
+    <div class="pattern-data-div">
+      <app-pattern-card [editable]="false" [pattern]="pattern.pattern"></app-pattern-card>
+      <h3 class="pattern-name-text">{{pattern.name}}</h3>
+      <button mat-flat-button (click)="removeFromGame(pattern)" >Quitar de la partida</button>
+    </div>
+  }
+</div>
+<app-pattern-list-component [selectedPatterns]="selectedPatterns">
+
+</app-pattern-list-component>

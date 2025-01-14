@@ -1,0 +1,12 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+
+.settings-dialog-content-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tittle {
+  text-align: center;
+  color: $primary-color;
+}
