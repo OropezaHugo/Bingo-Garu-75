@@ -1,0 +1,33 @@
+$secondary-color: #fca311;
+$primary-color: #7b2cbf;
+
+.serial-searcher {
+  min-width: 100%;
+}
+.attach-serial-content-div {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  grid-gap: 4rem;
+  place-content: space-between;
+}
+
+.serial-table-header {
+  color: $primary-color;
+}
+
+.mat-column-cardQuantity, .mat-column-createdAt, .mat-column-name {
+  border: 1px solid black;
+}
+
+.button-div {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+}
+.attach-serial-button {
+  padding: 5rem 4rem;
+  border-radius: 10rem;
+  background-color: $secondary-color;
+  font-weight: bold;
+  font-size: 2rem;
+}
