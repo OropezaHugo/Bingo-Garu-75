@@ -1,0 +1,43 @@
+<mat-drawer-container class="drawer-container">
+  <mat-drawer #drawer
+              [mode]="'over'"
+              [(opened)]="isDrawerOpen"
+              class="drawer">
+    <nav class="drawer-links">
+      <app-text-button
+        *ngFor="let item of ['Instrucciones', 'Seriales', 'Patrones']"
+        class="nav-item"
+        [text]="item"
+        [color]="'default'"
+        [disabled]="false">
+      </app-text-button>
+    </nav>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar class="header">
+      <div class="logo"
+           (click)="toggleDrawer()"
+           [class.clickable]="isMobile"
+           role="button"
+           [attr.tabindex]="isMobile ? 0 : -1">
+        <span class="logo-icon">🎯</span>
+        <span class="logo-text">BingoGaru75</span>
+      </div>
+
+      <nav class="nav-links" *ngIf="shouldShowNavLinks()">
+        <app-text-button
+          *ngFor="let item of ['Instrucciones', 'Seriales', 'Patrones']"
+          class="nav-item font-medium weight-default"
+          [text]="item"
+          [color]="'default'"
+          [disabled]="false">
+        </app-text-button>
+      </nav>
+    </mat-toolbar>
+
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
