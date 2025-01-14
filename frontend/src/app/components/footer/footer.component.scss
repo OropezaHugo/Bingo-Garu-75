@@ -3,7 +3,7 @@ $text: #fff;
 $background-drawer: #FCA311;
 $shadow-color: rgba(0, 0, 0, 0.1);
 
-$accent-light: #9d4edd;    
+$accent-light: #9d4edd;
 $accent-dark: #5a189a;
 $orange-light: #fcb542;
 $orange-dark: #e89200;
@@ -13,7 +13,7 @@ $orange-dark: #e89200;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, $background-drawer, $orange-light);
+  background: $background-color;
   color: $text;
   padding: 20px 40px;
   position: fixed;
