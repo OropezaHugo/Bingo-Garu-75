@@ -15,6 +15,7 @@ import {
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {DatePipe} from '@angular/common';
 import {MatPaginator} from '@angular/material/paginator';
+import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutton/rectanglebutton.component';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -39,6 +40,7 @@ import {MatPaginator} from '@angular/material/paginator';
     MatRowDef,
     MatNoDataRow,
     MatPaginator,
+    RectanglebuttonComponent
   ],
   templateUrl: './attach-serial-content.component.html',
   styleUrl: './attach-serial-content.component.scss'

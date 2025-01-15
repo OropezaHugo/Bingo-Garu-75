@@ -1,11 +1,14 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {WeatherService} from './core/services/weather.service';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
-  imports: [HomePageComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

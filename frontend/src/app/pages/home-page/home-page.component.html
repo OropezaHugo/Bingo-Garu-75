@@ -1,4 +1,29 @@
-<app-header>
-    <router-outlet></router-outlet>
-</app-header>
-<app-footer></app-footer>
+<div class="home-page">
+  <div class="home-text">
+    <h1 class="TituloPrincipal">¡Bienvenido al Mejor Bingo Online! 🎉</h1>
+    <p class="TextoSecundario">
+      Explora la diversión del Bingo 75, gestiona patrones y seriales o inicia una partida para jugar con amigos y familia.
+      ¡Comienza ahora!
+    </p>
+  </div>
+  <img src="WlecomeImage.png" class="welcome-image" />
+</div>
+<div class="button">
+  <button class="seriales" mat-icon-button routerLink="serials">
+    <mat-icon class="icon">content_paste</mat-icon>
+    <h2 class="title">Gestionar Seriales</h2>
+    <p class="context">Administra tus seriales y cartones de Bingo 75. Crea, edita y elimina seriales para tus partidas.</p>
+  </button>
+
+  <button class="patrones" mat-icon-button routerLink="patterns">
+    <mat-icon class="icon">description</mat-icon>
+    <h2 class="pattern-button-title">Gestionar Patrones</h2>
+    <p class="context">Administra tus patrones de para tus cartas de Bingo 75. Crea, edita y elimina patrones para tus partidas.</p>
+  </button>
+
+  <button class="nueva-partida" mat-icon-button routerLink="instructions">
+    <mat-icon class="icon">groups</mat-icon>
+    <h2 class="title">Iniciar Nueva Partida</h2>
+    <p class="context">Entre a una llamada y unase con sus amigos o familiares a una partida nueva de Bingo 75.</p>
+  </button>
+</div>

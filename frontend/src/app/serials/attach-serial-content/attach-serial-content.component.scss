@@ -23,11 +23,6 @@ $primary-color: #7b2cbf;
   display: flex;
   flex-direction: column;
   place-content: center;
+  place-items: center;
 }
-.attach-serial-button {
-  padding: 5rem 4rem;
-  border-radius: 10rem;
-  background-color: $secondary-color;
-  font-weight: bold;
-  font-size: 2rem;
-}
+
