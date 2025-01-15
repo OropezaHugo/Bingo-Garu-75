@@ -29,14 +29,14 @@ export class LobbyPage {
 
   selectedPatterns: NewPatternDialogData[] = [
     {
-      pattern: [
+      patternMatrix: [
         true, true, true, true, true,
         true, true, true, true, true,
         true, true, true, true, true,
         true, true, true, true, true,
         true, true, true, true, true,
       ],
-      name: "Carton Lleno"
+      patternName: "Carton Lleno"
     }
   ]
   readonly dialog = inject(MatDialog);

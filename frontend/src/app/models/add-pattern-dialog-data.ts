@@ -1,96 +1,103 @@
 export interface NewPatternDialogData {
-  pattern: boolean[]
-  name: string
+  id?: number
+  patternMatrix: boolean[]
+  patternName: string
+}
+
+export interface Pattern {
+  id: number
+  patternMatrix: boolean[]
+  patternName: string
 }
 export const EmptyPattern: NewPatternDialogData = {
-  pattern: [
+  patternMatrix: [
     false, false, false, false, false,
     false, false, false, false, false,
     false, false, false, false, false,
     false, false, false, false, false,
     false, false, false, false, false,
   ],
-  name: ""
+  patternName: ""
 }
 export const ExamplePatterns: NewPatternDialogData[] = [
   {
-    pattern: [
+    patternMatrix: [
         true, false, false, false, true,
       true, false, false, false, true,
       true, true, true, true, true,
       true, false, false, false, true,
       true, false, false, false, true,
     ],
-    name: "Letra H"
+    patternName: "Letra H"
   },
   {
-    pattern: [
+    patternMatrix: [
       true, true, true, true, true,  // Línea horizontal superior
       false, false, false, false, false,
       false, false, false, false, false,
       false, false, false, false, false,
       false, false, false, false, false,
     ],
-    name: "Línea Horizontal Superior"
+    patternName: "Línea Horizontal Superior"
   },
   {
-    pattern: [
+    patternMatrix: [
       true, false, false, false, true,  // Esquinas (4 corners)
       false, false, false, false, false,
       false, false, false, false, false,
       false, false, false, false, false,
       true, false, false, false, true,
     ],
-    name: "Cuatro Esquinas"
+    patternName: "Cuatro Esquinas"
   },
   {
-    pattern: [
+    patternMatrix: [
       true, false, false, false, true,
       false, true, false, true, false,
       false, false, true, false, false,
       false, true, false, true, false,
       true, false, false, false, true,
     ],
-    name: "Letra X"
+    patternName: "Letra X"
   },
   {
-    pattern: [
+    patternMatrix: [
       true, false, false, false, true,
       true, false, false, false, true,
       true, true, true, true, true,
       true, false, false, false, true,
       true, false, false, false, true,
     ],
-    name: "Marco"
+    patternName: "Marco"
   },
   {
-    pattern: [
+    patternMatrix: [
       false, false, true, false, false,
       false, false, true, false, false,
       true, true, true, true, true,
       false, false, true, false, false,
       false, false, true, false, false,
     ],
-    name: "Cruz"
+    patternName: "Cruz"
   },
   {
-    pattern: [
+    patternMatrix: [
       true, true, true, true, true,
       false, false, true, false, false,
       false, false, true, false, false,
       false, false, true, false, false,
       false, false, true, false, false,
     ],
-    name: "Letra T"
+    patternName: "Letra T"
   },
   {
-    pattern: [
+    patternMatrix: [
       false, false, true, false, false,
       false, true, true, true, false,
       true, false, true, false, true,
       false, false, true, false, false,
       false, false, true, false, false,
     ],
-    name: "Flecha Hacia Arriba"
+    patternName: "Flecha Hacia Arriba"
   }
 ]

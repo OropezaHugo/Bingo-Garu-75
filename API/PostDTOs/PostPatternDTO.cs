@@ -5,7 +5,7 @@ namespace API.PostDTOs;
 public class PostPatternDTO
 {
     [Required]
-    public string PatternMatrix { get; set; }
+    public List<bool> PatternMatrix { get; set; }
     [Required]
     public string PatternName { get; set; }
 }

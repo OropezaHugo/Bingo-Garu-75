@@ -4,7 +4,7 @@ namespace Core.Entities;
 
 public class Card: BaseEntity
 {
-    public required string ContentMatrix { get; set; }
+    public required List<int> ContentMatrix { get; set; }
     public required int SerialId { get; set; }
     
     [ForeignKey(nameof(SerialId))]

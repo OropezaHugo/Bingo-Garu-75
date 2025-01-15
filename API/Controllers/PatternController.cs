@@ -11,13 +11,14 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class PatternController(
     IGenericRepository<Pattern> repository,
+    IGamePatternsRepository gamePatternsRepository,
     IMapper mapper): ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IList<PatternResponseDTO>>> GetPatterns()
+    public async Task<ActionResult<IList<PatternResponseDTO>>> GetPatterns([FromQuery] string? name)
     {
         var patterns = await repository.ListAllAsync();
-        return Ok( patterns.AsEnumerable().Select(pattern => mapper.Map<PatternResponseDTO>(pattern)));
+        return Ok( patterns.AsEnumerable().Where(pattern => pattern.PatternName.Contains(name ?? string.Empty)).Select(pattern => mapper.Map<PatternResponseDTO>(pattern)));
     }
 
     [HttpGet("{id}")]
@@ -40,6 +41,7 @@ public class PatternController(
     {
         var pattern = await repository.GetByIdAsync(id);
         if (pattern == null) return NotFound();
+        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("patterns used can not be updated");
         var newPattern = mapper.Map<Pattern>((patternDto, id));
         repository.UpdateAsync(newPattern);
         return Ok(await repository.SaveChangesAsync());
