@@ -1,0 +1,75 @@
+$primary-color: #7b2cbf;
+$text: #fff;
+$secondary-color: #FCA311;
+$text-color: #2d3748;
+$gradient-start: #7b2cbf;
+$gradient-end: #9d4edd;
+
+.manual-container {
+  max-width: 800px;
+  margin: 70px auto 0;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: $text-color;
+  background: linear-gradient(135deg, $gradient-start, $gradient-end);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: $text;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  text-align: justify;
+  color: $text;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: $secondary-color;
+  margin-bottom: 15px;
+}
+
+.subsection-title {
+  font-size: 1.25rem;
+  color: $secondary-color;
+  margin-bottom: 10px;
+}
+
+.features-list, .functionality-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.features-list li, .functionality-list li {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+  color: $text;
+}
+
+.features-list li::before, .functionality-list li::before {
+  content: '\2022';
+  color: $secondary-color;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+strong {
+  color: $secondary-color;
+}
