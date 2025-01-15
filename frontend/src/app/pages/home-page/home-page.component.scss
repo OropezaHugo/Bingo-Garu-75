@@ -1,0 +1,153 @@
+$primary-color: #7b2cbf;
+$text: #fff;
+$secondary-color: #FCA311;
+$text-color: #2d3748;
+$gradient-start: #7b2cbf;
+$gradient-end: #9d4edd;
+
+.home-page {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  padding: 3rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba($gradient-start, 0.05) 0%, rgba($gradient-end, 0.1) 100%);
+
+  .welcome-image {
+    max-width: 400px;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .home-text {
+    margin-bottom: 2rem;
+
+    .TituloPrincipal {
+      color: $primary-color;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .TextoSecundario {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      margin: 0 auto;
+      max-width: 500px;
+      color: $text-color;
+      opacity: 0.9;
+      animation: fadeIn 1s ease-out 0.5s both;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeIn 1s ease-out 1s both;
+  margin-top: 4rem;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $text;
+    color: $primary-color;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+    height: 250px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon {
+      color: $secondary-color;
+    }
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .context {
+      font-size: 1rem;
+      color: #333333;
+    }
+
+    &.seriales {
+      border: 2px solid #4caf50;
+    }
+
+    &.patrones {
+      border: 2px solid #2196f3;
+    }
+
+    &.nueva-partida {
+      border: 2px solid #ff9800;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .button {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .button button {
+    flex-direction: column;
+
+    width: 250px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page {
+    padding: 1rem;
+
+    .welcome-image {
+      max-width: 200px;
+    }
+
+    .home-text .TituloPrincipal {
+      font-size: 2rem;
+    }
+
+    .home-text .TextoSecundario {
+      font-size: 1rem;
+    }
+  }
+
+  .button button {
+    margin-top: 1.5rem;
+  }
+}
