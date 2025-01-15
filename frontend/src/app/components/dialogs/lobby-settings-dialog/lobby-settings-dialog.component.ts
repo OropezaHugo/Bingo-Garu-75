@@ -7,12 +7,12 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {NewPatternDialogData} from '../../../models/add-pattern-dialog-data';
-import {LobbySettings} from '../../../models/lobby-settings';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {Game} from '../../../models/game';
 
 @Component({
   selector: 'app-lobby-settings-dialog',
@@ -33,6 +33,6 @@ import {MatCheckbox} from '@angular/material/checkbox';
 })
 export class LobbySettingsDialogComponent {
   readonly dialogRef = inject(MatDialogRef<LobbySettingsDialogComponent>);
-  readonly data = inject<LobbySettings>(MAT_DIALOG_DATA);
+  readonly data = inject<Game>(MAT_DIALOG_DATA);
   readonly dialogModel = model(this.data)
 }

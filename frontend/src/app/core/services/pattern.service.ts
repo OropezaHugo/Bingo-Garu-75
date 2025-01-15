@@ -1,6 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {NewPatternDialogData, Pattern} from '../../models/add-pattern-dialog-data';
+import {GameService} from './game.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,11 @@ export class PatternService {
   updatePattern(pattern: Pattern){
     return this.http.put<boolean>(this.baseUrl + 'Pattern/' + pattern.id, {patternMatrix: pattern.patternMatrix, patternName: pattern.patternName}).subscribe({
       next: result => {
+        if (result) {
+          this.getPatterns()
+        }
+      },
+      error: result => {
         if (result) {
           this.getPatterns()
         }

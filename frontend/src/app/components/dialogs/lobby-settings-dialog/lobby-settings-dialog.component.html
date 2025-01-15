@@ -1,19 +1,15 @@
 <h2 class="settings-tittle" mat-dialog-title>Ajustes</h2>
 <mat-dialog-content>
   <div class="settings-dialog-content-div">
-    <mat-checkbox class="example-margin" [(ngModel)]="dialogModel().manual">
-      Partida Manual
+    <mat-checkbox class="example-margin" [(ngModel)]="dialogModel().automaticRaffle">
+      Tombola Automatica
     </mat-checkbox>
     <mat-checkbox class="example-margin" [(ngModel)]="dialogModel().randomPatterns">
       Aleatorizar Patrones
     </mat-checkbox>
-    <mat-checkbox class="example-margin" [(ngModel)]="dialogModel().sharedPrices">
+    <mat-checkbox class="example-margin" [(ngModel)]="dialogModel().sharePrizes">
       Premios Compartidos
     </mat-checkbox>
-    <mat-form-field appearance="outline">
-      <mat-label>Rondas</mat-label>
-      <input placeholder="Rondas" matInput [(ngModel)]="dialogModel().Rounds" type="number"/>
-    </mat-form-field>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

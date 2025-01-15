@@ -9,6 +9,7 @@ import {EmptyPattern, ExamplePatterns, NewPatternDialogData, Pattern} from '../.
 import {NewPatternDialogComponent} from '../new-pattern-dialog/new-pattern-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {PatternService} from '../../core/services/pattern.service';
+import {GameService} from '../../core/services/game.service';
 
 @Component({
   selector: 'app-pattern-list-component',
@@ -27,9 +28,8 @@ import {PatternService} from '../../core/services/pattern.service';
   styleUrl: './pattern-list-component.component.scss'
 })
 export class PatternListComponentComponent implements OnInit {
-
-  selectedPatterns = input.required<NewPatternDialogData[]>();
   patternService = inject(PatternService);
+  gameService = inject(GameService);
   readonly dialog = inject(MatDialog);
 
   openEditPatternDialog(pattern: Pattern): void {
@@ -68,9 +68,9 @@ export class PatternListComponentComponent implements OnInit {
   filterPatterns(event: Event) {
     this.patternService.getPatterns((event.target as HTMLInputElement).value)
   }
-  addToGame(pattern: NewPatternDialogData) {
-    if (!this.selectedPatterns().includes(pattern)) {
-      this.selectedPatterns().push(pattern);
+  addToGame(pattern: Pattern) {
+    if (!this.gameService.gamePatterns().includes(pattern)) {
+      this.gameService.addPatternToActualGame(pattern.id)
     }
   }
 

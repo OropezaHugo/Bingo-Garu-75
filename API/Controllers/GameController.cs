@@ -27,11 +27,25 @@ public class GameController
     {
         return Ok(mapper.Map<GameResponseDTO>(await repository.GetByIdAsync(id)));
     }
-
     [HttpPost]
-    public async Task<ActionResult<bool>> PostGame(PostGameDTO game)
+    public async Task<ActionResult<GameResponseDTO>> PostGame(PostGameDTO game)
     {
-        repository.AddAsync(mapper.Map<Game>(game));    
-        return Ok(await repository.SaveChangesAsync());
+        var newGame = repository.AddAsync(mapper.Map<Game>(game));
+        if (await repository.SaveChangesAsync())
+        {
+            return mapper.Map<GameResponseDTO>(newGame);
+        }
+        return Problem("Problem adding new game");
     }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<GameResponseDTO>> UpdateGame(int id, PostGameDTO game)
+    {
+        var newGame = repository.UpdateAsync(mapper.Map<Game>((game, id)));
+        if (await repository.SaveChangesAsync())
+        {
+            return mapper.Map<GameResponseDTO>(newGame);
+        }
+        return Problem("Problem updating game");
+    } 
 }
