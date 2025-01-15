@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatSidenavModule
+    MatSidenavModule,
+    RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -38,6 +40,12 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  closeDrawerOnMobile() {
+    if (this.isMobile) {
+      this.isDrawerOpen = false;
+    }
+  }
+
   toggleDrawer() {
     if (this.isMobile) {
       this.isDrawerOpen = !this.isDrawerOpen;
@@ -47,4 +55,6 @@ export class HeaderComponent implements OnInit {
   shouldShowNavLinks(): boolean {
     return !this.isMobile;
   }
+
+
 }
