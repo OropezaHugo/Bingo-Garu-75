@@ -5,19 +5,40 @@
               class="drawer">
     <nav class="drawer-links">
       <app-text-button
-        *ngFor="let item of ['Instrucciones', 'Seriales', 'Patrones']"
         class="nav-item"
-        [text]="item"
-        [color]="'default'"
-        [disabled]="false">
+        text="Home"
+        color="default"
+        [routerLink]="'/'"
+        (click)="closeDrawerOnMobile()">
+      </app-text-button>
+      <app-text-button
+        class="nav-item"
+        text="Instrucciones"
+        color="default"
+        [routerLink]="'/'"
+        (click)="closeDrawerOnMobile()">
+      </app-text-button>
+      <app-text-button
+        class="nav-item"
+        text="Seriales"
+        color="default"
+        [routerLink]="'/serials'"
+        (click)="closeDrawerOnMobile()">
+      </app-text-button>
+      <app-text-button
+        class="nav-item"
+        text="Patrones"
+        color="default"
+        [routerLink]="'/patterns'"
+        (click)="closeDrawerOnMobile()">
       </app-text-button>
     </nav>
   </mat-drawer>
 
   <mat-drawer-content>
     <mat-toolbar class="header">
-      <div class="logo"
-           (click)="toggleDrawer()"
+      <div class="logo" (click)="toggleDrawer()"
+           [routerLink]="isMobile ? null : '/'"
            [class.clickable]="isMobile"
            role="button"
            [attr.tabindex]="isMobile ? 0 : -1">
@@ -27,11 +48,22 @@
 
       <nav class="nav-links" *ngIf="shouldShowNavLinks()">
         <app-text-button
-          *ngFor="let item of ['Instrucciones', 'Seriales', 'Patrones']"
           class="nav-item font-medium weight-default"
-          [text]="item"   
-          [color]="'default'"
-          [disabled]="false">
+          text="Instrucciones"
+          color="default"
+          [routerLink]="'/'">
+        </app-text-button>
+        <app-text-button
+          class="nav-item font-medium weight-default"
+          text="Seriales"
+          color="default"
+          [routerLink]="'/serials'">
+        </app-text-button>
+        <app-text-button
+          class="nav-item font-medium weight-default"
+          text="Patrones"
+          color="default"
+          [routerLink]="'/patterns'">
         </app-text-button>
       </nav>
     </mat-toolbar>
