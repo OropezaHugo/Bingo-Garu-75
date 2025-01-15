@@ -24,12 +24,22 @@ public class GenericRepository<T>(Bingo75Context context): IGenericRepository<T>
 
     public void UpdateAsync(T entity)
     {
+        var trackedEntity = context.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (trackedEntity != null)
+        {
+            context.Entry(trackedEntity).State = EntityState.Detached;
+        }
         context.Set<T>().Attach(entity);
         context.Entry(entity).State = EntityState.Modified;
     }
 
     public void DeleteAsync(T entity)
     {
+        var trackedEntity = context.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (trackedEntity != null)
+        {
+            context.Entry(trackedEntity).State = EntityState.Detached;
+        }
         context.Set<T>().Remove(entity);
     }
 
