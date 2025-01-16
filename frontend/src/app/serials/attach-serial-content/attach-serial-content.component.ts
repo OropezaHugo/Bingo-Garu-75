@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, input, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, input, OnInit, viewChild} from '@angular/core';
 import {MatFormField, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatIcon} from '@angular/material/icon';
-import {ExampleSerials, Serial} from '../../models/serial';
+import {Serial} from '../../models/serial';
 import {
   MatCell,
   MatCellDef,
@@ -16,6 +16,7 @@ import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {DatePipe} from '@angular/common';
 import {MatPaginator} from '@angular/material/paginator';
 import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutton/rectanglebutton.component';
+import {SerialService} from '../../core/services/serial.service';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -46,9 +47,9 @@ import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutt
   styleUrl: './attach-serial-content.component.scss'
 })
 export class AttachSerialContentComponent implements OnInit, AfterViewInit {
-  dataSource: MatTableDataSource<Serial> = new MatTableDataSource(ExampleSerials);
-  columns: string[] = ['name', "cardQuantity", "createdAt"];
-
+  dataSource: MatTableDataSource<Serial> = new MatTableDataSource();
+  columns: string[] = ['serialName', "cardQuantity", "creationDate"];
+  serialService = inject(SerialService)
   sort = viewChild.required(MatSort)
   paginator = viewChild.required(MatPaginator)
   ngAfterViewInit() {
@@ -65,7 +66,11 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ExampleSerials);
+    this.serialService.getSerials().subscribe({
+      next: data => {
+        this.dataSource = new MatTableDataSource(data);
+      }
+    })
   }
 }
 
