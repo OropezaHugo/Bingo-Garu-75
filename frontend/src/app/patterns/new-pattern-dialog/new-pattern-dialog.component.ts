@@ -9,7 +9,7 @@ import {
 import {MatButton} from '@angular/material/button';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
-import {NewPatternDialogData} from '../../models/add-pattern-dialog-data';
+import {EmptyPattern, NewPatternDialogData} from '../../models/add-pattern-dialog-data';
 import {PatternCardComponent} from '../../shared/pattern-card/pattern-card.component';
 
 @Component({
@@ -34,4 +34,8 @@ export class NewPatternDialogComponent {
   readonly data = inject<NewPatternDialogData>(MAT_DIALOG_DATA);
   readonly dialogModel = model(this.data)
 
+  cancel(){
+    this.dialogModel.set(EmptyPattern)
+    this.dialogRef.close();
+  }
 }

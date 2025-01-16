@@ -17,20 +17,31 @@ public class GenericRepository<T>(Bingo75Context context): IGenericRepository<T>
         return await context.Set<T>().ToListAsync();
     }
     
-    public void AddAsync(T entity)
+    public T AddAsync(T entity)
     {
-        context.Set<T>().Add(entity);
+        return context.Set<T>().Add(entity).Entity;
     }
 
-    public void UpdateAsync(T entity)
+    public T UpdateAsync(T entity)
     {
-        context.Set<T>().Attach(entity);
+        var trackedEntity = context.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (trackedEntity != null)
+        {
+            context.Entry(trackedEntity).State = EntityState.Detached;
+        }
+        var updatedEntity = context.Set<T>().Attach(entity).Entity;
         context.Entry(entity).State = EntityState.Modified;
+        return updatedEntity;
     }
 
-    public void DeleteAsync(T entity)
+    public T DeleteAsync(T entity)
     {
-        context.Set<T>().Remove(entity);
+        var trackedEntity = context.Set<T>().Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (trackedEntity != null)
+        {
+            context.Entry(trackedEntity).State = EntityState.Detached;
+        }
+        return context.Set<T>().Remove(entity).Entity;
     }
 
     public async Task<bool> SaveChangesAsync()

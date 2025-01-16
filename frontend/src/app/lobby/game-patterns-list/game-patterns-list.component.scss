@@ -1,0 +1,34 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+
+.selected-patterns-div {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  gap: 1rem;
+}
+
+.pattern-data-div {
+  display: flex;
+  flex-direction: column;
+  max-width: 196px;
+
+}
+
+.pattern-name-text {
+  height: 3rem;
+}
+
+.lobby-actions {
+  display: flex;
+  flex-direction: row;
+  place-content: space-around;
+  margin-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+.icon-button-settings {
+  color: $secondary-color;
+  scale: 3;
+}
