@@ -33,9 +33,9 @@ public class GameController
         var newGame = repository.AddAsync(mapper.Map<Game>(game));
         if (await repository.SaveChangesAsync())
         {
-            return mapper.Map<GameResponseDTO>(newGame);
+            return Ok(mapper.Map<GameResponseDTO>(newGame));
         }
-        return Problem("Problem adding new game");
+        return Conflict("hubo un problema al crear un nuevo juego");
     }
     
     [HttpPut("{id}")]
@@ -44,8 +44,8 @@ public class GameController
         var newGame = repository.UpdateAsync(mapper.Map<Game>((game, id)));
         if (await repository.SaveChangesAsync())
         {
-            return mapper.Map<GameResponseDTO>(newGame);
+            return Ok(mapper.Map<GameResponseDTO>(newGame));
         }
-        return Problem("Problem updating game");
+        return Conflict("hubo un problema al editar la informacion del juego");
     } 
 }

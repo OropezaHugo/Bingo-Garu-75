@@ -2,6 +2,7 @@ import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Game} from '../../models/game';
 import {Pattern} from '../../models/add-pattern-dialog-data';
+import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,12 @@ export class GameService {
   gamePatterns = signal<Pattern[]>([])
 
   getGameById(id: number) {
-    return this.http.get<Game>(`${this.baseUrl}Game/${id}`).subscribe({
-      next: (result) => {
-        this.actualGame.set(result)
-      }
-    })
+    return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
+        map(game => {
+          this.actualGame.set(game);
+          this.getActualGamePatterns()
+        }),
+    )
   }
   getActualGamePatterns() {
     return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
@@ -28,10 +30,16 @@ export class GameService {
     })
   }
   createNewGame() {
+    let id =  localStorage.getItem("gameId")
+    if (id != null) {
+      let idNumber = +id
+      return this.getGameById(idNumber).subscribe()
+    }
     return this.http.post<Game>(`${this.baseUrl}Game`, {}).subscribe({
       next: (result) => {
         if (result) {
-          this.getGameById(result.id)
+          this.getGameById(result.id).subscribe()
+          localStorage.setItem("gameId", result.id.toString())
         }
       }
     })
@@ -41,7 +49,7 @@ export class GameService {
     return this.http.put(`${this.baseUrl}Game/${newGame.id}`, {automaticRaffle: newGame.automaticRaffle, randomPatterns: newGame.randomPatterns, sharePrizes: newGame.sharePrizes}).subscribe({
       next: (result) => {
         if (result) {
-          this.getGameById(newGame.id)
+          this.getGameById(newGame.id).subscribe()
         }
       }
     })
@@ -65,5 +73,10 @@ export class GameService {
         }
       }
     })
+  }
+
+  finishGame() {
+    localStorage.removeItem("gameId");
+    this.actualGame.set(undefined)
   }
 }

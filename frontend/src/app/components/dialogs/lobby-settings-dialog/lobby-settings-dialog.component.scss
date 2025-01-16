@@ -4,6 +4,7 @@ $secondary-color: #fca311;
 .settings-dialog-content-div {
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
 }
 
 .settings-tittle {

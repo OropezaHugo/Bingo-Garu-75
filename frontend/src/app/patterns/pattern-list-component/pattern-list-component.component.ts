@@ -28,6 +28,7 @@ import {GameService} from '../../core/services/game.service';
   styleUrl: './pattern-list-component.component.scss'
 })
 export class PatternListComponentComponent implements OnInit {
+  inGame = input<boolean>(false)
   patternService = inject(PatternService);
   gameService = inject(GameService);
   readonly dialog = inject(MatDialog);

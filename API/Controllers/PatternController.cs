@@ -43,7 +43,7 @@ public class PatternController(
     {
         var pattern = await patternRepository.GetByIdAsync(id);
         if (pattern == null) return NotFound();
-        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("patterns used can not be updated");
+        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("Patrones yá usados no pueden ser editados");
         var newPattern = mapper.Map<Pattern>((patternDto, id));
         patternRepository.UpdateAsync(newPattern);
         return Ok(await patternRepository.SaveChangesAsync());
@@ -54,7 +54,7 @@ public class PatternController(
     {
         var pattern = await patternRepository.GetByIdAsync(id);
         if (pattern == null) return NotFound();
-        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("patterns used can not be updated");
+        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("Patrones yá usados no pueden ser eliminados");
         patternRepository.DeleteAsync(pattern);
         return Ok(await patternRepository.SaveChangesAsync());
     }
@@ -66,7 +66,7 @@ public class PatternController(
         if (pattern == null) return NotFound("pattern not found");
         var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
         if (game == null) return NotFound("game not found");
-        if (gamePatternsRepository.ExistsPatternGameRelation(gamePatternsDto.GameId, gamePatternsDto.PatternId)) return Conflict("pattern already in game");
+        if (gamePatternsRepository.ExistsPatternGameRelation(gamePatternsDto.GameId, gamePatternsDto.PatternId)) return Conflict("el patron ya existe en la partida");
         gamePatternsRepository.CreatePatternGameRelation(mapper.Map<GamePatterns>(gamePatternsDto));
         return Ok(await gamePatternsRepository.SaveChangesAsync());
     }

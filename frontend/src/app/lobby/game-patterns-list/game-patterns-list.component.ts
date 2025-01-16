@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatButton} from "@angular/material/button";
 import {PatternCardComponent} from "../../shared/pattern-card/pattern-card.component";
 import {GameService} from '../../core/services/game.service';

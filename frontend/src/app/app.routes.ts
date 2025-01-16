@@ -6,6 +6,7 @@ import {AttachSerialContentComponent} from "./serials/attach-serial-content/atta
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LobbyPage } from './pages/lobby-page/lobby-page';
 import { InstructionsComponent } from './pages/instructions/instructions.component';
+import {PatternListComponentComponent} from "./patterns/pattern-list-component/pattern-list-component.component";
 
 export const routes: Routes = [
     { path: "serials", component: SerialsBasePageComponent, children: [
@@ -14,7 +15,8 @@ export const routes: Routes = [
         { path: "attach", component: AttachSerialContentComponent },
         ], pathMatch: 'full'},
     { path: "", component: HomePageComponent, pathMatch: 'full'},
-    {path: "patterns", component: LobbyPage},
-    {path: "instructions", component: InstructionsComponent}
-
+    {path: "lobby", component: LobbyPage},
+    {path: "instructions", component: InstructionsComponent},
+    {path: "patterns", component: PatternListComponentComponent},
+    {path: "**", redirectTo: ""},
 ];
