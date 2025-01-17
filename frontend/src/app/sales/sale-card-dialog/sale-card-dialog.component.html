@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Cartas a vender:</h2>
+<mat-dialog-content class="dialog-content-div">
+  <div class="selected-cards-div">
+    @for (card of cards(); track $index){
+      <app-sale-button [viewOnly]="true" [gameCard]="card"/>
+    }
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre del comprador</mat-label>
+    <input matInput [formControl]="userForm"/>
+    <mat-hint>{{userForm.hasError('minlength') ?
+      "reuiere minimo 3 caracteres":
+      userForm.hasError('required') ?
+      "campo requerido":
+      ""}}</mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar venta</button>
+  <button mat-button  (click)="onSubmit()">Finalizar venta</button>
+</mat-dialog-actions>

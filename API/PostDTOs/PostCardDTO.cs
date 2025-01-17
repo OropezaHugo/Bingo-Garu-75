@@ -7,4 +7,5 @@ public class PostCardDTO
 {
     public List<int> ContentMatrix { get; set; } = CardTools.GenerateContentMatrix();
     public required int SerialId { get; set; }
+    public required int CardNumber { get; set; }
 }

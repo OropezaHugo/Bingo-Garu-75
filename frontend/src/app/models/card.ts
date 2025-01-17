@@ -8,6 +8,16 @@ export interface CardBox {
   marked: boolean;
 }
 
+export interface GameCardInfo {
+  cardId: number;
+  gameId: number;
+  contentMatrix: number[];
+  serialId: number;
+  sold: boolean;
+  userName: string;
+  cardNumber: number;
+}
+
 /* card: Card = {
     cardNumber: 125,
     content: [

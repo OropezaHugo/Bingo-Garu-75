@@ -1,3 +1,4 @@
+using API.PostDTOs;
 using API.ResponseDTOs;
 using AutoMapper;
 using Core.Entities;
@@ -10,6 +11,7 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class CardController(
     IGenericRepository<Card> repository,
+    IGenericRepository<Game> gameRepository,
     IGameCardsRepository gameCardsRepository,
     IMapper mapper): ControllerBase
 {
@@ -30,9 +32,23 @@ public class CardController(
     }
     
     [HttpGet("game/{id}")]
-    public async Task<ActionResult<IList<CardResponseDTO>>> GetCardByGame(int id)
+    public async Task<ActionResult<IList<GameCardResponseDTO>>> GetCardsByGameId(int id)
     {
-        var cards = await gameCardsRepository.ListCardsByGameId(id);
-        return Ok(cards.Select(card => mapper.Map<CardResponseDTO>(card)));
+        var cards = await repository.ListAllAsync();
+        var gameCardsResponse = cards.Join(gameCardsRepository.ListAllGameCards().Result,
+            card => card.Id,
+            gameCards => gameCards.CardId, (card, gameCards) => mapper.Map<GameCardResponseDTO>((card, gameCards)))
+            .Where(dto => dto.GameId == id).ToList();
+        return Ok(gameCardsResponse);
+    }
+
+    [HttpPost("game")]
+    public async Task<ActionResult<bool>> UpdateGameCard(SellCardDTO sellCardDto)
+    {
+        if (await repository.GetByIdAsync(sellCardDto.CardId) == null) return NotFound();
+        if (await gameRepository.GetByIdAsync(sellCardDto.GameId) == null) return NotFound();
+        if(!gameCardsRepository.ExistsGameCardRelation(sellCardDto.GameId, sellCardDto.CardId)) return NotFound();
+        gameCardsRepository.SellGameCards(mapper.Map<GameCards>(sellCardDto));
+        return Ok(await gameCardsRepository.SaveChangesAsync());
     }
 }

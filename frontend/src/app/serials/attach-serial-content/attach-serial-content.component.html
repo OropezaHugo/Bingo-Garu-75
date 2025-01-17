@@ -25,16 +25,20 @@
         <td mat-cell *matCellDef="let row">{{row.creationDate | date}}</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">no se encontro un serial con el nombre "{{input.value}}"</td>
+      <tr mat-row *matNoDataRow>
+        <td colspan="4">no se encontro un serial con el nombre "{{input.value}}"</td>
       </tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: columns;"
+        (click)="selectedSerial = row"
+        [class.selected-row]="selectedSerial == row"
+      ></tr>
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25]" aria-label="Elige pagina de seriales"></mat-paginator>
   </div>
   <div class="button-div">
-    <app-rectanglebutton class="attach-serial-button" text="Crear Nueva Partida" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
+    <app-rectanglebutton [disabled]="!ableToAttach" (click)="attachSerialToActualGame(selectedSerial)" class="attach-serial-button" text="Adjuntar Serial" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
   </div>
 
 </div>

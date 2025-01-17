@@ -1,13 +1,28 @@
-
 <div class="lobby-actions">
   <button class="icon-button-settings" mat-icon-button (click)="openSettingsDialog()"><mat-icon>settings</mat-icon></button>
-  <button  mat-stroked-button>Iniciar Partida</button>
 </div>
+<mat-stepper #stepper>
+  <mat-step>
+    <ng-template matStepLabel>Adjuntar serial</ng-template>
+    <app-attach-serial-content/>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Adjuntar patrones</ng-template>
+    <app-game-patterns-list/>
+    <app-pattern-list-component [inGame]="true"/>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Venta de Seriales</ng-template>
+    <app-sale-panel/>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Ajustes y Exportacion</ng-template>
+    <h1>comming soon</h1>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Adjuntar premios</ng-template>
+    <h1>comming soon</h1>
+  </mat-step>
+</mat-stepper>
 
-<h1 class="pattern-section-title">Patrones seleccionados</h1>
-<app-game-patterns-list>
 
-</app-game-patterns-list>
-<app-pattern-list-component [inGame]="true">
-
-</app-pattern-list-component>

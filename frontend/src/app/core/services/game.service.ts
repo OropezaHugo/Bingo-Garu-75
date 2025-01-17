@@ -1,8 +1,10 @@
-import {inject, Injectable, signal} from '@angular/core';
+import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Game} from '../../models/game';
 import {Pattern} from '../../models/add-pattern-dialog-data';
 import {map} from "rxjs";
+import {Serial} from "../../models/serial";
+import {GameCardInfo} from '../../models/card';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,14 @@ export class GameService {
   private http = inject(HttpClient)
   actualGame = signal<Game | undefined>(undefined)
   gamePatterns = signal<Pattern[]>([])
+  gameCards = signal<GameCardInfo[]>([])
 
-  getGameById(id: number) {
+  getGameById(id?: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
         map(game => {
           this.actualGame.set(game);
           this.getActualGamePatterns()
+          this.getCardsByGameId()
         }),
     )
   }
@@ -78,5 +82,42 @@ export class GameService {
   finishGame() {
     localStorage.removeItem("gameId");
     this.actualGame.set(undefined)
+  }
+
+  attachSerialToActualGame(serial: Serial) {
+    return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
+      next: (result) => {
+        console.log(result);
+        if (result) {
+          console.log(result);
+          this.getGameById(this.actualGame()?.id).subscribe()
+        }
+      }
+    })
+  }
+
+  getCardsByGameId() {
+    return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
+      next: value => {
+        console.log("llegue")
+        this.gameCards.set(value)
+      }
+    })
+  }
+
+  sellCard(card: GameCardInfo) {
+      return this.http.post(`${this.baseUrl}Card/game`,
+        {
+          gameId: card.gameId,
+          cardId: card.cardId,
+          sold: card.sold,
+          userName: card.userName
+        }).subscribe({
+        next: (result) => {
+          if (result) {
+            this.getCardsByGameId()
+          }
+        }
+      })
   }
 }

@@ -23,6 +23,11 @@ public class GameCardsRepository(Bingo75Context context): IGameCardsRepository
             .Any(gameCards => gameCards.GameId == gameId);
     }
 
+    public bool ExistsGameCardRelation(int gameId, int cardId)
+    {
+        return context.GameCards.Any(gameCards => gameCards.GameId == gameId && gameCards.CardId == cardId);
+    }
+
     public void CreateCardGameRelation(GameCards gameCards)
     {
         context.GameCards.Add(gameCards);
@@ -64,8 +69,18 @@ public class GameCardsRepository(Bingo75Context context): IGameCardsRepository
         context.GameCards.Remove(gameCards);
     }
 
-    public GameCards? GetGameCards(int gameId, int cardId)
+    public GameCards? GetGameCard(int gameId, int cardId)
     {
         return context.GameCards.FirstOrDefault(gameCards => gameCards.GameId == gameId && gameCards.CardId == cardId);
+    }
+
+    public void SellGameCards(GameCards gameCards)
+    {
+        context.GameCards.Update(gameCards);
+    }
+
+    public async Task<List<GameCards>> ListAllGameCards()
+    {
+        return await context.GameCards.ToListAsync();
     }
 }

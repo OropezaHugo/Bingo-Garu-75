@@ -51,7 +51,8 @@ public class SerialController
             cardRepository.AddAsync(mapper.Map<Card>(new PostCardDTO()
             {
                 SerialId = newSerial.Id,
-                ContentMatrix = CardTools.GenerateContentMatrix()
+                ContentMatrix = CardTools.GenerateContentMatrix(),
+                CardNumber = cardNumber
             }));
             cardNumber--;
         }
@@ -61,7 +62,7 @@ public class SerialController
     [HttpDelete("{cardId}/game/{gameId}")]
     public async Task<ActionResult<bool>> DeleteCardFromGame(int cardId, int gameId)
     {
-        var gameCards = gameCardsRepository.GetGameCards(gameId, cardId);
+        var gameCards = gameCardsRepository.GetGameCard(gameId, cardId);
         if (gameCards == null) return NotFound();
         gameCardsRepository.DeleteGameCardRelation(gameCards);
         return Ok(await gameCardsRepository.SaveChangesAsync());
