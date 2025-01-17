@@ -30,6 +30,9 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
+
                     b.PrimitiveCollection<string>("ContentMatrix")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

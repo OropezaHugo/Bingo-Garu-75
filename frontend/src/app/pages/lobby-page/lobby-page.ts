@@ -11,6 +11,9 @@ import {
 import {PatternListComponentComponent} from '../../patterns/pattern-list-component/pattern-list-component.component';
 import { GameService } from '../../core/services/game.service';
 import {GamePatternsListComponent} from "../../lobby/game-patterns-list/game-patterns-list.component";
+import {MatStep, MatStepLabel, MatStepper} from '@angular/material/stepper';
+import {AttachSerialContentComponent} from '../../serials/attach-serial-content/attach-serial-content.component';
+import {SalePanelComponent} from '../../sales/sale-panel/sale-panel.component';
 
 
 @Component({
@@ -21,24 +24,17 @@ import {GamePatternsListComponent} from "../../lobby/game-patterns-list/game-pat
     MatIconButton,
     PatternListComponentComponent,
     GamePatternsListComponent,
+    MatStepper,
+    MatStep,
+    AttachSerialContentComponent,
+    MatStepLabel,
+    SalePanelComponent,
   ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
 })
 export class LobbyPage implements OnInit {
 
-  selectedPatterns: NewPatternDialogData[] = [
-    {
-      patternMatrix: [
-        true, true, true, true, true,
-        true, true, true, true, true,
-        true, true, true, true, true,
-        true, true, true, true, true,
-        true, true, true, true, true,
-      ],
-      patternName: "Carton Lleno"
-    }
-  ]
   readonly dialog = inject(MatDialog);
   gameService = inject(GameService);
 
@@ -53,9 +49,6 @@ export class LobbyPage implements OnInit {
         this.gameService.updateGame(result);
       }
     });
-  }
-  removeFromGame(pattern: NewPatternDialogData) {
-    this.selectedPatterns = this.selectedPatterns.filter(p => p != pattern);
   }
   ngOnInit() {
     this.gameService.createNewGame()

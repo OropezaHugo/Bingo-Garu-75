@@ -1,0 +1,19 @@
+@if (viewOnly()) {
+  <button class="selected-button">
+    {{ gameCard().cardNumber }}
+  </button>
+} @else if (selected()) {
+  <button class="selected-button">
+    {{ gameCard().cardNumber }}
+  </button>
+} @else if (!gameCard().sold){
+  <button class="unsold-button">
+    {{ gameCard().cardNumber }}
+  </button>
+} @else {
+  <button class="sold-button">
+    {{ gameCard().cardNumber }}
+  </button>
+}
+
+

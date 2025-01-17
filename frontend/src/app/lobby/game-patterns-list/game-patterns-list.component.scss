@@ -23,7 +23,7 @@ $secondary-color: #fca311;
 .lobby-actions {
   display: flex;
   flex-direction: row;
-  place-content: space-around;
+  place-content: flex-end;
   margin-top: 3rem;
   padding-bottom: 1rem;
 }
@@ -31,4 +31,10 @@ $secondary-color: #fca311;
 .icon-button-settings {
   color: $secondary-color;
   scale: 3;
+}
+.pattern-name-text {
+  color: $secondary-color;
+}
+.pattern-section-title {
+  color: $primary-color;
 }

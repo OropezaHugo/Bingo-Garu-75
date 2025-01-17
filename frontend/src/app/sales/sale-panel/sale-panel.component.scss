@@ -1,0 +1,36 @@
+.sale-cards-panel-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  place-content: center;
+
+}
+
+.sale-panel-div {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 1rem;
+}
+
+.card-preview {
+  width: 300px;
+}
+
+.sale-actions-panel-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.selected-card {
+  background-color: #9d4edd;
+}
+
+@media (max-width: 900px){
+  .sale-panel-div {
+    display: flex;
+    flex-direction: column;
+  }
+}

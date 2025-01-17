@@ -13,7 +13,7 @@ export const routes: Routes = [
         { path: "", component: SerialsBasePageContentComponent },
         { path: "generate", component: GenerateSerialContentComponent },
         { path: "attach", component: AttachSerialContentComponent },
-        ], pathMatch: 'full'},
+        ]},
     { path: "", component: HomePageComponent, pathMatch: 'full'},
     {path: "lobby", component: LobbyPage},
     {path: "instructions", component: InstructionsComponent},

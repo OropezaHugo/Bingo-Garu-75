@@ -1,0 +1,26 @@
+.sale-panel-button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  width: 4rem;
+  height: 4rem;
+  border: none;
+}
+
+.unsold-button {
+  @extend .sale-panel-button;
+  background-color: darkred;
+  color: white;
+}
+
+.sold-button {
+  @extend .sale-panel-button;
+  background-color: greenyellow;
+  color: black;
+}
+
+.selected-button {
+  @extend .sale-panel-button;
+  background-color: dodgerblue;
+  color: black;
+}

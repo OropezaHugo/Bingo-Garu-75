@@ -5,7 +5,13 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {MatTooltip} from "@angular/material/tooltip";
 import {PatternCardComponent} from "../../shared/pattern-card/pattern-card.component";
-import {EmptyPattern, ExamplePatterns, NewPatternDialogData, Pattern} from '../../models/add-pattern-dialog-data';
+import {
+  EmptyPattern,
+  EmptyPatternData,
+  ExamplePatterns,
+  NewPatternDialogData,
+  Pattern
+} from '../../models/add-pattern-dialog-data';
 import {NewPatternDialogComponent} from '../new-pattern-dialog/new-pattern-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {PatternService} from '../../core/services/pattern.service';
@@ -48,16 +54,15 @@ export class PatternListComponentComponent implements OnInit {
   }
   openCreatePatternDialog(): void {
     const dialogRef = this.dialog.open(NewPatternDialogComponent, {
-      data: {
-        patternMatrix: EmptyPattern.patternMatrix,
-        patternName: ""
-      },
+      data: EmptyPattern,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined && result.pattern != EmptyPattern) {
         this.patternService.postPattern(result)
         this.patternService.getPatterns()
+        EmptyPattern.patternMatrix = EmptyPatternData
+        EmptyPattern.patternName = ""
       }
     });
   }

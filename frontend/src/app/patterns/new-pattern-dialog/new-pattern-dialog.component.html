@@ -7,11 +7,11 @@
 <mat-dialog-content style="padding-top: 1rem">
   <mat-form-field appearance="outline">
     <mat-label>Nombre del patron</mat-label>
-    <input matInput [(ngModel)]="dialogModel().patternName" maxlength="30"/>
+    <input matInput [(ngModel)]="dialogModel().patternName" maxlength="30" [required]="true"/>
   </mat-form-field>
   <app-pattern-card [editable]="true" [pattern]="dialogModel().patternMatrix"></app-pattern-card>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="cancel()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="dialogModel()">Listo</button>
+  <button mat-button  [mat-dialog-close]="dialogModel()">Listo</button>
 </mat-dialog-actions>

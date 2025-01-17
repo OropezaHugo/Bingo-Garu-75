@@ -6,6 +6,7 @@ public class Card: BaseEntity
 {
     public required List<int> ContentMatrix { get; set; }
     public required int SerialId { get; set; }
+    public int CardNumber { get; set; }
     
     [ForeignKey(nameof(SerialId))]
     public Serial? Serial { get; set; }

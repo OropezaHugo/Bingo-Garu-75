@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, input, OnInit, viewChild} from '@angular/core';
+import {AfterViewInit, Component, inject, input, OnInit, viewChild} from '@angular/core';
 import {MatFormField, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatIcon} from '@angular/material/icon';
-import {ExampleSerials, Serial} from '../../models/serial';
+import {Serial} from '../../models/serial';
 import {
   MatCell,
   MatCellDef,
@@ -16,6 +16,10 @@ import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {DatePipe} from '@angular/common';
 import {MatPaginator} from '@angular/material/paginator';
 import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutton/rectanglebutton.component';
+import {SerialService} from '../../core/services/serial.service';
+import {GameService} from '../../core/services/game.service';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirDialogComponent} from '../../shared/confir-dialog/confir-dialog.component';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -46,11 +50,15 @@ import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutt
   styleUrl: './attach-serial-content.component.scss'
 })
 export class AttachSerialContentComponent implements OnInit, AfterViewInit {
-  dataSource: MatTableDataSource<Serial> = new MatTableDataSource(ExampleSerials);
-  columns: string[] = ['name', "cardQuantity", "createdAt"];
-
-  sort = viewChild.required(MatSort)
-  paginator = viewChild.required(MatPaginator)
+  dataSource: MatTableDataSource<Serial> = new MatTableDataSource();
+  columns: string[] = ['serialName', "cardQuantity", "creationDate"];
+  serialService = inject(SerialService)
+  gameService = inject(GameService)
+  selectedSerial?: Serial
+  ableToAttach = true
+  readonly dialog = inject(MatDialog);
+  sort = viewChild.required<MatSort>(MatSort)
+  paginator = viewChild.required<MatPaginator>(MatPaginator)
   ngAfterViewInit() {
     this.dataSource.sort = this.sort()
     this.dataSource.paginator = this.paginator()
@@ -65,7 +73,27 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
     }
   }
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ExampleSerials);
+    this.serialService.getSerials().subscribe({
+      next: data => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.sort = this.sort()
+        this.dataSource.paginator = this.paginator()
+      }
+    })
   }
+  attachSerialToActualGame(serial?: Serial) {
+    if(serial) {
+      this.dialog.open(ConfirDialogComponent, {
+        data: false,
+      }).afterClosed().subscribe(result => {
+        if (result == true){
+          this.gameService.attachSerialToActualGame(serial);
+          this.ableToAttach = false;
+        }
+      })
+    }
+  }
+
+
 }
 

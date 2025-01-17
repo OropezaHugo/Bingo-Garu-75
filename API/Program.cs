@@ -14,6 +14,7 @@ builder.Services.AddDbContext<Bingo75Context>(optionsBuilder =>
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IGamePatternsRepository, GamePatternsRepository>();
+builder.Services.AddScoped<IGameCardsRepository, GameCardsRepository>();
 builder.Services.AddAutoMapper(typeof(PatternProfile));
 builder.Services.AddControllers();
 

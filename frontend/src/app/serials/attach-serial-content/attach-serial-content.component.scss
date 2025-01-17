@@ -15,7 +15,7 @@ $primary-color: #7b2cbf;
   color: $primary-color;
 }
 
-.mat-column-cardQuantity, .mat-column-createdAt, .mat-column-name {
+.mat-column-cardQuantity, .mat-column-creationDate, .mat-column-serialName {
   border: 1px solid black;
 }
 
@@ -26,3 +26,8 @@ $primary-color: #7b2cbf;
   place-items: center;
 }
 
+.selected-row {
+  background-color: $primary-color;
+  color: white;
+  font-weight: bold;
+}
