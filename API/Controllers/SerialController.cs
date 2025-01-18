@@ -100,7 +100,7 @@ public class SerialController
         if (game == null) return NotFound();
         var serial = await repository.GetByIdAsync(gameSerialDto.SerialId);
         if (serial == null) return NotFound();
-        if (gameCardsRepository.ExistsSerialGameRelation(gameSerialDto.GameId, gameSerialDto.SerialId))
+        if (gameCardsRepository.ExistsAnySerialGameRelation(gameSerialDto.GameId))
             return Conflict("yá hay un serial en esta partida");
         gameCardsRepository.CreateSerialGameRelation(gameSerialDto.GameId, gameSerialDto.SerialId);
         return Ok(await gameCardsRepository.SaveChangesAsync());

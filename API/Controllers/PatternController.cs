@@ -85,4 +85,23 @@ public class PatternController(
         var patterns = await gamePatternsRepository.ListPatternsByGameId(id);
         return Ok(patterns.Select(pattern => mapper.Map<PatternResponseDTO>(pattern)));
     }
+    
+    [HttpGet("game/{id}/prizes")]
+    public async Task<ActionResult<PatternResponseDTO>> GetGamePatternsInfoByGameId(int id)
+    {
+        var patterns = await gamePatternsRepository.ListPatternsByGameId(id);
+        var gamePatterns = await gamePatternsRepository.ListGamePatternsByGameId(id);
+        var response = patterns
+            .Join(gamePatterns, pattern => pattern.Id,
+                gamePattern => gamePattern.PatternId,
+                (pattern, gamePattern) => mapper.Map<PatternInfoResponseDTO>((gamePattern, pattern)));
+        return Ok(response.ToList());
+    }
+
+    [HttpPut("game/prizes")]
+    public async Task<ActionResult<bool>> UpdateGamePatternsInfoByGameId(PostGamePatternsDTO gamePatternsDto)
+    {
+            gamePatternsRepository.UpdateGamePattern(mapper.Map<GamePatterns>(gamePatternsDto));
+            return Ok(await gamePatternsRepository.SaveChangesAsync());
+    }
 }

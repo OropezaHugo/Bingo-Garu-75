@@ -9,6 +9,14 @@ export interface Pattern {
   patternMatrix: boolean[]
   patternName: string
 }
+
+export interface GamePatternInfo {
+  id: number
+  patternMatrix: boolean[]
+  patternName: string
+  targetPrize: number,
+  active: boolean
+}
 export const EmptyPattern: NewPatternDialogData = {
   patternMatrix: [
     false, false, false, false, false,

@@ -1,0 +1,27 @@
+
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+$accent-light: #9d4edd;
+.pattern-name-text {
+  color: $secondary-color;
+}
+.pattern-section-title {
+  color: $primary-color;
+}
+
+.pattern-data-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pattern-name-text {
+  height: 3rem;
+}
+
+.pattern-prize-actions {
+  display: flex;
+  flex-direction: row;
+  place-content: space-between;
+  align-items: center;
+}

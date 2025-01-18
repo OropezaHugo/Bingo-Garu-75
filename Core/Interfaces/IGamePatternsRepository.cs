@@ -10,4 +10,6 @@ public interface IGamePatternsRepository
     Task<bool> SaveChangesAsync();
     Task<List<Pattern>> ListPatternsByGameId(int gameId);
     void DeleteGamePatternRelation(GamePatterns gamePatterns);
+    Task<List<GamePatterns>> ListGamePatternsByGameId(int gameId);
+    void UpdateGamePattern(GamePatterns gamePatterns);
 }
