@@ -12,7 +12,8 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './bingo-card.component.scss'
 })
 export class BingoCardComponent {
- card = input.required<Card>()
+  card = input.required<Card>()
+  boughtBy = input<string | undefined>()
 
   clickBox(event: MouseEvent, boxIndex: number) {
     if (typeof this.card())

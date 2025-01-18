@@ -2,7 +2,7 @@
   <div class="sale-actions-panel-div">
     @if (displayedCard) {
       <div class="card-preview">
-        <app-bingo-card [card]="displayedCard"/>
+        <app-bingo-card [card]="displayedCard" [boughtBy]="displayedCardBuyer"/>
       </div>
     }
     <app-rectanglebutton (click)="sellCards()" text="Vender cartones seleccionados"></app-rectanglebutton>

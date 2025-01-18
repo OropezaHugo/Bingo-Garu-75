@@ -26,6 +26,7 @@ export class SalePanelComponent{
   pageSizeOptions = [15, 25, 40];
   gameService = inject(GameService)
   displayedCard?: Card
+  displayedCardBuyer: string | undefined
   selectedCards = signal<GameCardInfo[]>([])
   dialog = inject(MatDialog)
   displayCard(gameCard: GameCardInfo) {
@@ -33,6 +34,11 @@ export class SalePanelComponent{
       cardNumber: gameCard.cardNumber,
       content: gameCard.contentMatrix
         .map<CardBox>(value => ({number: value, marked: false}))
+    }
+    if (gameCard.userName.length > 2) {
+      this.displayedCardBuyer = gameCard.userName;
+    } else {
+      this.displayedCardBuyer = undefined
     }
   }
   selectCard(gameCard: GameCardInfo) {

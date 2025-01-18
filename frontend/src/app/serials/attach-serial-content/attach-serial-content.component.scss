@@ -31,3 +31,14 @@ $primary-color: #7b2cbf;
   color: white;
   font-weight: bold;
 }
+
+@media (max-width: 900px){
+
+  .attach-serial-content-div {
+    display: grid;
+    grid-template-rows: 4fr 1fr;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+    place-content: center;
+  }
+}
