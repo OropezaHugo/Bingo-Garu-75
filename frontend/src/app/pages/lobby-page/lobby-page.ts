@@ -14,6 +14,7 @@ import {GamePatternsListComponent} from "../../lobby/game-patterns-list/game-pat
 import {MatStep, MatStepLabel, MatStepper} from '@angular/material/stepper';
 import {AttachSerialContentComponent} from '../../serials/attach-serial-content/attach-serial-content.component';
 import {SalePanelComponent} from '../../sales/sale-panel/sale-panel.component';
+import { ExportPersonalizationPageComponent } from "../export-personalization-page/export-personalization-page.component";
 
 
 @Component({
@@ -29,7 +30,8 @@ import {SalePanelComponent} from '../../sales/sale-panel/sale-panel.component';
     AttachSerialContentComponent,
     MatStepLabel,
     SalePanelComponent,
-  ],
+    ExportPersonalizationPageComponent
+],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
 })

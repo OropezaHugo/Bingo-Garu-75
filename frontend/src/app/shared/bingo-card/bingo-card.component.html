@@ -1,33 +1,31 @@
-<div class="card-div">
+<div class="card-div" [style.background-color]="colors?.CardFillColor">
   <div class="card-header-div">
-    <h2 class="card-title"> Black Bingo</h2>
-    <div class="card-number-box">
-      <h2 class="card-number">Nº {{card().cardNumber}}</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor"> Black Bingo</h2>
+    <div class="card-number-box" [style.background-color]="colors?.BoxFillColor" [style.border-color]="colors?.StrokeColor">
+      <h2 class="card-number" [style.color]="colors?.CardNumberColor">Nº {{card().cardNumber}}</h2>
     </div>
   </div>
 
   <div class="bingo-card-grid">
-    <h2 class="card-title">B</h2>
-    <h2 class="card-title">I</h2>
-    <h2 class="card-title">N</h2>
-    <h2 class="card-title">G</h2>
-    <h2 class="card-title">O</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor">B</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor">I</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor">N</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor">G</h2>
+    <h2 class="card-title" [style.color]="colors?.CardNameColor">O</h2>
     @for (box of card().content; track $index) {
       @if ($index == 12) {
-        <button class="star-box">
+        <button class="star-box" [style.border-color]="colors?.StrokeColor">
           <mat-icon>star</mat-icon>
         </button>
       } @else if (box.marked) {
-        <button class="marked-box" (click)="clickBox($event, $index)">
+        <button class="marked-box" [style.color]="colors?.BoxFillColor" [style.background-color]="colors?.BoxFillColor" [style.border-color]="colors?.StrokeColor" (click)="clickBox($event, $index)">
           {{box.number}}
         </button>
       } @else {
-        <button class="unmarked-box" (click)="clickBox($event, $index)">
+        <button class="unmarked-box" [style.color]="colors?.BoxNumberColor" [style.background-color]="colors?.BoxFillColor" [style.border-color]="colors?.StrokeColor" (click)="clickBox($event, $index)">
           {{box.number}}
         </button>
       }
-
-
     }
   </div>
 </div>

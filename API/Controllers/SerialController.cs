@@ -105,4 +105,26 @@ public class SerialController
         gameCardsRepository.CreateSerialGameRelation(gameSerialDto.GameId, gameSerialDto.SerialId);
         return Ok(await gameCardsRepository.SaveChangesAsync());
     }
+    
+    [HttpGet("colors/{id}")]
+    public async Task<ActionResult<SerialColorsDTO>> GetColors(int id)
+    {
+        var serial = await repository.GetByIdAsync(id);
+        if (serial == null)
+        {
+            return NotFound();
+        }
+
+        var serialColors = new SerialColorsDTO
+        {
+            StrokeColor = serial.StrokeColor,
+            BoxFillColor = serial.BoxFillColor,
+            CardFillColor = serial.CardFillColor,
+            CardNameColor = serial.CardNameColor,
+            BoxNumberColor = serial.BoxNumberColor,
+            CardNumberColor = serial.CardNumberColor
+        };
+
+        return Ok(serialColors);
+    }
 }

@@ -1,8 +1,4 @@
-$primary-color: #7b2cbf;
-$secondary-color: #fca311;
-
 .card-div {
-  background-color: $primary-color;
   padding: 1rem;
   width: max(100%, 300px);
   place-content: center;
@@ -12,22 +8,22 @@ $secondary-color: #fca311;
     place-content: space-between;
     align-items: center;
   }
-
 }
+
 .card-title {
   margin: 0;
   font-size: 2rem;
-  color: $secondary-color;
   text-align: center;
 }
+
 .card-number-box {
   padding: 1rem;
-  background-color: $secondary-color;
 }
+
 .card-number {
   margin: 0;
-  color: $primary-color;
 }
+
 .bingo-card-grid {
   padding: 1rem;
   display: grid;
@@ -47,19 +43,15 @@ $secondary-color: #fca311;
   font-weight: bold;
   font-size: 1.5rem;
 }
+
 .marked-box {
   @extend .box;
-  background-color: $secondary-color;
-  color: $primary-color;
 }
 
 .unmarked-box {
   @extend .box;
-  background-color: white;
-  color: $primary-color;
 }
 
 .star-box {
   @extend .marked-box;
-  color: white;
 }
