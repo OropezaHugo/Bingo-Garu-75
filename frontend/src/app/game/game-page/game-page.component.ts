@@ -20,6 +20,7 @@ import {GamePatternInfo} from '../../models/add-pattern-dialog-data';
 import {VerifyCardDialogComponent} from '../verify-card-dialog/verify-card-dialog.component';
 import {RoundService} from '../../core/services/round.service';
 import {delay} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-game-page',
@@ -52,6 +53,7 @@ export class GamePageComponent implements OnInit {
   dialog = inject(MatDialog);
   gameService = inject(GameService)
   roundService = inject(RoundService)
+  router = inject(Router)
   activePatterns: GamePatternInfo[] = []
   activeRound: Round | undefined = undefined
 
@@ -125,5 +127,16 @@ export class GamePageComponent implements OnInit {
   loadRound(event: MatTabChangeEvent) {
     this.rounds = this.roundService.actualRounds();
     this.activeRound = this.rounds[event.index];
+  }
+  finishGame(){
+    let dialogRef = this.dialog.open(ConfirDialogComponent, {
+      data: false
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.gameService.finishGame()
+        this.router.navigate(['/'], {replaceUrl: true});
+      }
+    })
   }
 }

@@ -8,9 +8,15 @@
 <div class="raffled-numbers-panel">
   @for (bingoNumber of bingoNumbers; track $index) {
     @if (raffledNumbers().includes(bingoNumber)) {
-      <div class="raffled-number">
-        <h3>{{bingoNumber}}</h3>
-      </div>
+      @if (lastNumber() == bingoNumber) {
+        <div class="last-number">
+          <h3>{{bingoNumber}}</h3>
+        </div>
+      } @else {
+        <div class="raffled-number">
+          <h3>{{bingoNumber}}</h3>
+        </div>
+      }
     } @else {
       <div class="unraffled-number">
         <h3>{{bingoNumber}}</h3>

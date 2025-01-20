@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {PrizeData, Round} from '../../models/round';
+import {CreateRoundsData, PrizeData, Round} from '../../models/round';
 import {GameService} from './game.service';
 
 @Injectable({
@@ -43,18 +43,32 @@ export class RoundService {
     let asserts = patternMatrix.filter(value => value).length
     patternMatrix.forEach((patternMatrixCell, index) => {
       if (patternMatrixCell) {
-        if (raffleNumbers.includes(cardContent[index])){
+        if (raffleNumbers.includes(cardContent[index]) || index === 12) {
           asserts -= 1
         }
-      }
-      if (index === 12) {
-        asserts -=1
       }
     })
     return !(asserts > 0);
   }
 
   postPrize(prize: PrizeData) {
-    return this.http.post<boolean>(`${this.baseUrl}Prize/game/${this.gameService.actualGame()?.id}`, prize)
+    this.gameService.createNewGame().subscribe({
+      next: () => {
+        return this.http.post<boolean>(`${this.baseUrl}Prize/game/${this.gameService.actualGame()?.id}`, prize).subscribe()
+      }
+    })
+
+  }
+
+  postRounds(roundsData: CreateRoundsData) {
+    this.gameService.createNewGame().subscribe({
+      next: () => {
+        return this.http.post<boolean>(`${this.baseUrl}Round/game/${this.gameService.actualGame()?.id}`, roundsData).subscribe({
+          next: result => {
+            this.getRounds()
+          }
+        })
+      }
+    })
   }
 }

@@ -91,7 +91,7 @@ export class VerifyCardDialogComponent {
         patternId: this.prizeFormGroup.value.patternControl.id,
         prizeAmount: this.prizeFormGroup.value.amountControl!,
         userName: this.prizeFormGroup.value.userNameControl
-      }).subscribe()
+      })
     }
     return
   }

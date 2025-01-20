@@ -58,6 +58,7 @@ export class SalePanelComponent implements OnInit{
     this.pageIndex.set(event.pageIndex);
   }
   getPaginatedList() {
+
     return this.gameService.gameCards()
       .slice(this.pageIndex() * this.pageSize(),
         (this.pageIndex() * this.pageSize()) + this.pageSize())

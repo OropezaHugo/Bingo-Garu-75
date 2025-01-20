@@ -3,8 +3,7 @@ $secondary-color: #fca311;
 
 .game-div {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-
+  grid-template-columns: 33% 66%;
 }
 
 .round-tab-content {
@@ -52,4 +51,11 @@ h4 {
   gap: 1rem;
   overflow: hidden;
 
+}
+
+@media (max-width: 800px) {
+  .game-div {
+    display: flex;
+    flex-direction: column;
+  }
 }

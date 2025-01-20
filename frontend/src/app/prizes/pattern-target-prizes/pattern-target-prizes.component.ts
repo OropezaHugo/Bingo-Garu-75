@@ -7,13 +7,14 @@ import {GameService} from '../../core/services/game.service';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {GamePatternInfo} from '../../models/add-pattern-dialog-data';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {GamePatternInfoComponent} from '../game-pattern-info/game-pattern-info.component';
 import {RectanglebuttonComponent} from '../../components/buttons/rectanglebutton/rectanglebutton.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../shared/confir-dialog/confir-dialog.component';
 import {Router} from '@angular/router';
 import {RoundService} from '../../core/services/round.service';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-pattern-target-prizes',
@@ -27,15 +28,23 @@ import {RoundService} from '../../core/services/round.service';
     MatInput,
     FormsModule,
     GamePatternInfoComponent,
-    RectanglebuttonComponent
+    RectanglebuttonComponent,
+    ReactiveFormsModule,
+    MatCheckbox
   ],
   templateUrl: './pattern-target-prizes.component.html',
   styleUrl: './pattern-target-prizes.component.scss'
 })
 export class PatternTargetPrizesComponent implements OnInit {
   gameService = inject(GameService);
+  roundService = inject(RoundService);
   dialog = inject(MatDialog);
   router = inject(Router);
+
+  roundsFormGroup = new FormGroup({
+    roundNumber: new FormControl<number>(1, Validators.required),
+    hasBonus: new FormControl<boolean>(false),
+  })
 
   ngOnInit() {
     this.gameService.getActualGamePatternsInfo()
@@ -46,8 +55,30 @@ export class PatternTargetPrizesComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.router.navigate(['/game']);
+        this.createRounds()
       }
     })
+  }
+
+  createRounds(){
+    if (this.roundsFormGroup.value.roundNumber
+    && this.roundsFormGroup.value.hasBonus !== undefined
+      && this.roundsFormGroup.value.hasBonus !== null
+    ) {
+
+      this.roundService.postRounds({
+        roundQuantity: this.roundsFormGroup.value.roundNumber,
+        hasBonusRound: this.roundsFormGroup.value.hasBonus
+      })
+      this.gameService.updateGame({
+        inProgress: true,
+        finished: false,
+        id: this.gameService.actualGame()!.id,
+        automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+        sharePrizes: this.gameService.actualGame()!.sharePrizes,
+        randomPatterns: this.gameService.actualGame()!.randomPatterns,
+      })
+      this.router.navigate(['/game']);
+    }
   }
 }

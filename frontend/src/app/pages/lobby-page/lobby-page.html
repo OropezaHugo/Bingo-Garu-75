@@ -1,39 +1,59 @@
 <div class="lobby-actions">
   <button class="icon-button-settings" mat-icon-button (click)="openSettingsDialog()"><mat-icon>settings</mat-icon></button>
 </div>
-<mat-stepper #stepper>
-  <mat-step>
-    <ng-template matStepLabel>Adjuntar serial</ng-template>
-    <app-attach-serial-content/>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Adjuntar patrones</ng-template>
-    <app-game-patterns-list/>
-    <app-pattern-list-component [inGame]="true"/>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Venta de Seriales</ng-template>
-    <app-sale-panel/>
-  </mat-step>
+<mat-stepper >
+    <mat-step>
+      <ng-template matStepLabel>Adjuntar serial</ng-template>
+      @defer (on viewport) {
+      <app-attach-serial-content/>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Adjuntar patrones</ng-template>
+      @defer (on viewport) {
+      <app-game-patterns-list/>
+      <app-pattern-list-component [inGame]="true"/>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Venta de Seriales</ng-template>
+      @defer (on viewport) {
+      <app-sale-panel/>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
   <mat-step>
     <ng-template matStepLabel>Ajustes y Exportacion</ng-template>
-    <div>
-      <button mat-button (click)="toggleView()" class="toggle-btn">
-        <mat-icon>swap_horiz</mat-icon>
-        {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
-      </button>
+    @defer (on viewport) {
+      <div>
+        <button mat-button (click)="toggleView()" class="toggle-btn">
+          <mat-icon>swap_horiz</mat-icon>
+          {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
+        </button>
 
-      @if (personalization) {
-        <app-personalization-page></app-personalization-page>
-      } @else {
-        <app-exportation-page></app-exportation-page>
+        @if (personalization) {
+          <app-personalization-page></app-personalization-page>
+        } @else {
+          <app-exportation-page></app-exportation-page>
+        }
+      </div>
+    } @placeholder {
+      <h1>Loading</h1>
+    }
+  </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Adjuntar premios</ng-template>
+      @defer (on viewport) {
+      <app-pattern-target-prizes></app-pattern-target-prizes>
+      } @placeholder {
+        <h1>Loading</h1>
       }
-    </div>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Adjuntar premios</ng-template>
-    <app-pattern-target-prizes></app-pattern-target-prizes>
-  </mat-step>
+    </mat-step>
 </mat-stepper>
 
 

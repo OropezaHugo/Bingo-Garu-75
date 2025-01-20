@@ -18,7 +18,7 @@ public static class CardTools
             }
             else if ((i - 2) % 5 == 0)
             {
-                contentMatrix.Add(GenerateNumber(16, 46, contentMatrix));
+                contentMatrix.Add(GenerateNumber(31, 46, contentMatrix));
             }
             else if ((i - 3) % 5 == 0)
             {
@@ -35,10 +35,14 @@ public static class CardTools
     private static int GenerateNumber(int min, int max, List<int> content)
     {
         int generatedNumber = Random.Shared.Next(min, max);
-        while (content.Contains(generatedNumber))
+        while (content.Contains(generatedNumber) 
+               & generatedNumber < (max + (content.Count / 5) - 4)
+               & generatedNumber >= content[^5]
+               )
         {
             generatedNumber = Random.Shared.Next(min, max);
         }
         return generatedNumber;
     }
+
 }

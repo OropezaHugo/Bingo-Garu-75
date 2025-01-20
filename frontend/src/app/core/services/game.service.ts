@@ -65,7 +65,7 @@ export class GameService {
   }
 
   updateGame(newGame: Game) {
-    return this.http.put(`${this.baseUrl}Game/${newGame.id}`, {automaticRaffle: newGame.automaticRaffle, randomPatterns: newGame.randomPatterns, sharePrizes: newGame.sharePrizes}).subscribe({
+    return this.http.put(`${this.baseUrl}Game/${newGame.id}`, newGame).subscribe({
       next: (result) => {
         if (result) {
           this.getGameById(newGame.id).subscribe()

@@ -45,10 +45,13 @@ public class CardController(
     [HttpPost("game")]
     public async Task<ActionResult<bool>> UpdateGameCard(SellCardDTO sellCardDto)
     {
+        var game = await gameRepository.GetByIdAsync(sellCardDto.GameId);
+        if (game == null) return NotFound();
+        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         if (await repository.GetByIdAsync(sellCardDto.CardId) == null) return NotFound();
         if (await gameRepository.GetByIdAsync(sellCardDto.GameId) == null) return NotFound();
         if(!gameCardsRepository.ExistsGameCardRelation(sellCardDto.GameId, sellCardDto.CardId)) return NotFound();
         gameCardsRepository.SellGameCards(mapper.Map<GameCards>(sellCardDto));
         return Ok(await gameCardsRepository.SaveChangesAsync());
     }
-}
+}   

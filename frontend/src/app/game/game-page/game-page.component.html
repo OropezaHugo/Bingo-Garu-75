@@ -1,15 +1,16 @@
 <div class="game-div">
-  <mat-tab-group (selectedTabChange)="loadRound($event)">
-    @for (round of roundService.actualRounds(); track $index) {
-      <mat-tab [label]="round.roundName" [disabled]="disableRounds[$index]">
-        <div class="round-tab-content">
-          <app-round-tab [round]="round"></app-round-tab>
-          <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
-        </div>
-      </mat-tab>
-    }
-  </mat-tab-group>
+    <mat-tab-group (selectedTabChange)="loadRound($event)">
+      @for (round of roundService.actualRounds(); track $index) {
+        <mat-tab [label]="round.roundName" [disabled]="disableRounds[$index]">
+          <div class="round-tab-content">
+            <app-round-tab [round]="round"></app-round-tab>
+            <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
+          </div>
+        </mat-tab>
+      }
+    </mat-tab-group>
   <div class="section-for-cards">
+
     <div class="game-patterns-section">
       @for (pattern of gameService.gamePatternsInfo(); track $index) {
         @if (pattern.active) {
@@ -48,6 +49,7 @@
                      aria-label="Select page">
       </mat-paginator>
     </div>
+    <button (click)="finishGame()" mat-stroked-button>Terminar partida</button>
   </div>
 
 </div>

@@ -12,8 +12,7 @@ namespace API.Controllers;
 public class GameController
     (
         IGenericRepository<Game> repository,
-        IMapper mapper,
-        IGamePatternsRepository gamePatternsRepository
+        IMapper mapper
         ): ControllerBase
 {
     [HttpGet]
@@ -39,9 +38,11 @@ public class GameController
     }
     
     [HttpPut("{id}")]
-    public async Task<ActionResult<GameResponseDTO>> UpdateGame(int id, PostGameDTO game)
+    public async Task<ActionResult<GameResponseDTO>> UpdateGame(int id, PostGameDTO gameDto)
     {
-        var newGame = repository.UpdateAsync(mapper.Map<Game>((game, id)));
+        var game = await repository.GetByIdAsync(id);
+        if (game == null) return NotFound();
+        var newGame = repository.UpdateAsync(mapper.Map<Game>((gameDto, id)));
         if (await repository.SaveChangesAsync())
         {
             return Ok(mapper.Map<GameResponseDTO>(newGame));

@@ -1,6 +1,11 @@
 <div class="round-content-div">
-  <app-round-raffled-numbers [raffledNumbers]="round().raffleNumbers"/>
+  <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
   <button [disabled]="round().raffleNumbers.length > 74" mat-flat-button (click)="raffleNumber()">Gira la tombola</button>
+  <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
+    <h3>
+      {{lastNumber}}
+    </h3>
+  </div>
 </div>
 
 

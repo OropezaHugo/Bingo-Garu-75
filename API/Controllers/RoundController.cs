@@ -12,6 +12,7 @@ namespace API.Controllers;
 public class RoundController
     (
         IGenericRepository<Round> repository,
+        IGenericRepository<Game> gameRepository,
         IMapper mapper
     ) :  ControllerBase
 {
@@ -25,10 +26,12 @@ public class RoundController
     [HttpPost("game/{gameId}")]
     public async Task<ActionResult<bool>> PostRound(int gameId, PostGameRoundsDTO roundsDto)
     {
+        var rounds = await repository.ListAllAsync();
+        if (rounds.Any(round => round.GameId == gameId)) return Conflict("este juego ya genero sus rondas");
         int roundQuantity = roundsDto.RoundQuantity;
         
-        int i = 0;
-        while (i < roundQuantity)
+        int i = 1;
+        while (i <= roundQuantity)
         {
             repository.AddAsync(new Round()
             {
@@ -52,6 +55,8 @@ public class RoundController
     [HttpPut("{roundId}")]
     public async Task<ActionResult<RoundResponseDTO>> UpdateRound(int roundId, PutRoundDTO roundDto)
     {
+        var game = await gameRepository.GetByIdAsync(roundDto.GameId);
+        if (game == null) return NotFound();
         var newRound = repository.UpdateAsync(mapper.Map<Round>((roundDto, roundId)));
         await repository.SaveChangesAsync();
         return Ok(mapper.Map<RoundResponseDTO>(newRound));

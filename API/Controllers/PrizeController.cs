@@ -14,6 +14,7 @@ public class PrizeController
         IGenericRepository<Prize> repository,
         IMapper mapper,
         IGenericRepository<Round> roundRepository,
+        IGenericRepository<Game> gameRepository,
         IGameCardsRepository gameCardsRepository,
         IGamePatternsRepository gamePatternsRepository
         ): ControllerBase
@@ -28,6 +29,9 @@ public class PrizeController
     [HttpPost("game/{gameId}")]
     public async Task<ActionResult<bool>> CreatePrize(int gameId, PostPrizeDTO prizeDto)
     {
+        var game = await gameRepository.GetByIdAsync(gameId);
+        if (game == null) return NotFound();
+        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         var round = await roundRepository.GetByIdAsync(prizeDto.RoundId);
         if (!gameCardsRepository.ExistsGameCardRelation(gameId, prizeDto.CardId))
             return Conflict("carton no registrado en la partida actual");

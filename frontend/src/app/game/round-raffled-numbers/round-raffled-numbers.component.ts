@@ -10,4 +10,5 @@ import {BingoNumbers} from '../../models/round';
 export class RoundRaffledNumbersComponent {
   raffledNumbers = input.required<number[]>();
   bingoNumbers = BingoNumbers
+  lastNumber = input.required<number>();
 }

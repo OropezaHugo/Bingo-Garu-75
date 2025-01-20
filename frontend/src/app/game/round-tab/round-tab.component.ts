@@ -18,9 +18,17 @@ import {RoundService} from '../../core/services/round.service';
 export class RoundTabComponent {
   roundService = inject(RoundService);
   round = input.required<Round>();
+  lastNumber = 0
+  animate: boolean = true
 
   raffleNumber() {
-    this.round().raffleNumbers.push(this.roundService.raffleNumber(this.round().raffleNumbers))
+    this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)
+    this.round().raffleNumbers.push(this.lastNumber)
     this.roundService.updateRoundData(this.round())
+    this.animate = true
+  }
+
+  resetAnimation() {
+    this.animate = false; // Limpia la animación después de que termine
   }
 }

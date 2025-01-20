@@ -14,6 +14,10 @@ export interface VerifyCardDialogData {
   patterns: GamePatternInfo[];
   roundId: number;
 }
+export interface CreateRoundsData {
+  roundQuantity: number;
+  hasBonusRound: boolean;
+}
 
 export interface PrizeData {
   id?: number;

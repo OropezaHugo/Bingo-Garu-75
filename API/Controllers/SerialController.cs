@@ -58,16 +58,7 @@ public class SerialController
         }
         return Ok(await cardRepository.SaveChangesAsync());
     }
-
-    [HttpDelete("{cardId}/game/{gameId}")]
-    public async Task<ActionResult<bool>> DeleteCardFromGame(int cardId, int gameId)
-    {
-        var gameCards = gameCardsRepository.GetGameCard(gameId, cardId);
-        if (gameCards == null) return NotFound();
-        gameCardsRepository.DeleteGameCardRelation(gameCards);
-        return Ok(await gameCardsRepository.SaveChangesAsync());
-    }
-
+    
     [HttpDelete("{id}")]
     public async Task<ActionResult<bool>> DeleteSerial(int id)
     {
@@ -98,6 +89,7 @@ public class SerialController
     {
         var game = await gameRepository.GetByIdAsync(gameSerialDto.GameId);
         if (game == null) return NotFound();
+        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         var serial = await repository.GetByIdAsync(gameSerialDto.SerialId);
         if (serial == null) return NotFound();
         if (gameCardsRepository.ExistsAnySerialGameRelation(gameSerialDto.GameId))
