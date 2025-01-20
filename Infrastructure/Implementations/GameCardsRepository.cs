@@ -12,16 +12,11 @@ public class GameCardsRepository(Bingo75Context context): IGameCardsRepository
         return context.GameCards.Join(context.Cards.Where(c => c.SerialId == serialId), gameCards => gameCards.CardId, card => card.Id, (gameCards, card) => gameCards).Any(); 
     }
 
-    public bool ExistsSerialGameRelation(int gameId, int serialId)
+    public bool ExistsAnySerialGameRelation(int gameId)
     {
-        return context.GameCards
-            .Join(context.Cards
-                .Where(c => c.SerialId == serialId), 
-                gameCards => gameCards.CardId, 
-                card => card.Id, 
-                (gameCards, card) => gameCards)
-            .Any(gameCards => gameCards.GameId == gameId);
+        return context.GameCards.Any(gameCards => gameCards.GameId == gameId);
     }
+
 
     public bool ExistsGameCardRelation(int gameId, int cardId)
     {

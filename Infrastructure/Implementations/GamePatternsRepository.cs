@@ -41,4 +41,14 @@ public class GamePatternsRepository(Bingo75Context context): IGamePatternsReposi
     {
         context.GamePatterns.Remove(gamePatterns);
     }
+
+    public async Task<List<GamePatterns>> ListGamePatternsByGameId(int gameId)
+    {
+        return await context.GamePatterns.Where(gamePattern => gamePattern.GameId == gameId).ToListAsync();
+    }
+
+    public void UpdateGamePattern(GamePatterns gamePatterns)
+    {
+        context.GamePatterns.Update(gamePatterns);
+    }
 }

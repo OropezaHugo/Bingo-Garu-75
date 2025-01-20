@@ -1,0 +1,11 @@
+<div class="pattern-data-div">
+  <app-pattern-card [editable]="false" [pattern]="gamePattern().patternMatrix"></app-pattern-card>
+  <h3 class="pattern-name-text">{{gamePattern().patternName}}</h3>
+  <div class="pattern-prize-actions">
+    <mat-form-field appearance="outline">
+      <mat-label>Premio Objetivo (Bs)</mat-label>
+      <input matInput type="number" [formControl]="amountForm">
+    </mat-form-field>
+    <button (click)="updatePrize()" mat-icon-button matTooltip="guardar premio del patron {{gamePattern().patternName}}"><mat-icon>save</mat-icon></button>
+  </div>
+</div>

@@ -15,12 +15,6 @@ import {GameService} from "../../core/services/game.service";
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss'
 })
-export class HomePageComponent implements OnInit {
-  gameService = inject(GameService)
+export class HomePageComponent {
 
-  ngOnInit() {
-    if (this.gameService.actualGame()){
-      console.log("asdasdasd")
-    }
-  }
 }

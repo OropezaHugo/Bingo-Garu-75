@@ -1,0 +1,23 @@
+
+.attached-patterns {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  max-width: 60%;
+  max-height: 100vh;
+  gap: 1rem;
+}
+
+.prize-step-div {
+  display: flex;
+  flex-direction: row;
+  place-content: space-evenly;
+}
+
+.start-game-div {
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  align-items: center;
+}

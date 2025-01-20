@@ -7,6 +7,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LobbyPage } from './pages/lobby-page/lobby-page';
 import { InstructionsComponent } from './pages/instructions/instructions.component';
 import {PatternListComponentComponent} from "./patterns/pattern-list-component/pattern-list-component.component";
+import {GamePageComponent} from './game/game-page/game-page.component';
 
 export const routes: Routes = [
     { path: "serials", component: SerialsBasePageComponent, children: [
@@ -18,5 +19,6 @@ export const routes: Routes = [
     {path: "lobby", component: LobbyPage},
     {path: "instructions", component: InstructionsComponent},
     {path: "patterns", component: PatternListComponentComponent},
+    {path: "game", component: GamePageComponent},
     {path: "**", redirectTo: ""},
 ];

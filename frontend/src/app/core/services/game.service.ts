@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Game} from '../../models/game';
-import {Pattern} from '../../models/add-pattern-dialog-data';
+import {GamePatternInfo, Pattern} from '../../models/add-pattern-dialog-data';
 import {map} from "rxjs";
 import {Serial} from "../../models/serial";
 import {GameCardInfo} from '../../models/card';
@@ -16,12 +16,14 @@ export class GameService {
   actualGame = signal<Game | undefined>(undefined)
   gamePatterns = signal<Pattern[]>([])
   gameCards = signal<GameCardInfo[]>([])
+  gamePatternsInfo = signal<GamePatternInfo[]>([])
 
   getGameById(id?: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
         map(game => {
           this.actualGame.set(game);
           this.getActualGamePatterns()
+          this.getActualGamePatternsInfo()
           this.getCardsByGameId()
         }),
     )
@@ -30,6 +32,14 @@ export class GameService {
     return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
       next: (result) => {
         this.gamePatterns.set(result)
+      }
+    })
+  }
+
+  getActualGamePatternsInfo() {
+    return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
+      next: (result) => {
+        this.gamePatternsInfo.set(result)
       }
     })
   }
@@ -64,6 +74,7 @@ export class GameService {
       next: (result) => {
         if (result) {
           this.getActualGamePatterns()
+          this.getActualGamePatternsInfo()
         }
       }
     })
@@ -74,6 +85,7 @@ export class GameService {
       next: (result) => {
         if (result) {
           this.getActualGamePatterns()
+          this.getActualGamePatternsInfo()
         }
       }
     })
@@ -87,9 +99,7 @@ export class GameService {
   attachSerialToActualGame(serial: Serial) {
     return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
       next: (result) => {
-        console.log(result);
         if (result) {
-          console.log(result);
           this.getGameById(this.actualGame()?.id).subscribe()
         }
       }
@@ -99,7 +109,6 @@ export class GameService {
   getCardsByGameId() {
     return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
       next: value => {
-        console.log("llegue")
         this.gameCards.set(value)
       }
     })
@@ -119,5 +128,25 @@ export class GameService {
           }
         }
       })
+  }
+
+
+
+  updateGamePatternInfo(gamePattern: GamePatternInfo) {
+    return this.http.put<boolean>(this.baseUrl + 'Pattern/game/prizes', {
+      gameId: this.actualGame()?.id,
+      patternId: gamePattern.id,
+      targetPrice: gamePattern.targetPrize,
+      active: gamePattern.active
+    }).subscribe({
+      next: result => {
+        if (result) {
+          console.log(gamePattern)
+          this.getActualGamePatterns()
+          this.getActualGamePatternsInfo()
+          this.getCardsByGameId()
+        }
+      }
+    })
   }
 }

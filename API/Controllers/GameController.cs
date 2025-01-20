@@ -47,5 +47,6 @@ public class GameController
             return Ok(mapper.Map<GameResponseDTO>(newGame));
         }
         return Conflict("hubo un problema al editar la informacion del juego");
-    } 
+    }
+    
 }

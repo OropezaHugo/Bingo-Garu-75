@@ -6,7 +6,7 @@ public interface IGameCardsRepository
 {
     
     bool ExistsSerialInAnyGame(int serialId);
-    bool ExistsSerialGameRelation(int gameId, int serialId);
+    bool ExistsAnySerialGameRelation(int gameId);
     bool ExistsGameCardRelation(int gameId, int cardId);
     void CreateCardGameRelation(GameCards gameCards);
     void CreateSerialGameRelation(int gameId, int serialId);
