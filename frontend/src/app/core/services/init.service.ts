@@ -14,7 +14,7 @@ export class InitService {
     if (gameIdString) {
       gameId = +gameIdString
     }
-    const game$ = gameId ? this.gameService.getGameById(gameId) : of(null);
+    const game$ = gameId ? this.gameService.createNewGame() : of(null);
     return forkJoin({
       game$: game$
     });

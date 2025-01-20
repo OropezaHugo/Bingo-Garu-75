@@ -13,9 +13,12 @@ import {Pattern} from '../../models/add-pattern-dialog-data';
   templateUrl: './game-patterns-list.component.html',
   styleUrl: './game-patterns-list.component.scss'
 })
-export class GamePatternsListComponent {
+export class GamePatternsListComponent implements OnInit {
   gameService = inject(GameService)
   removeFromGame(pattern: Pattern) {
     this.gameService.deletePatternFromActualGame(pattern.id);
+  }
+  ngOnInit() {
+    this.gameService.getActualGamePatterns()
   }
 }

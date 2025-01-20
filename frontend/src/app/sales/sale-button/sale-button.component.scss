@@ -24,3 +24,9 @@
   background-color: dodgerblue;
   color: black;
 }
+
+.view-only-button {
+  @extend .sale-panel-button;
+  background-color: black;
+  color: white;
+}

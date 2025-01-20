@@ -1,4 +1,4 @@
-import {Component, inject, input, signal} from '@angular/core';
+import {Component, inject, input, model, OnInit, signal} from '@angular/core';
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
@@ -24,10 +24,15 @@ import {MatTooltip} from '@angular/material/tooltip';
   templateUrl: './game-pattern-info.component.html',
   styleUrl: './game-pattern-info.component.scss'
 })
-export class GamePatternInfoComponent {
+export class GamePatternInfoComponent implements OnInit {
   gameService = inject(GameService);
   gamePattern = input.required<GamePatternInfo>()
-  amountForm = new FormControl(0);
+  editablePrize = input<boolean>(true);
+  amountForm = new FormControl<number>(0);
+
+  ngOnInit() {
+    this.amountForm.setValue(this.gamePattern().targetPrice)
+  }
   updatePrize(){
     const latestValue = this.amountForm.value
     if (latestValue !== null) {
@@ -36,7 +41,7 @@ export class GamePatternInfoComponent {
         patternName: this.gamePattern().patternName,
         patternMatrix: this.gamePattern().patternMatrix,
         active: this.gamePattern().active,
-        targetPrize: latestValue
+        targetPrice: latestValue
       })
     }
   }

@@ -1,0 +1,6 @@
+<div class="round-content-div">
+  <app-round-raffled-numbers [raffledNumbers]="round().raffleNumbers"/>
+  <button [disabled]="round().raffleNumbers.length > 74" mat-flat-button (click)="raffleNumber()">Gira la tombola</button>
+</div>
+
+

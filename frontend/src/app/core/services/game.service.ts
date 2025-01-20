@@ -2,7 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Game} from '../../models/game';
 import {GamePatternInfo, Pattern} from '../../models/add-pattern-dialog-data';
-import {map} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Serial} from "../../models/serial";
 import {GameCardInfo} from '../../models/card';
 
@@ -18,28 +18,33 @@ export class GameService {
   gameCards = signal<GameCardInfo[]>([])
   gamePatternsInfo = signal<GamePatternInfo[]>([])
 
-  getGameById(id?: number) {
+  getGameById(id: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
         map(game => {
           this.actualGame.set(game);
-          this.getActualGamePatterns()
-          this.getActualGamePatternsInfo()
-          this.getCardsByGameId()
         }),
     )
   }
   getActualGamePatterns() {
-    return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
-      next: (result) => {
-        this.gamePatterns.set(result)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
+          next: (result) => {
+            this.gamePatterns.set(result);
+          }
+        })
       }
     })
   }
 
   getActualGamePatternsInfo() {
-    return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
-      next: (result) => {
-        this.gamePatternsInfo.set(result)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
+          next: (result) => {
+            this.gamePatternsInfo.set(result)
+          }
+        })
       }
     })
   }
@@ -47,16 +52,16 @@ export class GameService {
     let id =  localStorage.getItem("gameId")
     if (id != null) {
       let idNumber = +id
-      return this.getGameById(idNumber).subscribe()
+      return this.getGameById(idNumber)
     }
-    return this.http.post<Game>(`${this.baseUrl}Game`, {}).subscribe({
-      next: (result) => {
+    return this.http.post<Game>(`${this.baseUrl}Game`, {}).pipe(
+      map((result) => {
         if (result) {
-          this.getGameById(result.id).subscribe()
           localStorage.setItem("gameId", result.id.toString())
+          this.getGameById(result.id).subscribe()
         }
-      }
-    })
+      })
+    )
   }
 
   updateGame(newGame: Game) {
@@ -97,19 +102,28 @@ export class GameService {
   }
 
   attachSerialToActualGame(serial: Serial) {
-    return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
-      next: (result) => {
-        if (result) {
-          this.getGameById(this.actualGame()?.id).subscribe()
-        }
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
+          next: (result) => {
+            if (result) {
+              this.getGameById(this.actualGame()!.id).subscribe()
+            }
+          }
+        })
       }
     })
+
   }
 
   getCardsByGameId() {
-    return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
-      next: value => {
-        this.gameCards.set(value)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
+          next: value => {
+            this.gameCards.set(value)
+          }
+        })
       }
     })
   }
@@ -136,12 +150,11 @@ export class GameService {
     return this.http.put<boolean>(this.baseUrl + 'Pattern/game/prizes', {
       gameId: this.actualGame()?.id,
       patternId: gamePattern.id,
-      targetPrice: gamePattern.targetPrize,
+      targetPrice: gamePattern.targetPrice,
       active: gamePattern.active
     }).subscribe({
       next: result => {
         if (result) {
-          console.log(gamePattern)
           this.getActualGamePatterns()
           this.getActualGamePatternsInfo()
           this.getCardsByGameId()

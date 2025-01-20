@@ -4,7 +4,7 @@ $secondary-color: #fca311;
 .card-div {
   background-color: $primary-color;
   padding: 1rem;
-  width: max(100%, 300px);
+  min-width: 300px;
   place-content: center;
   .card-header-div {
     display: flex;
@@ -15,7 +15,7 @@ $secondary-color: #fca311;
 
 }
 .card-title {
-  margin: 0;
+  margin: 0.5rem 0;
   font-size: 2rem;
   color: $secondary-color;
   text-align: center;

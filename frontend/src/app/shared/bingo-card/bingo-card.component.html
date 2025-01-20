@@ -26,13 +26,14 @@
           {{box.number}}
         </button>
       }
-
-
     }
   </div>
 </div>
-@if(boughtBy()) {
-  <h2 class="card-title">{{'Comparado por: ' + boughtBy()}}</h2>
-} @else {
-  <h2 class="card-title">Disponible</h2>
+@if (showOwnerInfo()) {
+  @if(boughtBy()) {
+    <h2 class="card-title">{{'Comparado por: ' + boughtBy()}}</h2>
+  } @else {
+    <h2 class="card-title">Disponible</h2>
+  }
+
 }

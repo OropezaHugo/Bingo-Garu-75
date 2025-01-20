@@ -61,7 +61,7 @@ export class LobbyPage implements OnInit {
     });
   }
   ngOnInit() {
-    this.gameService.createNewGame()
+    this.gameService.createNewGame().subscribe()
   }
 
 }
