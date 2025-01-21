@@ -8,17 +8,17 @@ import { LobbyPage } from './pages/lobby-page/lobby-page';
 import { InstructionsComponent } from './pages/instructions/instructions.component';
 import {PatternListComponentComponent} from "./patterns/pattern-list-component/pattern-list-component.component";
 import {GamePageComponent} from './game/game-page/game-page.component';
+import {PrizesBoardComponent} from './end-game/prizes-board/prizes-board.component';
+import {HistoryComponent} from './pages/history/history.component';
 
 export const routes: Routes = [
-    { path: "serials", component: SerialsBasePageComponent, children: [
-        { path: "", component: SerialsBasePageContentComponent },
-        { path: "generate", component: GenerateSerialContentComponent },
-        { path: "attach", component: AttachSerialContentComponent },
-        ]},
+    { path: "serials", component: AttachSerialContentComponent },
     { path: "", component: HomePageComponent, pathMatch: 'full'},
     {path: "lobby", component: LobbyPage},
     {path: "instructions", component: InstructionsComponent},
     {path: "patterns", component: PatternListComponentComponent},
     {path: "game", component: GamePageComponent},
+    {path: "prizes", component: PrizesBoardComponent},
+  {path: "history", component: HistoryComponent},
     {path: "**", redirectTo: ""},
 ];

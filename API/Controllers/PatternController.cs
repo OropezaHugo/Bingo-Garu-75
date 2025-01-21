@@ -107,7 +107,6 @@ public class PatternController(
     {
         var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
         if (game == null) return NotFound();
-        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         gamePatternsRepository.UpdateGamePattern(mapper.Map<GamePatterns>(gamePatternsDto));
         return Ok(await gamePatternsRepository.SaveChangesAsync());
     }

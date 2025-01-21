@@ -5,6 +5,7 @@ $primary-color: #7b2cbf;
   min-width: 100%;
 }
 .attach-serial-content-div {
+  padding-top: 1.5rem;
   display: grid;
   grid-template-columns: 4fr 1fr;
   grid-gap: 4rem;
@@ -31,10 +32,22 @@ $primary-color: #7b2cbf;
   color: white;
   font-weight: bold;
 }
+.generate-serial-content-div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media (max-width: 900px){
 
   .attach-serial-content-div {
+    padding-top: 1.5rem;
     display: grid;
     grid-template-rows: 4fr 1fr;
     grid-template-columns: 1fr;

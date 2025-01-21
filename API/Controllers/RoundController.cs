@@ -22,6 +22,13 @@ public class RoundController
         var rounds = await repository.ListAllAsync();
         return Ok(rounds.Where(round => round.GameId == gameId).Select(round => mapper.Map<RoundResponseDTO>(round)).ToList());   
     }
+    [HttpGet("{roundId}")]
+    public async Task<ActionResult<List<RoundResponseDTO>>> GetRoundsByRoundId(int roundId)
+    {
+        var round = await repository.GetByIdAsync(roundId);
+        if (round == null) return NotFound();
+        return Ok(mapper.Map<RoundResponseDTO>(round));
+    }
 
     [HttpPost("game/{gameId}")]
     public async Task<ActionResult<bool>> PostRound(int gameId, PostGameRoundsDTO roundsDto)

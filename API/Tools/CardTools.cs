@@ -34,10 +34,15 @@ public static class CardTools
 
     private static int GenerateNumber(int min, int max, List<int> content)
     {
+        var lastColumnNumber = 0;
+        if (content.Count > 4)
+        {
+            lastColumnNumber = content[^5];
+        }
         int generatedNumber = Random.Shared.Next(min, max);
         while (content.Contains(generatedNumber) 
                & generatedNumber < (max + (content.Count / 5) - 4)
-               & generatedNumber >= content[^5]
+               & generatedNumber >= lastColumnNumber
                )
         {
             generatedNumber = Random.Shared.Next(min, max);

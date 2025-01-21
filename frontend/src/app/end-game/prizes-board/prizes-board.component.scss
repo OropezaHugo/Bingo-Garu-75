@@ -1,0 +1,14 @@
+.prizes-list-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+.prizes-list-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  place-items: center;
+  align-items: center;
+}

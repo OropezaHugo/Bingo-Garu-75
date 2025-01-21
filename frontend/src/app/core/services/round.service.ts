@@ -19,6 +19,9 @@ export class RoundService {
     }
     return randomNumber;
   }
+  getRoundsById(roundId: number) {
+    return this.http.get<Round>(`${this.baseUrl}Round/${roundId}`)
+  }
   getRounds(){
     this.gameService.createNewGame().subscribe({
       next: () => {
@@ -57,7 +60,6 @@ export class RoundService {
         return this.http.post<boolean>(`${this.baseUrl}Prize/game/${this.gameService.actualGame()?.id}`, prize).subscribe()
       }
     })
-
   }
 
   postRounds(roundsData: CreateRoundsData) {

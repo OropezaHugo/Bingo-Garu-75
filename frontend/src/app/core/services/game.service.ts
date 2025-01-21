@@ -5,6 +5,7 @@ import {GamePatternInfo, Pattern} from '../../models/add-pattern-dialog-data';
 import {map, Observable} from "rxjs";
 import {Serial} from "../../models/serial";
 import {GameCardInfo} from '../../models/card';
+import {PrizeData} from '../../models/round';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class GameService {
   actualGame = signal<Game | undefined>(undefined)
   gamePatterns = signal<Pattern[]>([])
   gameCards = signal<GameCardInfo[]>([])
+  gamePrizes = signal<PrizeData[]>([])
   gamePatternsInfo = signal<GamePatternInfo[]>([])
 
   getGameById(id: number) {
@@ -43,6 +45,21 @@ export class GameService {
         return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
           next: (result) => {
             this.gamePatternsInfo.set(result)
+          }
+        })
+      }
+    })
+  }
+
+  getActualGamePrizes() {
+    this.createNewGame().subscribe({
+      next: () => {
+        this.http.get<PrizeData[]>(`${this.baseUrl}Prize/game/${this.actualGame()?.id}`).subscribe({
+          next: (result) => {
+            if (result) {
+              console.log(result);
+              this.gamePrizes.set(result);
+            }
           }
         })
       }
@@ -97,7 +114,23 @@ export class GameService {
   }
 
   finishGame() {
-    localStorage.removeItem("gameId");
+    this.getActualGamePrizes()
+    this.updateGame({
+      finished: true,
+      id: this.actualGame()!.id,
+      automaticRaffle: this.actualGame()!.automaticRaffle,
+      randomPatterns: this.actualGame()!.randomPatterns,
+      sharePrizes: this.actualGame()!.sharePrizes,
+      inProgress: this.actualGame()!.inProgress,
+    })
+  }
+
+  disposeActualGame() {
+    localStorage.removeItem("gameId")
+    this.gamePrizes.set([])
+    this.gamePatterns.set([])
+    this.gamePatternsInfo.set([])
+    this.gameCards.set([])
     this.actualGame.set(undefined)
   }
 

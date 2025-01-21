@@ -10,3 +10,8 @@ export interface Serial {
   boxNumberColor: string;
   cardNumberColor: string;
 }
+
+export interface NewSerialData {
+  cardNumber: number;
+  serialName?: string;
+}

@@ -5,7 +5,7 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar serial</ng-template>
       @defer (on viewport) {
-      <app-attach-serial-content/>
+      <app-attach-serial-content [useToGenerate]="false"/>
       } @placeholder {
         <h1>Loading</h1>
       }

@@ -21,6 +21,14 @@ public class GameController
         var games = await repository.ListAllAsync();
         return Ok(games.AsEnumerable().Select(game => mapper.Map<GameResponseDTO>(game)));
     }
+    
+    
+    [HttpGet("finished")]
+    public async Task<ActionResult<List<GameResponseDTO>>> GetFinishedGames()
+    {
+        var games = await repository.ListAllAsync();
+        return Ok(games.Where(game => game.Finished).Select(game => mapper.Map<GameResponseDTO>(game)));
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult<GameResponseDTO>> GetGameById(int id)
     {

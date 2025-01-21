@@ -15,6 +15,7 @@ import {ConfirDialogComponent} from '../../shared/confir-dialog/confir-dialog.co
 import {Router} from '@angular/router';
 import {RoundService} from '../../core/services/round.service';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {SnackbarService} from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-pattern-target-prizes',
@@ -38,6 +39,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 export class PatternTargetPrizesComponent implements OnInit {
   gameService = inject(GameService);
   roundService = inject(RoundService);
+  snackBar = inject(SnackbarService);
   dialog = inject(MatDialog);
   router = inject(Router);
 
@@ -65,7 +67,12 @@ export class PatternTargetPrizesComponent implements OnInit {
     && this.roundsFormGroup.value.hasBonus !== undefined
       && this.roundsFormGroup.value.hasBonus !== null
     ) {
-
+      if (this.gameService.gameCards().length < 1) {
+        this.snackBar.error('Primero adjunta un serial a la partida actual')
+      }
+      if (this.gameService.gamePatternsInfo().length < 1) {
+        this.snackBar.error('Primero adjunta al menos 1 patron a la partida actual')
+      }
       this.roundService.postRounds({
         roundQuantity: this.roundsFormGroup.value.roundNumber,
         hasBonusRound: this.roundsFormGroup.value.hasBonus

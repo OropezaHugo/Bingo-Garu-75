@@ -56,6 +56,7 @@ export class GamePageComponent implements OnInit {
   router = inject(Router)
   activePatterns: GamePatternInfo[] = []
   activeRound: Round | undefined = undefined
+  actualTab = 0;
 
 
   ngOnInit() {
@@ -90,6 +91,7 @@ export class GamePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.disableRounds[index] = true;
+        this.actualTab = index + 1;
       }
     })
   }
@@ -135,7 +137,7 @@ export class GamePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.gameService.finishGame()
-        this.router.navigate(['/'], {replaceUrl: true});
+        this.router.navigate(['/prizes'], {replaceUrl: true});
       }
     })
   }

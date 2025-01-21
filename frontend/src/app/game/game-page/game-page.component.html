@@ -1,5 +1,5 @@
 <div class="game-div">
-    <mat-tab-group (selectedTabChange)="loadRound($event)">
+    <mat-tab-group (selectedTabChange)="loadRound($event)" [(selectedIndex)]="actualTab">
       @for (round of roundService.actualRounds(); track $index) {
         <mat-tab [label]="round.roundName" [disabled]="disableRounds[$index]">
           <div class="round-tab-content">
