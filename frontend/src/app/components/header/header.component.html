@@ -32,6 +32,13 @@
         [routerLink]="'/patterns'"
         (click)="closeDrawerOnMobile()">
       </app-text-button>
+      <app-text-button
+        class="nav-item"
+        text="Historial"
+        color="default"
+        [routerLink]="'/history'"
+        (click)="closeDrawerOnMobile()">
+      </app-text-button>
     </nav>
   </mat-drawer>
 
@@ -64,6 +71,12 @@
           text="Patrones"
           color="default"
           [routerLink]="'/patterns'">
+        </app-text-button>
+        <app-text-button
+          class="nav-item font-medium weight-default"
+          text="Historial"
+          color="default"
+          [routerLink]="'/history'">
         </app-text-button>
       </nav>
     </mat-toolbar>

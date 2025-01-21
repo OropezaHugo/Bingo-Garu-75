@@ -66,6 +66,7 @@ public class PatternController(
         if (pattern == null) return NotFound("pattern not found");
         var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
         if (game == null) return NotFound("game not found");
+        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         if (gamePatternsRepository.ExistsPatternGameRelation(gamePatternsDto.GameId, gamePatternsDto.PatternId)) return Conflict("el patron ya existe en la partida");
         gamePatternsRepository.CreatePatternGameRelation(mapper.Map<GamePatterns>(gamePatternsDto));
         return Ok(await gamePatternsRepository.SaveChangesAsync());
@@ -75,6 +76,9 @@ public class PatternController(
     [HttpDelete("{patternId}/game/{gameId}")]
     public async Task<ActionResult<bool>> DeletePatternFromGame([FromRoute] PostGamePatternsDTO gamePatternsDto)
     {
+        var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
+        if (game == null) return NotFound();
+        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
         gamePatternsRepository.DeleteGamePatternRelation(mapper.Map<GamePatterns>(gamePatternsDto));
         return Ok(await gamePatternsRepository.SaveChangesAsync());
     }
@@ -101,7 +105,9 @@ public class PatternController(
     [HttpPut("game/prizes")]
     public async Task<ActionResult<bool>> UpdateGamePatternsInfoByGameId(PostGamePatternsDTO gamePatternsDto)
     {
-            gamePatternsRepository.UpdateGamePattern(mapper.Map<GamePatterns>(gamePatternsDto));
-            return Ok(await gamePatternsRepository.SaveChangesAsync());
+        var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
+        if (game == null) return NotFound();
+        gamePatternsRepository.UpdateGamePattern(mapper.Map<GamePatterns>(gamePatternsDto));
+        return Ok(await gamePatternsRepository.SaveChangesAsync());
     }
 }

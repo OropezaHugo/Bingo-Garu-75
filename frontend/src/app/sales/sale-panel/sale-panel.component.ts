@@ -19,7 +19,7 @@ import {RectanglebuttonComponent} from '../../components/buttons/rectanglebutton
   templateUrl: './sale-panel.component.html',
   styleUrl: './sale-panel.component.scss'
 })
-export class SalePanelComponent{
+export class SalePanelComponent implements OnInit{
 
   pageSize = model<number>(25);
   pageIndex = model<number>(0);
@@ -41,6 +41,10 @@ export class SalePanelComponent{
       this.displayedCardBuyer = undefined
     }
   }
+
+  ngOnInit() {
+    this.gameService.getCardsByGameId()
+  }
   selectCard(gameCard: GameCardInfo) {
     if (this.selectedCards().includes(gameCard)){
       this.selectedCards.update(value => value.filter(value1 => value1 !== gameCard))
@@ -52,9 +56,9 @@ export class SalePanelComponent{
   updateLocalPagination(event: PageEvent){
     this.pageSize.set(event.pageSize);
     this.pageIndex.set(event.pageIndex);
-
   }
   getPaginatedList() {
+
     return this.gameService.gameCards()
       .slice(this.pageIndex() * this.pageSize(),
         (this.pageIndex() * this.pageSize()) + this.pageSize())

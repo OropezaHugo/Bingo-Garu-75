@@ -13,7 +13,6 @@ export class SaleButtonComponent implements OnInit {
   selected = input<boolean>(false);
   viewOnly = input.required<boolean>();
   card?: Card = undefined
-  readonly dialog = inject(MatDialog);
   ngOnInit() {
     this.card = {
       cardNumber: this.gameCard().cardNumber,
@@ -22,6 +21,4 @@ export class SaleButtonComponent implements OnInit {
           marked: false}))
     }
   }
-
-  protected readonly console = console;
 }

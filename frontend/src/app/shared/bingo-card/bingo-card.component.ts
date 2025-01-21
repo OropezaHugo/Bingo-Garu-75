@@ -14,6 +14,7 @@ import {MatIcon} from '@angular/material/icon';
 export class BingoCardComponent {
   card = input.required<Card>()
   boughtBy = input<string | undefined>()
+  showOwnerInfo = input<boolean>(true)
 
   clickBox(event: MouseEvent, boxIndex: number) {
     if (typeof this.card())

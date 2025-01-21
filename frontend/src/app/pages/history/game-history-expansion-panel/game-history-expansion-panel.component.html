@@ -1,0 +1,12 @@
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Partida {{gameId()}}
+    </mat-panel-title>
+    <mat-panel-description>
+      Monto Premiado: {{totalAmount}} Bs
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <app-prizes-board [forActualGame]="false" [gameId]="gameId()">
+  </app-prizes-board>
+</mat-expansion-panel>

@@ -16,8 +16,10 @@
 }
 
 .start-game-div {
+  padding: 0.5rem;
   display: flex;
-  flex-direction: row;
-  place-content: center;
+  flex-direction: column;
+  place-content: start;
+  gap: 1rem;
   align-items: center;
 }

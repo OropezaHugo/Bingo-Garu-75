@@ -14,7 +14,7 @@ export interface GamePatternInfo {
   id: number
   patternMatrix: boolean[]
   patternName: string
-  targetPrize: number,
+  targetPrice: number,
   active: boolean
 }
 export const EmptyPattern: NewPatternDialogData = {

@@ -17,15 +17,17 @@ export class PatternService {
   getPatterns(filterName?: string){
     let params = new HttpParams()
     if(filterName){
-      console.log(filterName)
       params = params.append("name", filterName);
     }
     return this.http.get<Pattern[]>(this.baseUrl + 'Pattern', {params: params}).subscribe({
       next: result => {
-        console.log(result);
         this.patterns.set(result)
       }
     });
+  }
+
+  getPatternById(patternId: number){
+    return this.http.get<Pattern>(this.baseUrl + 'Pattern/' + patternId)
   }
 
   postPattern(pattern: NewPatternDialogData){

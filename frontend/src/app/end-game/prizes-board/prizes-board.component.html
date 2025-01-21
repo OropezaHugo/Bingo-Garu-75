@@ -1,0 +1,29 @@
+@if (gamePrizes.length < 1 && gameService.gamePrizes().length < 1) {
+  <h2>No se regitraron premios en esta partida</h2>
+} @else {
+  <div class="prizes-list-panel">
+    <div class="prizes-list-header">
+      <h1>Ronda</h1>
+      <h1>Figura</h1>
+      <h1>Ganador</h1>
+      <h1>Monto</h1>
+    </div>
+    <mat-divider/>
+    @if (forActualGame() !== false) {
+      @for (prize of gameService.gamePrizes(); track prize.id) {
+        <app-prizes-row [prizeData]="prize"/>
+        <mat-divider/>
+      }
+      <button mat-flat-button (click)="leaveGame()">Abandonar partida permanentemente</button>
+    } @else {
+
+      @for (prize of gamePrizes; track prize.id) {
+        <app-prizes-row [prizeData]="prize"/>
+        <mat-divider/>
+      }
+
+    }
+
+  </div>
+
+}

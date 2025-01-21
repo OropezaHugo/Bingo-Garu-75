@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, inject, input, OnInit, viewChild} from '@angular/core';
-import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatIcon} from '@angular/material/icon';
 import {Serial} from '../../models/serial';
@@ -20,6 +20,8 @@ import {SerialService} from '../../core/services/serial.service';
 import {GameService} from '../../core/services/game.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../shared/confir-dialog/confir-dialog.component';
+import {GenerateSerialContentComponent} from '../generate-serial-content/generate-serial-content.component';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -44,13 +46,16 @@ import {ConfirDialogComponent} from '../../shared/confir-dialog/confir-dialog.co
     MatRowDef,
     MatNoDataRow,
     MatPaginator,
-    RectanglebuttonComponent
+    RectanglebuttonComponent,
+    MatHint,
+    ReactiveFormsModule
   ],
   templateUrl: './attach-serial-content.component.html',
   styleUrl: './attach-serial-content.component.scss'
 })
 export class AttachSerialContentComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Serial> = new MatTableDataSource();
+  useToGenerate = input<boolean>(false);
   columns: string[] = ['serialName', "cardQuantity", "creationDate"];
   serialService = inject(SerialService)
   gameService = inject(GameService)
@@ -93,7 +98,32 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
       })
     }
   }
-
-
+  serialFormGroup = new FormGroup({
+    quantity: new FormControl<number>(0, Validators.required),
+    name: new FormControl<string>('', [Validators.required, Validators.minLength(2)]),
+  })
+  createSerial() {
+    if (this.serialFormGroup.value.quantity
+      && this.serialFormGroup.value.name
+      && this.serialFormGroup.valid) {
+      this.serialService.createSerial(
+        {
+          serialName: this.serialFormGroup.value.name,
+          cardNumber: this.serialFormGroup.value.quantity
+        }).subscribe({
+        next: (result) => {
+          if (result) {
+            this.serialService.getSerials().subscribe({
+              next: data => {
+                this.dataSource = new MatTableDataSource(data);
+                this.dataSource.sort = this.sort()
+                this.dataSource.paginator = this.paginator()
+              }
+            })
+          }
+        }
+      })
+    }
+  }
 }
 

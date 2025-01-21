@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import { RectanglebuttonComponent } from '../../components/buttons/rectanglebutton/rectanglebutton.component';
+import {SerialService} from '../../core/services/serial.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-generate-serial-content',

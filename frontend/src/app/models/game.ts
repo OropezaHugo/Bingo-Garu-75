@@ -3,4 +3,6 @@ export interface Game {
   automaticRaffle: boolean;
   randomPatterns: boolean;
   sharePrizes: boolean;
+  inProgress: boolean;
+  finished: boolean;
 }

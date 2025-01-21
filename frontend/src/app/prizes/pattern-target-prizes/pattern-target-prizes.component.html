@@ -1,10 +1,23 @@
-<div class="prize-step-div">
-  <div class="attached-patterns">
-    @for (gamePattern of gameService.gamePatternsInfo(); track $index) {
-      <app-game-pattern-info [gamePattern]="gamePattern"></app-game-pattern-info>
-    }
+@if (gameService.gamePatternsInfo().length < 1) {
+  <h2>Primero adjunta almenos 1 patron para adjuntar un premio objetivo</h2>
+} @else {
+
+  <div class="prize-step-div">
+    <div class="attached-patterns">
+      @for (gamePattern of gameService.gamePatternsInfo(); track $index) {
+        <app-game-pattern-info [gamePattern]="gamePattern"></app-game-pattern-info>
+      }
+    </div>
+    <div class="start-game-div" [formGroup]="roundsFormGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>Número de rondas</mat-label>
+        <input matInput [formControl]="roundsFormGroup.controls.roundNumber">
+      </mat-form-field>
+      <mat-checkbox [formControl]="roundsFormGroup.controls.hasBonus">
+        Incluir ronda bonus
+      </mat-checkbox>
+      <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
+    </div>
   </div>
-  <div class="start-game-div">
-    <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
-  </div>
-</div>
+
+}

@@ -58,6 +58,12 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("AutomaticRaffle")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InProgress")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("RandomPatterns")
                         .HasColumnType("bit");
 

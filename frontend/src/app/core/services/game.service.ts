@@ -2,9 +2,10 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Game} from '../../models/game';
 import {GamePatternInfo, Pattern} from '../../models/add-pattern-dialog-data';
-import {map} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Serial} from "../../models/serial";
 import {GameCardInfo} from '../../models/card';
+import {PrizeData} from '../../models/round';
 
 @Injectable({
   providedIn: 'root'
@@ -16,30 +17,51 @@ export class GameService {
   actualGame = signal<Game | undefined>(undefined)
   gamePatterns = signal<Pattern[]>([])
   gameCards = signal<GameCardInfo[]>([])
+  gamePrizes = signal<PrizeData[]>([])
   gamePatternsInfo = signal<GamePatternInfo[]>([])
 
-  getGameById(id?: number) {
+  getGameById(id: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
         map(game => {
           this.actualGame.set(game);
-          this.getActualGamePatterns()
-          this.getActualGamePatternsInfo()
-          this.getCardsByGameId()
         }),
     )
   }
   getActualGamePatterns() {
-    return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
-      next: (result) => {
-        this.gamePatterns.set(result)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/${this.actualGame()?.id}/game`).subscribe({
+          next: (result) => {
+            this.gamePatterns.set(result);
+          }
+        })
       }
     })
   }
 
   getActualGamePatternsInfo() {
-    return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
-      next: (result) => {
-        this.gamePatternsInfo.set(result)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<GamePatternInfo[]>(`${this.baseUrl}Pattern/game/${this.actualGame()?.id}/prizes`).subscribe({
+          next: (result) => {
+            this.gamePatternsInfo.set(result)
+          }
+        })
+      }
+    })
+  }
+
+  getActualGamePrizes() {
+    this.createNewGame().subscribe({
+      next: () => {
+        this.http.get<PrizeData[]>(`${this.baseUrl}Prize/game/${this.actualGame()?.id}`).subscribe({
+          next: (result) => {
+            if (result) {
+              console.log(result);
+              this.gamePrizes.set(result);
+            }
+          }
+        })
       }
     })
   }
@@ -47,20 +69,20 @@ export class GameService {
     let id =  localStorage.getItem("gameId")
     if (id != null) {
       let idNumber = +id
-      return this.getGameById(idNumber).subscribe()
+      return this.getGameById(idNumber)
     }
-    return this.http.post<Game>(`${this.baseUrl}Game`, {}).subscribe({
-      next: (result) => {
+    return this.http.post<Game>(`${this.baseUrl}Game`, {}).pipe(
+      map((result) => {
         if (result) {
-          this.getGameById(result.id).subscribe()
           localStorage.setItem("gameId", result.id.toString())
+          this.getGameById(result.id).subscribe()
         }
-      }
-    })
+      })
+    )
   }
 
   updateGame(newGame: Game) {
-    return this.http.put(`${this.baseUrl}Game/${newGame.id}`, {automaticRaffle: newGame.automaticRaffle, randomPatterns: newGame.randomPatterns, sharePrizes: newGame.sharePrizes}).subscribe({
+    return this.http.put(`${this.baseUrl}Game/${newGame.id}`, newGame).subscribe({
       next: (result) => {
         if (result) {
           this.getGameById(newGame.id).subscribe()
@@ -92,24 +114,49 @@ export class GameService {
   }
 
   finishGame() {
-    localStorage.removeItem("gameId");
+    this.getActualGamePrizes()
+    this.updateGame({
+      finished: true,
+      id: this.actualGame()!.id,
+      automaticRaffle: this.actualGame()!.automaticRaffle,
+      randomPatterns: this.actualGame()!.randomPatterns,
+      sharePrizes: this.actualGame()!.sharePrizes,
+      inProgress: this.actualGame()!.inProgress,
+    })
+  }
+
+  disposeActualGame() {
+    localStorage.removeItem("gameId")
+    this.gamePrizes.set([])
+    this.gamePatterns.set([])
+    this.gamePatternsInfo.set([])
+    this.gameCards.set([])
     this.actualGame.set(undefined)
   }
 
   attachSerialToActualGame(serial: Serial) {
-    return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
-      next: (result) => {
-        if (result) {
-          this.getGameById(this.actualGame()?.id).subscribe()
-        }
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
+          next: (result) => {
+            if (result) {
+              this.getGameById(this.actualGame()!.id).subscribe()
+            }
+          }
+        })
       }
     })
+
   }
 
   getCardsByGameId() {
-    return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
-      next: value => {
-        this.gameCards.set(value)
+    this.createNewGame().subscribe({
+      next: () => {
+        return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
+          next: value => {
+            this.gameCards.set(value)
+          }
+        })
       }
     })
   }
@@ -136,12 +183,11 @@ export class GameService {
     return this.http.put<boolean>(this.baseUrl + 'Pattern/game/prizes', {
       gameId: this.actualGame()?.id,
       patternId: gamePattern.id,
-      targetPrice: gamePattern.targetPrize,
+      targetPrice: gamePattern.targetPrice,
       active: gamePattern.active
     }).subscribe({
       next: result => {
         if (result) {
-          console.log(gamePattern)
           this.getActualGamePatterns()
           this.getActualGamePatternsInfo()
           this.getCardsByGameId()

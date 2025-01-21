@@ -1,1 +1,55 @@
-<p>game-page works!</p>
+<div class="game-div">
+    <mat-tab-group (selectedTabChange)="loadRound($event)" [(selectedIndex)]="actualTab">
+      @for (round of roundService.actualRounds(); track $index) {
+        <mat-tab [label]="round.roundName" [disabled]="disableRounds[$index]">
+          <div class="round-tab-content">
+            <app-round-tab [round]="round"></app-round-tab>
+            <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
+          </div>
+        </mat-tab>
+      }
+    </mat-tab-group>
+  <div class="section-for-cards">
+
+    <div class="game-patterns-section">
+      @for (pattern of gameService.gamePatternsInfo(); track $index) {
+        @if (pattern.active) {
+          <div class="game-pattern-cell-selected">
+            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
+            <h4>Activo esta ronda</h4>
+          </div>
+        } @else {
+          <div class="">
+            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
+          </div>
+        }
+      }
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Ingrese el numero de la carta</mat-label>
+      <input matInput type="number">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ingrese el usuario</mat-label>
+      <input matInput >
+    </mat-form-field>
+    <div>
+      <div class="in-game-div">
+        @for (card of getPaginatedList(); track card.cardNumber) {
+          <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
+        }
+      </div>
+      <mat-paginator [length]="this.gameService.gameCards().length"
+                     [pageSize]="pageSize()"
+                     [pageSizeOptions]="pageSizeOptions"
+                     [pageIndex]="pageIndex()"
+                     (page)="updateLocalPagination($event)"
+                     showFirstLastButtons="true"
+                     aria-label="Select page">
+      </mat-paginator>
+    </div>
+    <button (click)="finishGame()" mat-stroked-button>Terminar partida</button>
+  </div>
+
+</div>

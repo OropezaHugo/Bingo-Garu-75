@@ -1,0 +1,61 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+
+.game-div {
+  display: grid;
+  grid-template-columns: 33% 66%;
+}
+
+.round-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  place-content: center;
+}
+
+.game-patterns-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+}
+
+.game-pattern-cell-selected {
+  border: 2px solid $secondary-color;
+  border-radius: 1rem;
+}
+
+h4 {
+  text-align: center;
+  margin: 0;
+}
+.in-game-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.in-game-card-cell {
+  background-color: $primary-color;
+  min-height: 3rem;
+  min-width: 3rem;
+  align-content: center;
+}
+
+.section-for-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+
+}
+
+@media (max-width: 800px) {
+  .game-div {
+    display: flex;
+    flex-direction: column;
+  }
+}

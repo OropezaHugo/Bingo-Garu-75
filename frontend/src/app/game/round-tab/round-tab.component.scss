@@ -1,0 +1,44 @@
+.round-content-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  place-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+}
+
+.last-raffled-number {
+  display: flex;
+  flex-direction: column;
+  background-color: red;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  place-content: center;
+}
+.animated {
+  animation: fallDown 1s linear;
+}
+h3 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+@keyframes fallDown {
+  0% {
+    transform: translateY(-50vh);
+    height: 6rem;
+    width: 6rem;
+    background-color: blue;
+    color: white;
+    border-radius: 3rem;
+  }
+  100% {
+    transform: translateY(0);
+    height: 2rem;
+    width: 2rem;
+    border-radius: 1rem;
+  }
+}

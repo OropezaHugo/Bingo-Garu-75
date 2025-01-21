@@ -1,36 +1,41 @@
-<div class="sale-panel-div">
-  <div class="sale-actions-panel-div">
-    @if (displayedCard) {
-      <div class="card-preview">
-        <app-bingo-card [card]="displayedCard" [boughtBy]="displayedCardBuyer"/>
-      </div>
-    }
-    <app-rectanglebutton (click)="sellCards()" text="Vender cartones seleccionados"></app-rectanglebutton>
-  </div>
-  <div>
-    <div class="sale-cards-panel-div">
-      @for (card
-        of getPaginatedList()
-        ; track card.cardId) {
-        <app-sale-button
-          [viewOnly]="false"
-          [selected]="selectedCards().includes(card)"
-          [gameCard]="card"
-          (mouseover)="displayCard(card)"
-          (click)="selectCard(card); pageIndex.set(pageIndex())"
-          (tap)="displayCard(card); selectCard(card)"
-        />
+@if (gameService.gameCards().length < 1) {
+  <h2>Adjunta primero un serial a la partida para poder gestionar su venta</h2>
+} @else {
+  <div class="sale-panel-div">
+    <div class="sale-actions-panel-div">
+      @if (displayedCard) {
+        <div class="card-preview">
+          <app-bingo-card [card]="displayedCard" [boughtBy]="displayedCardBuyer"/>
+        </div>
       }
+      <app-rectanglebutton (click)="sellCards()" text="Vender cartones seleccionados"></app-rectanglebutton>
+    </div>
+    <div>
+      <div class="sale-cards-panel-div">
+        @for (card
+          of getPaginatedList()
+          ; track card.cardId) {
+          <app-sale-button
+            [viewOnly]="false"
+            [selected]="selectedCards().includes(card)"
+            [gameCard]="card"
+            (mouseover)="displayCard(card)"
+            (click)="selectCard(card); pageIndex.set(pageIndex())"
+            (tap)="displayCard(card); selectCard(card)"
+          />
+        }
+      </div>
+
+      <mat-paginator [length]="this.gameService.gameCards().length"
+                     [pageSize]="pageSize()"
+                     [pageSizeOptions]="pageSizeOptions"
+                     [pageIndex]="pageIndex()"
+                     (page)="updateLocalPagination($event)"
+                     showFirstLastButtons="true"
+                     aria-label="Select page">
+      </mat-paginator>
     </div>
 
-    <mat-paginator [length]="this.gameService.gameCards().length"
-                   [pageSize]="pageSize()"
-                   [pageSizeOptions]="pageSizeOptions"
-                   [pageIndex]="pageIndex()"
-                   (page)="updateLocalPagination($event)"
-                   showFirstLastButtons="true"
-                   aria-label="Select page">
-    </mat-paginator>
   </div>
 
-</div>
+}
