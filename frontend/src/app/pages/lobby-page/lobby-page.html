@@ -17,7 +17,18 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Ajustes y Exportacion</ng-template>
-    <h1>comming soon</h1>
+    <div>
+      <button mat-button (click)="toggleView()" class="toggle-btn">
+        <mat-icon>swap_horiz</mat-icon>
+        {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
+      </button>
+
+      @if (personalization) {
+        <app-personalization-page></app-personalization-page>
+      } @else {
+        <app-exportation-page></app-exportation-page>
+      }
+    </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Adjuntar premios</ng-template>

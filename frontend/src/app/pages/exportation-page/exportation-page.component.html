@@ -1,0 +1,25 @@
+<div class="pagination">
+  @for (page of paginatedCards; track $index) {
+    <button (click)="exportToPDF($index)">
+      Export Page {{ $index + 1 }}
+    </button>
+  }
+</div>
+
+@if (isExporting) {
+  <p>{{ statusMessage }}</p>
+  <mat-progress-bar
+  mode="indeterminate"
+  color="primary"
+  ></mat-progress-bar>
+}
+
+
+<div #cardsGrid class="card-grid">
+  @for (card of paginatedCards[currentPage]; track $index) {
+    <app-personal-bingo-card
+      [card]="card"
+      [serialId]="currentPage * cardsPerPage + $index + 1">
+    </app-personal-bingo-card>
+  }
+</div>

@@ -6,6 +6,7 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {errorInterceptor} from './core/interceptors/error.interceptor';
 import {InitService} from './core/services/init.service';
+import { providePrimeNG } from 'primeng/config';
 import {firstValueFrom, lastValueFrom} from 'rxjs';
 
 function initializeApp(initService: InitService){
@@ -25,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       useFactory: initializeApp,
       multi: true,
       deps: [InitService]
-    }
+    },
+    providePrimeNG({})
   ]
 };

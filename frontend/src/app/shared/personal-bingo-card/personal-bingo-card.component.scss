@@ -1,0 +1,57 @@
+.card-div {
+  padding: 1rem;
+  width: max(100%, 300px);
+  place-content: center;
+  .card-header-div {
+    display: flex;
+    flex-direction: row;
+    place-content: space-between;
+    align-items: center;
+  }
+}
+
+.card-title {
+  margin: 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.card-number-box {
+  padding: 1rem;
+}
+
+.card-number {
+  margin: 0;
+}
+
+.bingo-card-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 90%;
+  aspect-ratio: 1;
+  gap: 2px;
+  place-items: center;
+}
+
+.box {
+  border: 0;
+  padding: 0.5rem;
+  width: 90%;
+  height: 90%;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.marked-box {
+  @extend .box;
+}
+
+.unmarked-box {
+  @extend .box;
+}
+
+.star-box {
+  @extend .marked-box;
+}
