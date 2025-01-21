@@ -1,0 +1,14 @@
+<div class="color-picker-container">
+  <form [formGroup]="formGroup">
+    <div class="color-display">
+      <div class="color-preview" [style.background-color]="formGroup.get('color')?.value"></div>
+      <label>{{ selectedElementLabel }}</label>
+    </div>
+    <p-colorpicker
+      formControlName="color"
+      [inline]="true"
+      [format]="format"
+      (onChange)="onColorSelect($event)">
+    </p-colorpicker>
+  </form>
+</div>

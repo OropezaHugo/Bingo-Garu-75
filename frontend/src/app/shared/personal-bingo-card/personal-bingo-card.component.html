@@ -1,0 +1,31 @@
+<div class="card-div" [style.background-color]="CardFillColor">
+  <div class="card-header-div">
+    <h2 class="card-title" [style.color]="CardNameColor"> Black Bingo</h2>
+    <div class="card-number-box" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor">
+      <h2 class="card-number" [style.color]="CardNumberColor">Nº {{card().cardNumber}}</h2>
+    </div>
+  </div>
+
+  <div class="bingo-card-grid">
+    <h2 class="card-title" [style.color]="CardNameColor">B</h2>
+    <h2 class="card-title" [style.color]="CardNameColor">I</h2>
+    <h2 class="card-title" [style.color]="CardNameColor">N</h2>
+    <h2 class="card-title" [style.color]="CardNameColor">G</h2>
+    <h2 class="card-title" [style.color]="CardNameColor">O</h2>
+    @for (box of card().content; track $index) {
+      @if ($index == 12) {
+        <button class="star-box" [style.border-color]="StrokeColor">
+          <mat-icon>star</mat-icon>
+        </button>
+      } @else if (box.marked) {
+        <button class="marked-box" [style.color]="BoxFillColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor" (click)="clickBox($event, $index)">
+          {{box.number}}
+        </button>
+      } @else {
+        <button class="unmarked-box" [style.color]="BoxNumberColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor" (click)="clickBox($event, $index)">
+          {{box.number}}
+        </button>
+      }
+    }
+  </div>
+</div>

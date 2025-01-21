@@ -1,0 +1,66 @@
+<div class="personalization-container">
+  <div class="color-buttons">
+    @if (isColorPickerOpen) {
+      <app-color-picker #colorPicker
+        (colorChange)="onColorChange($event)">
+      </app-color-picker>
+    }
+    <button (click)="openColorPicker('StrokeColor')">
+      Contorno de la carta
+    </button>
+    <button (click)="openColorPicker('BoxFillColor')">
+      Fondo de las casillas
+    </button>
+    <button (click)="openColorPicker('CardFillColor')">
+      Fondo de la Carta
+    </button>
+    <button (click)="openColorPicker('CardNameColor')">
+      Nombre de la Carta
+    </button>
+    <button (click)="openColorPicker('BoxNumberColor')">
+      Numero de las casillas
+    </button>
+    <button (click)="openColorPicker('CardNumberColor')">
+      Numero de la Carta
+    </button>
+  </div>
+<div class="preview-section">
+  <div class="bingo-card"
+        [style.background-color]="CardFillColor"
+        [style.color]="CardNumberColor">
+    <div class="card-header" [style.color]="CardNameColor">
+      BingoGaru75
+    </div>
+    <div class="card-number" [style.color]="CardNumberColor">
+      Nº1
+    </div>
+    <div class="card-grid" [style.border-color]="StrokeColor">
+      @for (box of boxes; track box) {
+        <div class="box"
+              [style.background-color]="BoxFillColor"
+              [style.color]="BoxNumberColor">
+          {{ box }}
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<div class="palette-selection">
+  <h3>Diseños Predefinidos</h3>
+  <div class="palette-grid">
+    @for (palette of colorPalettes; track palette.id) {
+      <button
+        class="palette-button"
+        [class.active]="currentPalette === palette.id"
+        (click)="applyPalette(palette.id)">
+        <div class="palette-preview">
+          <div class="color-sample" [style.background-color]="palette.StrokeColor"></div>
+          <div class="color-sample" [style.background-color]="palette.CardFillColor"></div>
+          <div class="color-sample" [style.background-color]="palette.BoxFillColor"></div>
+        </div>
+        <span>{{ palette.label }}</span>
+      </button>
+    }
+  </div>
+</div>

@@ -15,6 +15,8 @@ import {MatStep, MatStepLabel, MatStepper} from '@angular/material/stepper';
 import {AttachSerialContentComponent} from '../../serials/attach-serial-content/attach-serial-content.component';
 import {SalePanelComponent} from '../../sales/sale-panel/sale-panel.component';
 import {PatternTargetPrizesComponent} from '../../prizes/pattern-target-prizes/pattern-target-prizes.component';
+import { PersonalizationPageComponent } from "../personalization-page/personalization-page.component";
+import { ExportationPageComponent } from '../exportation-page/exportation-page.component';
 
 
 @Component({
@@ -31,7 +33,9 @@ import {PatternTargetPrizesComponent} from '../../prizes/pattern-target-prizes/p
     MatStepLabel,
     SalePanelComponent,
     PatternTargetPrizesComponent,
-  ],
+    PersonalizationPageComponent,
+    ExportationPageComponent
+],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
 })
@@ -39,7 +43,11 @@ export class LobbyPage implements OnInit {
 
   readonly dialog = inject(MatDialog);
   gameService = inject(GameService);
+  personalization = true;
 
+  toggleView(): void {
+    this.personalization = !this.personalization;
+  }
 
   openSettingsDialog(): void {
     const dialogRef = this.dialog.open(LobbySettingsDialogComponent, {

@@ -1,6 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Serial} from '../../models/serial';
+import { SerialColorsDTO } from '../../models/ColorSerials';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,9 @@ export class SerialService {
 
   getSerials() {
     return this.http.get<Serial[]>(`${this.baseUrl}Serial`)
+  }
+
+  getColorsSerial(id: number) {
+    return this.http.get<SerialColorsDTO>(`${this.baseUrl}serial/colors/${id}`);
   }
 }
