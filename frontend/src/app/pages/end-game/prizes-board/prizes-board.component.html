@@ -1,5 +1,6 @@
 @if (gamePrizes.length < 1 && gameService.gamePrizes().length < 1) {
   <h2>No se regitraron premios en esta partida</h2>
+  <button (click)="leaveGame()" mat-flat-button >Abandonar partida permanentemente</button>
 } @else {
   <div class="prizes-list-panel">
     <div class="prizes-list-header">
