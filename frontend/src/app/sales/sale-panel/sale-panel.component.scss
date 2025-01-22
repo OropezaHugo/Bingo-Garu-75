@@ -1,36 +1,85 @@
+.sale-actions-panel-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.card-preview {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.export-button {
+  background-color: #4caf50;
+  color: #fff;
+  margin: 0.5rem 0;
+  width: 100%;
+  text-align: center;
+
+  &:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+  }
+}
+
 .sale-cards-panel-div {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
   align-items: center;
-  place-content: center;
-
+  justify-content: center;
 }
 
 .sale-panel-div {
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-gap: 1rem;
-}
-
-.card-preview {
-  width: 300px;
-}
-
-.sale-actions-panel-div {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-}
-.selected-card {
-  background-color: #9d4edd;
 }
 
-@media (max-width: 900px){
+@media (max-width: 900px) {
   .sale-panel-div {
     display: flex;
     flex-direction: column;
+    align-items: center; 
+  }
+}
+
+@media (max-width: 600px) {
+  button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+
+  app-rectanglebutton {
+    font-size: 1rem;
+    padding: 0.7rem 1.8rem;
   }
 }

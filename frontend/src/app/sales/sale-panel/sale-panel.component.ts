@@ -7,6 +7,8 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {SaleCardDialogComponent} from '../sale-card-dialog/sale-card-dialog.component';
 import {RectanglebuttonComponent} from '../../components/buttons/rectanglebutton/rectanglebutton.component';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-sale-panel',
@@ -79,6 +81,38 @@ export class SalePanelComponent implements OnInit{
           this.pageSize.set(25);
         }
       })
+    }
+  }
+  exportCardAsPDF() {
+    const cardElement = document.querySelector('.card') as HTMLElement;
+    if (cardElement && this.displayedCard) {
+      const cardNumber = this.displayedCard.cardNumber;
+      html2canvas(cardElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'px',
+          format: [canvas.width, canvas.height],
+        });
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`carta_${cardNumber}.pdf`);
+      });
+    }
+  }
+
+  exportCardAsImage() {
+    const cardElement = document.querySelector('.card') as HTMLElement;
+    if (cardElement && this.displayedCard) {
+      const cardNumber = this.displayedCard.cardNumber;
+      html2canvas(cardElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = `carta_${cardNumber}.png`;
+        link.click();
+      });
     }
   }
 }
