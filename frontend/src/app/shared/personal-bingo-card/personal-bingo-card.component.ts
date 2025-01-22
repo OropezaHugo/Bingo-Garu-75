@@ -2,7 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { SerialService } from '../../core/services/serial.service';
 import { ColorService } from '../../core/services/ColorService';
-import { Card } from '../../models/card';
+import { Card } from '../../core/models/card';
 import { Subscription } from 'rxjs';
 
 @Component({

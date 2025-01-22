@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import {SerialsBasePageComponent} from "./serials/serials-base-page/serials-base-page.component";
-import {SerialsBasePageContentComponent} from "./serials/serials-base-page-content/serials-base-page-content.component";
-import {GenerateSerialContentComponent} from "./serials/generate-serial-content/generate-serial-content.component";
-import {AttachSerialContentComponent} from "./serials/attach-serial-content/attach-serial-content.component";
+import {SerialsBasePageComponent} from "./sections/serial-section/serials-base-page/serials-base-page.component";
+import {SerialsBasePageContentComponent} from "./sections/serial-section/serials-base-page-content/serials-base-page-content.component";
+import {GenerateSerialContentComponent} from "./sections/serial-section/generate-serial-content/generate-serial-content.component";
+import {AttachSerialContentComponent} from "./sections/serial-section/attach-serial-content/attach-serial-content.component";
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LobbyPage } from './pages/lobby-page/lobby-page';
 import { InstructionsComponent } from './pages/instructions/instructions.component';
-import {PatternListComponentComponent} from "./patterns/pattern-list-component/pattern-list-component.component";
-import {GamePageComponent} from './game/game-page/game-page.component';
-import {PrizesBoardComponent} from './end-game/prizes-board/prizes-board.component';
+import {PatternListComponentComponent} from "./sections/pattern-section/pattern-list-component/pattern-list-component.component";
+import {GamePageComponent} from './pages/game/game-page/game-page.component';
+import {PrizesBoardComponent} from './pages/end-game/prizes-board/prizes-board.component';
 import {HistoryComponent} from './pages/history/history.component';
 
 export const routes: Routes = [

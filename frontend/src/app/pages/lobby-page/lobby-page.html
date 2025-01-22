@@ -13,7 +13,7 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar patrones</ng-template>
       @defer (on viewport) {
-      <app-game-patterns-list/>
+      <app-game-pattern-section-list/>
       <app-pattern-list-component [inGame]="true"/>
       } @placeholder {
         <h1>Loading</h1>
@@ -37,9 +37,9 @@
         </button>
 
         @if (personalization) {
-          <app-personalization-page></app-personalization-page>
+          <app-personalization-section></app-personalization-section>
         } @else {
-          <app-exportation-page></app-exportation-page>
+          <app-exportation-section></app-exportation-section>
         }
       </div>
     } @placeholder {
@@ -49,7 +49,7 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar premios</ng-template>
       @defer (on viewport) {
-      <app-pattern-target-prizes></app-pattern-target-prizes>
+      <app-pattern-target-prize-section>></app-pattern-target-prize-section>
       } @placeholder {
         <h1>Loading</h1>
       }

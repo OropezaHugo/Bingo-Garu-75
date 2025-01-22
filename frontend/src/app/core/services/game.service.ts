@@ -1,11 +1,11 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Game} from '../../models/game';
-import {GamePatternInfo, Pattern} from '../../models/add-pattern-dialog-data';
+import {Game} from '../models/game';
+import {GamePatternInfo, Pattern} from '../models/add-pattern-dialog-data';
 import {map, Observable} from "rxjs";
-import {Serial} from "../../models/serial";
-import {GameCardInfo} from '../../models/card';
-import {PrizeData} from '../../models/round';
+import {Serial} from "../models/serial";
+import {GameCardInfo} from '../models/card';
+import {PrizeData} from '../models/round';
 
 @Injectable({
   providedIn: 'root'

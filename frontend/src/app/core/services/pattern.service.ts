@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {GamePatternInfo, NewPatternDialogData, Pattern} from '../../models/add-pattern-dialog-data';
+import {GamePatternInfo, NewPatternDialogData, Pattern} from '../models/add-pattern-dialog-data';
 import {GameService} from './game.service';
 
 @Injectable({
