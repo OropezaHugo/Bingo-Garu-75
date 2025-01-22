@@ -53,7 +53,7 @@ export class VerifyCardDialogComponent {
   gameService = inject(GameService);
   prizeFormGroup = new FormGroup({
     patternControl: new FormControl<GamePatternInfo | undefined>(undefined, Validators.required),
-    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3)]),
+    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     amountControl: new FormControl<number>(0, Validators.required)
   })
 

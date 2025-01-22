@@ -7,7 +7,7 @@
   </div>
   <mat-form-field appearance="outline">
     <mat-label>Nombre del comprador</mat-label>
-    <input matInput [formControl]="userForm"/>
+    <input matInput [formControl]="userForm" maxlength="30"/>
     <mat-hint>{{userForm.hasError('minlength') ?
       "reuiere minimo 3 caracteres":
       userForm.hasError('required') ?

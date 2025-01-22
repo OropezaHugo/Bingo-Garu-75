@@ -52,14 +52,22 @@ export class PatternTargetPrizesComponent implements OnInit {
     this.gameService.getActualGamePatternsInfo()
   }
   startGame() {
-    let dialogRef = this.dialog.open(ConfirDialogComponent, {
-      data: false
-    })
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.createRounds()
-      }
-    })
+    if(this.gameService.gameCards().length > 0 &&
+        this.gameService.gamePatternsInfo().length > 0)
+    {
+
+      let dialogRef = this.dialog.open(ConfirDialogComponent, {
+        data: false
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === true) {
+          this.createRounds()
+        }
+      })
+    } else {
+      this.snackBar.error('adjunte un serial y un patron para iniciar la partida')
+    }
+
   }
 
   createRounds(){

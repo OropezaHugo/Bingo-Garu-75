@@ -16,12 +16,8 @@
       <mat-checkbox [formControl]="roundsFormGroup.controls.hasBonus">
         Incluir ronda bonus
       </mat-checkbox>
-      @if (gameService.gameCards().length < 1 ||
-        gameService.gamePatternsInfo().length < 1) {
-        <app-rectanglebutton [disabled]="true" (click)="startGame()" text="Iniciar Partida"/>
-      } @else {
+
         <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
-      }
 
     </div>
   </div>

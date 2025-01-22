@@ -140,7 +140,11 @@ export class GameService {
         return this.http.post<boolean>(`${this.baseUrl}Serial/game`, {gameId: this.actualGame()?.id, serialId: serial.id}).subscribe({
           next: (result) => {
             if (result) {
-              this.getGameById(this.actualGame()!.id).subscribe()
+              this.getGameById(this.actualGame()!.id).subscribe({
+                next: () => {
+                  this.getCardsByGameId()
+                }
+              })
             }
           }
         })
