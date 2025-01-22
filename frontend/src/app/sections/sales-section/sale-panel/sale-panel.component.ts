@@ -9,6 +9,7 @@ import {SaleCardDialogComponent} from '../sale-card-dialog/sale-card-dialog.comp
 import {RectanglebuttonComponent} from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import { ExportCardDialogComponent } from '../export-card-dialog/export-card-dialog.component';
 
 @Component({
   selector: 'app-sale-panel',
@@ -83,36 +84,10 @@ export class SalePanelComponent implements OnInit{
       })
     }
   }
-  exportCardAsPDF() {
-    const cardElement = document.querySelector('.card') as HTMLElement;
-    if (cardElement && this.displayedCard) {
-      const cardNumber = this.displayedCard.cardNumber;
-      html2canvas(cardElement).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF({
-          orientation: 'portrait',
-          unit: 'px',
-          format: [canvas.width, canvas.height],
-        });
 
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-        pdf.save(`carta_${cardNumber}.pdf`);
-      });
-    }
-  }
-
-  exportCardAsImage() {
-    const cardElement = document.querySelector('.card') as HTMLElement;
-    if (cardElement && this.displayedCard) {
-      const cardNumber = this.displayedCard.cardNumber;
-      html2canvas(cardElement).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-
-        const link = document.createElement('a');
-        link.href = imgData;
-        link.download = `carta_${cardNumber}.png`;
-        link.click();
-      });
-    }
+  openExportDialog() {
+    this.dialog.open(ExportCardDialogComponent, {
+      width: '500px',
+    });
   }
 }

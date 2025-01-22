@@ -4,13 +4,10 @@
   <div class="sale-panel-div">
     <div class="sale-actions-panel-div">
       @if (displayedCard) {
-        <div class="card-preview">
+        <div class="card-preview-sale">
           <app-bingo-card [card]="displayedCard" [boughtBy]="displayedCardBuyer" class="card"/>
-          <button (click)="exportCardAsPDF()"class="export-button">
-            Exportar como PDF
-          </button>
-          <button (click)="exportCardAsImage()" class="export-button">
-            Exportar como Imagen
+          <button (click)="openExportDialog()" class="export-button">
+            Buscar y Exportar Carta
           </button>
         </div>
       }

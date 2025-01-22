@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Exportar Carta</h2>
+<mat-dialog-content class="export-content">
+  <form [formGroup]="searchForm">
+    <div class="search-section">
+      <mat-form-field appearance="outline">
+        <mat-label>ID de la carta</mat-label>
+        <input matInput formControlName="cardIdControl">
+        <mat-hint>Ingrese el ID de la carta a exportar</mat-hint>
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="onSearch()">Buscar</button>
+    </div>
+  </form>
+
+  @if(errorMessage) {
+    <div class="error-message">
+      <p>{{errorMessage}}</p>
+    </div>
+  }
+
+  @if (previewCard) {
+    <div class="preview-section">
+      <h3>Vista previa</h3>
+      <div class="card-preview">
+        <app-bingo-card [showOwnerInfo]="false" [card]="previewCard"/>
+      </div>
+    </div>
+  }
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions">
+  <div class="export-buttons">
+    <app-rectanglebutton
+      text="Exportar PDF"
+      color="primary"
+      [disabled]="!previewCard"
+      (click)="exportToPDF()"
+    />
+    <app-rectanglebutton
+      text="Exportar PNG"
+      color="accent"
+      [disabled]="!previewCard"
+      (click)="exportToPNG()"
+    />
+  </div>
+</mat-dialog-actions>
