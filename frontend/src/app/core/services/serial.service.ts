@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import { SerialColorsDTO } from '../../models/ColorSerials';
-import {NewSerialData, Serial} from '../../models/serial';
+import { SerialColorsDTO } from '../models/ColorSerials';
+import {NewSerialData, Serial} from '../models/serial';
 
 @Injectable({
   providedIn: 'root'

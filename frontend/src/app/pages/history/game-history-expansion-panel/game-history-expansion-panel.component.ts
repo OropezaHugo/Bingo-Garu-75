@@ -1,13 +1,13 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {HistoryService} from '../../../core/services/history.service';
-import {PrizeData} from '../../../models/round';
+import {PrizeData} from '../../../core/models/round';
 import {
   MatExpansionPanel,
   MatExpansionPanelDescription,
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import {PrizesBoardComponent} from '../../../end-game/prizes-board/prizes-board.component';
+import {PrizesBoardComponent} from '../../end-game/prizes-board/prizes-board.component';
 
 @Component({
   selector: 'app-game-history-expansion-panel',

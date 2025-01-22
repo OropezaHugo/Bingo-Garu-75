@@ -1,8 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {WeatherService} from './core/services/weather.service';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { HeaderComponent } from "./components/header/header.component";
-import { FooterComponent } from "./components/footer/footer.component";
+import { HeaderComponent } from "./shared/header/header.component";
+import { FooterComponent } from "./shared/footer/footer.component";
 import { RouterOutlet } from '@angular/router';
 
 

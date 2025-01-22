@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {PrizeData} from '../../models/round';
-import {Game} from '../../models/game';
+import {PrizeData} from '../models/round';
+import {Game} from '../models/game';
 
 
 @Injectable({
