@@ -18,7 +18,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>nombre del premiado</mat-label>
-          <input matInput [formControl]="prizeFormGroup.controls.userNameControl">
+          <input matInput [formControl]="prizeFormGroup.controls.userNameControl" maxlength="30">
           <mat-hint>minimo 3 caracteres</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline">

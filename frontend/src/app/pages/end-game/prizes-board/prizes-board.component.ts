@@ -1,21 +1,23 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {GameService} from '../../../core/services/game.service';
 import {PrizeData} from '../../../core/models/round';
-import {PrizesRowComponent} from '../prizes-row/prizes-row.component';
-import {Router} from '@angular/router';
+
+import {Router, RouterLink} from '@angular/router';
 import {RoundService} from '../../../core/services/round.service';
 import {MatDivider} from '@angular/material/divider';
 import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../../shared/dialogs/confir-dialog/confir-dialog.component';
 import {HistoryService} from '../../../core/services/history.service';
+import {PrizesRowComponent} from "../prizes-row/prizes-row.component";
 
 @Component({
   selector: 'app-prize-section-board',
   imports: [
-    PrizesRowComponent,
     MatDivider,
-    MatButton
+    MatButton,
+    RouterLink,
+    PrizesRowComponent
   ],
   templateUrl: './prizes-board.component.html',
   styleUrl: './prizes-board.component.scss'

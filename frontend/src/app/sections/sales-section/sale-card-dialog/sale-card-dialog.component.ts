@@ -36,7 +36,7 @@ export class SaleCardDialogComponent {
   readonly data = inject<GameCardInfo[]>(MAT_DIALOG_DATA);
   readonly cards = model(this.data);
 
-  userForm = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  userForm = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]);
   onNoClick(): void {
     this.dialogRef.close();
   }

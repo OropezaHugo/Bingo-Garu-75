@@ -38,37 +38,16 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25]" aria-label="Elige pagina de seriales"></mat-paginator>
   </div>
   @if (useToGenerate() === false) {
-    <div class="generate-serial-content-div" [formGroup]="serialFormGroup">
-      <mat-form-field appearance="outline" >
-        <mat-label>Cantidad de cartones</mat-label>
-        <input [formControl]="serialFormGroup.controls.quantity" matInput placeholder="Cantidad de cartones" type="number" min="5">
-        <mat-hint>min 5 cartas</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre del serial</mat-label>
-        <input [formControl]="serialFormGroup.controls.name" matInput placeholder="Nombre del serial">
-        <mat-hint>min 2 caracteres</mat-hint>
-      </mat-form-field>
-      <app-rectanglebutton (click)="createSerial()" class="button" text="Confirmar" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
+    <div class="generate-serial-content-div">
+      <app-rectanglebutton (click)="createSerial()" class="button" text="Crear Serial" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
       <div class="button-div">
         <app-rectanglebutton [disabled]="!ableToAttach" (click)="attachSerialToActualGame(selectedSerial)" class="attach-serial-button" text="Adjuntar Serial Seleccionado" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
       </div>
     </div>
 
   } @else {
-    <div class="generate-serial-content-div" [formGroup]="serialFormGroup">
-      <mat-form-field appearance="outline" >
-        <mat-label>Cantidad de cartones</mat-label>
-        <input [formControl]="serialFormGroup.controls.quantity" matInput placeholder="Cantidad de cartones" type="number" min="5">
-        <mat-hint>min 5 cartas</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre del serial</mat-label>
-        <input [formControl]="serialFormGroup.controls.name" matInput placeholder="Nombre del serial">
-        <mat-hint>min 2 caracteres</mat-hint>
-      </mat-form-field>
-      <app-rectanglebutton (click)="createSerial()" class="button" text="Confirmar" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
+    <div class="generate-serial-content-div">
+      <app-rectanglebutton (click)="createSerial()" class="button" text="Crear Serial" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
     </div>
-
   }
 </div>

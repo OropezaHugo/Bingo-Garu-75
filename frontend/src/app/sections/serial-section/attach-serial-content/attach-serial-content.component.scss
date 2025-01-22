@@ -35,6 +35,7 @@ $primary-color: #7b2cbf;
 .generate-serial-content-div {
   display: flex;
   flex-direction: column;
+  place-content: center;
   gap: 1rem;
 }
 

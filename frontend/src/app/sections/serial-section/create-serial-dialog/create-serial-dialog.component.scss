@@ -1,10 +1,16 @@
+$primary-color: #7b2cbf;
 .generate-serial-content-div {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+h2 {
+  color: $primary-color;
+  text-align: center;
 }

@@ -19,6 +19,7 @@ import {GameService} from '../../../core/services/game.service';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {Card, GameCardInfo} from '../../../core/models/card';
 import {GamePatternInfo} from '../../../core/models/add-pattern-dialog-data';
+import {SnackbarService} from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-verify-card-dialog',
@@ -48,12 +49,13 @@ export class VerifyCardDialogComponent {
   readonly dialogRef = inject(MatDialogRef<VerifyCardDialogComponent>);
   readonly data = inject<VerifyCardDialogData>(MAT_DIALOG_DATA);
   readonly verificationData = model(this.data);
+  snackBar = inject(SnackbarService)
   roundService = inject(RoundService);
   machineResponse = "no verificado";
   gameService = inject(GameService);
   prizeFormGroup = new FormGroup({
     patternControl: new FormControl<GamePatternInfo | undefined>(undefined, Validators.required),
-    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3)]),
+    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     amountControl: new FormControl<number>(0, Validators.required)
   })
 
@@ -92,6 +94,8 @@ export class VerifyCardDialogComponent {
         prizeAmount: this.prizeFormGroup.value.amountControl!,
         userName: this.prizeFormGroup.value.userNameControl
       })
+      this.snackBar.success('premio registrado')
+      this.dialogRef.close()
     }
     return
   }

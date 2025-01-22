@@ -30,18 +30,22 @@
   <mat-step>
     <ng-template matStepLabel>Ajustes y Exportacion</ng-template>
     @defer (on viewport) {
-      <div>
-        <button mat-button (click)="toggleView()" class="toggle-btn">
-          <mat-icon>swap_horiz</mat-icon>
-          {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
-        </button>
+      @if (gameService.gameCards().length < 1) {
+        <h1>Adjunta un serial para poder exportarlo y/o personalizarlo</h1>
+      } @else {
+        <div>
+          <button mat-button (click)="toggleView()" class="toggle-btn">
+            <mat-icon>swap_horiz</mat-icon>
+            {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
+          </button>
 
-        @if (personalization) {
-          <app-personalization-section></app-personalization-section>
-        } @else {
-          <app-exportation-section></app-exportation-section>
-        }
-      </div>
+          @if (personalization) {
+            <app-personalization-section></app-personalization-section>
+          } @else {
+            <app-exportation-section></app-exportation-section>
+          }
+        </div>
+      }
     } @placeholder {
       <h1>Loading</h1>
     }

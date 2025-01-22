@@ -20,8 +20,8 @@ import {SerialService} from '../../../core/services/serial.service';
 import {GameService} from '../../../core/services/game.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../../shared/dialogs/confir-dialog/confir-dialog.component';
-import {GenerateSerialContentComponent} from '../generate-serial-content/generate-serial-content.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CreateSerialDialogComponent} from '../create-serial-dialog/create-serial-dialog.component';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -98,32 +98,32 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
       })
     }
   }
-  serialFormGroup = new FormGroup({
-    quantity: new FormControl<number>(0, Validators.required),
-    name: new FormControl<string>('', [Validators.required, Validators.minLength(2)]),
-  })
   createSerial() {
-    if (this.serialFormGroup.value.quantity
-      && this.serialFormGroup.value.name
-      && this.serialFormGroup.valid) {
-      this.serialService.createSerial(
-        {
-          serialName: this.serialFormGroup.value.name,
-          cardNumber: this.serialFormGroup.value.quantity
-        }).subscribe({
-        next: (result) => {
-          if (result) {
-            this.serialService.getSerials().subscribe({
-              next: data => {
-                this.dataSource = new MatTableDataSource(data);
-                this.dataSource.sort = this.sort()
-                this.dataSource.paginator = this.paginator()
-              }
-            })
+    this.dialog.open(CreateSerialDialogComponent, {
+      data: {
+        cardNumber: 0,
+        serialName: ''
+      }
+    }).afterClosed().subscribe(result => {
+      if (result){
+        this.serialService.createSerial(
+          result).subscribe({
+          next: (result) => {
+            if (result) {
+              this.serialService.getSerials().subscribe({
+                next: data => {
+                  this.dataSource = new MatTableDataSource(data);
+                  this.dataSource.sort = this.sort()
+                  this.dataSource.paginator = this.paginator()
+                }
+              })
+            }
           }
-        }
-      })
-    }
+        })
+      }
+    })
+
+
   }
 }
 

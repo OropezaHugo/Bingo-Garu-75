@@ -17,6 +17,8 @@ $secondary-color: #fca311;
 .card-title {
   margin: 0.5rem 0;
   font-size: 2rem;
+  max-width: 300px;
+  overflow-wrap: break-word;
   color: $secondary-color;
   text-align: center;
 }
