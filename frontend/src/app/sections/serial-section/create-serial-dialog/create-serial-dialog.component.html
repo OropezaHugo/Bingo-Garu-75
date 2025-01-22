@@ -1,0 +1,17 @@
+<h2>Crea un nuevo serial</h2>
+<mat-dialog-content class="generate-serial-content-div">
+  <mat-form-field appearance="outline" >
+    <mat-label>Cantidad de cartones</mat-label>
+    <input [formControl]="serialFormGroup.controls.quantity" matInput placeholder="Cantidad de cartones" type="number" min="5">
+    <mat-hint>min 5 cartas</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Nombre del serial</mat-label>
+    <input [formControl]="serialFormGroup.controls.name" matInput placeholder="Nombre del serial">
+    <mat-hint>min 2 caracteres</mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <app-rectanglebutton (click)="createSerial()" class="button" text="Confirmar" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
+</mat-dialog-actions>
+

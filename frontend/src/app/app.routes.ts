@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import {SerialsBasePageComponent} from "./sections/serial-section/serials-base-page/serials-base-page.component";
-import {SerialsBasePageContentComponent} from "./sections/serial-section/serials-base-page-content/serials-base-page-content.component";
-import {GenerateSerialContentComponent} from "./sections/serial-section/generate-serial-content/generate-serial-content.component";
 import {AttachSerialContentComponent} from "./sections/serial-section/attach-serial-content/attach-serial-content.component";
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LobbyPage } from './pages/lobby-page/lobby-page';
