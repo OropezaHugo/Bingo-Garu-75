@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>Exportar Carta</h2>
-<mat-dialog-content class="export-content">
+<mat-dialog-content >
+  <div class="export-content">
   <form [formGroup]="searchForm">
     <div class="search-section">
       <mat-form-field appearance="outline">
@@ -9,6 +10,7 @@
       </mat-form-field>
       <button mat-flat-button color="primary" (click)="onSearch()">Buscar</button>
     </div>
+
   </form>
 
   @if(errorMessage) {
@@ -25,6 +27,7 @@
       </div>
     </div>
   }
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions class="dialog-actions">
   <div class="export-buttons">

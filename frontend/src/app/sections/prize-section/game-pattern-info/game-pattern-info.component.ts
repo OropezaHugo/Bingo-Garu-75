@@ -8,6 +8,7 @@ import {GamePatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {GameService} from '../../../core/services/game.service';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatTooltip} from '@angular/material/tooltip';
+import {SnackbarService} from "../../../core/services/snackbar.service";
 
 @Component({
   selector: 'app-game-pattern-info',
@@ -29,7 +30,7 @@ export class GamePatternInfoComponent implements OnInit {
   gamePattern = input.required<GamePatternInfo>()
   editablePrize = input<boolean>(true);
   amountForm = new FormControl<number>(0);
-
+  snackBar = inject(SnackbarService);
   ngOnInit() {
     this.amountForm.setValue(this.gamePattern().targetPrice)
   }
@@ -43,6 +44,7 @@ export class GamePatternInfoComponent implements OnInit {
         active: this.gamePattern().active,
         targetPrice: latestValue
       })
+      this.snackBar.success(`premio registrado: ${latestValue}Bs`)
     }
   }
 }

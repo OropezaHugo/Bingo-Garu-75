@@ -27,17 +27,16 @@
     </div>
     <mat-form-field appearance="outline">
       <mat-label>Ingrese el numero de la carta</mat-label>
-      <input matInput type="number">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Ingrese el usuario</mat-label>
-      <input matInput >
+      <input matInput type="number" [formControl]="cardForm">
     </mat-form-field>
     <div>
       <div class="in-game-div">
-        @for (card of getPaginatedList(); track card.cardNumber) {
-          <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
+        @if (getPaginatedList().length > 0) {
+          @for (card of getPaginatedList(); track card.cardNumber) {
+            <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
+          }
+        } @else {
+          <h2>no se encontro carta Nº {{cardForm.value}}</h2>
         }
       </div>
       <mat-paginator [length]="this.gameService.gameCards().length"
