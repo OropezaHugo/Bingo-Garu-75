@@ -8,10 +8,10 @@ export class ColorService {
   private colorsSource = new BehaviorSubject({
     StrokeColor: '#000000',
     BoxFillColor: '#FFFFFF',
-    CardFillColor: '#FFFFFF',
-    CardNameColor: '#000000',
-    BoxNumberColor: '#000000',
-    CardNumberColor: '#000000',
+    CardFillColor: '#7b2cbf',
+    CardNameColor: '#fca311',
+    BoxNumberColor: '#7b2cbf',
+    CardNumberColor: '#fca311',
   });
 
   colors$ = this.colorsSource.asObservable();

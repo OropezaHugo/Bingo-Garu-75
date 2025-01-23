@@ -9,11 +9,12 @@ import { GameService } from '../../../core/services/game.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { RectanglebuttonComponent } from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
+import { PersonalBingoCardComponent } from '../../../shared/personal-bingo-card/personal-bingo-card.component';
 
 @Component({
   selector: 'app-export-card-dialog',
   imports: [
-    BingoCardComponent,
+    PersonalBingoCardComponent,
     MatDialogTitle,
     MatLabel,
     MatInput,
@@ -66,27 +67,40 @@ export class ExportCardDialogComponent {
   }
 
   exportToPDF() {
-    const cardElement = document.querySelector('.card-preview') as HTMLElement;
-    if (cardElement && this.previewCard) {
+    const cardElement = document.querySelector('.card-preview-element') as HTMLElement;
+    if (cardElement && this.previewCard ) {
       const cardNumber = this.previewCard.cardNumber;
-      html2canvas(cardElement).then(canvas => {
+      const scale = 4;
+      html2canvas(cardElement ,{
+        scale: scale,
+        width: cardElement.scrollWidth,
+        height: cardElement.scrollHeight,
+      }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = canvas.width / scale;
+        const pdfHeight = canvas.height / scale;
+
         const pdf = new jsPDF({
           orientation: 'portrait',
           unit: 'px',
-          format: [canvas.width, canvas.height],
+          format: [pdfWidth, pdfHeight],
         });
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`carta_${cardNumber}.pdf`);
       });
     }
   }
 
   exportToPNG() {
-    const cardElement = document.querySelector('.card-preview') as HTMLElement;
+    const cardElement = document.querySelector('.card-preview-element') as HTMLElement;
     if (cardElement && this.previewCard) {
       const cardNumber = this.previewCard.cardNumber;
-      html2canvas(cardElement).then(canvas => {
+      const scale = 4;
+      html2canvas(cardElement ,{
+        scale: scale,
+        width: cardElement.scrollWidth,
+        height: cardElement.scrollHeight,
+      }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const link = document.createElement('a');
         link.href = imgData;

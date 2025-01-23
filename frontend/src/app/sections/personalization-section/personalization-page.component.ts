@@ -14,7 +14,7 @@ type PaletteId = keyof typeof DEFAULT_COLOR_PALETTES;
 })
 export class PersonalizationPageComponent {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
-  isColorPickerOpen = false;
+  isColorPickerOpen = true;
   formGroup: FormGroup;
   selectedElement: string | null = null;
   currentPalette: PaletteId = 'default';

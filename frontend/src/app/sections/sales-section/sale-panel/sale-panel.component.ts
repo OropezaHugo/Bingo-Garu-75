@@ -7,8 +7,6 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {SaleCardDialogComponent} from '../sale-card-dialog/sale-card-dialog.component';
 import {RectanglebuttonComponent} from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 import { ExportCardDialogComponent } from '../export-card-dialog/export-card-dialog.component';
 
 @Component({
@@ -84,6 +82,7 @@ export class SalePanelComponent implements OnInit{
       })
     }
   }
+
 
   openExportDialog() {
     this.dialog.open(ExportCardDialogComponent, {
