@@ -40,8 +40,6 @@ import { ExportationPageComponent } from '../../sections/exportation-section/exp
   styleUrl: './lobby-page.scss'
 })
 export class LobbyPage implements OnInit {
-
-  readonly dialog = inject(MatDialog);
   gameService = inject(GameService);
   personalization = true;
 
@@ -49,17 +47,6 @@ export class LobbyPage implements OnInit {
     this.personalization = !this.personalization;
   }
 
-  openSettingsDialog(): void {
-    const dialogRef = this.dialog.open(LobbySettingsDialogComponent, {
-      data: this.gameService.actualGame(),
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.gameService.updateGame(result);
-      }
-    });
-  }
   ngOnInit() {
     this.gameService.createNewGame().subscribe()
   }
