@@ -107,7 +107,7 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
     }).afterClosed().subscribe(result => {
       if (result){
         this.serialService.createSerial(
-          result).subscribe({
+            result).subscribe({
           next: (result) => {
             if (result) {
               this.serialService.getSerials().subscribe({

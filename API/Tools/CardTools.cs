@@ -5,49 +5,37 @@ public static class CardTools
 {
     public static List<int> GenerateContentMatrix()
     {
-        List<int> contentMatrix = new List<int>();
-        for (int i = 0; i < 25; i++)
+        var ranges = new List<(int start, int end)>
         {
-            if (i % 5 == 0)
+            (1, 15),
+            (16, 30),
+            (31, 45),
+            (46, 60),
+            (61, 75)
+        };
+        
+        List<List<int>> columns = new List<List<int>>();
+        
+        Random random = new Random();
+        foreach (var range in ranges)
+        {
+            var columnNumbers = Enumerable.Range(range.start, range.end - range.start + 1)
+                .OrderBy(x => random.Next())
+                .Take(5)
+                .ToList();
+            columnNumbers.Sort();
+            columns.Add(columnNumbers);
+        }
+        columns[2][2] = -1;
+        List<int> board = new List<int>();
+        for (int row = 0; row < 5; row++)
+        {
+            for (int col = 0; col < 5; col++)
             {
-                contentMatrix.Add(GenerateNumber(1, 16, contentMatrix));
-            }
-            else if ((i - 1) % 5 == 0)
-            {
-                contentMatrix.Add(GenerateNumber(16, 31, contentMatrix));
-            }
-            else if ((i - 2) % 5 == 0)
-            {
-                contentMatrix.Add(GenerateNumber(31, 46, contentMatrix));
-            }
-            else if ((i - 3) % 5 == 0)
-            {
-                contentMatrix.Add(GenerateNumber(46, 61, contentMatrix));
-            }
-            else
-            {
-                contentMatrix.Add(GenerateNumber(61, 76, contentMatrix));
+                board.Add(columns[col][row]);
             }
         }
-        return contentMatrix;
-    }
 
-    private static int GenerateNumber(int min, int max, List<int> content)
-    {
-        var lastColumnNumber = 0;
-        if (content.Count > 4)
-        {
-            lastColumnNumber = content[^5];
-        }
-        int generatedNumber = Random.Shared.Next(min, max);
-        while (content.Contains(generatedNumber) 
-               & generatedNumber < (max + (content.Count / 5) - 4)
-               & generatedNumber >= lastColumnNumber
-               )
-        {
-            generatedNumber = Random.Shared.Next(min, max);
-        }
-        return generatedNumber;
+        return board;
     }
-
 }

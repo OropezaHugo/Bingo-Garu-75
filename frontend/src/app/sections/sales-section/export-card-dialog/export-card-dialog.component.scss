@@ -9,16 +9,16 @@ h3 {
 }
 
 .export-content {
-  padding: 16px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
   align-items: center;
 
   .search-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1rem;
     align-items: center;
 
     mat-form-field {

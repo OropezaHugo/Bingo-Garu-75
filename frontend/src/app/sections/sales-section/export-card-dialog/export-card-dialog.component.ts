@@ -9,6 +9,7 @@ import { GameService } from '../../../core/services/game.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { RectanglebuttonComponent } from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
+import {MatButton} from '@angular/material/button';
 import { PersonalBingoCardComponent } from '../../../shared/personal-bingo-card/personal-bingo-card.component';
 
 @Component({
@@ -24,7 +25,8 @@ import { PersonalBingoCardComponent } from '../../../shared/personal-bingo-card/
     MatHint,
     MatFormFieldModule,
     ReactiveFormsModule,
-    RectanglebuttonComponent
+    RectanglebuttonComponent,
+    MatButton
   ],
   templateUrl: './export-card-dialog.component.html',
   styleUrl: './export-card-dialog.component.scss'

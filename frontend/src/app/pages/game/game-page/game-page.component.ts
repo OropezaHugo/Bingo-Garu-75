@@ -1,4 +1,4 @@
-import {Component, inject, model, OnInit} from '@angular/core';
+import {Component, inject, model, OnInit, signal} from '@angular/core';
 import {MatTab, MatTabChangeEvent, MatTabGroup} from '@angular/material/tabs';
 import {MockGameRounds, Round} from '../../../core/models/round';
 import {RoundTabComponent} from '../round-tab/round-tab.component';
@@ -21,6 +21,7 @@ import {VerifyCardDialogComponent} from '../verify-card-dialog/verify-card-dialo
 import {RoundService} from '../../../core/services/round.service';
 import {delay} from 'rxjs';
 import {Router} from '@angular/router';
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-game-page',
@@ -38,7 +39,8 @@ import {Router} from '@angular/router';
     MatLabel,
     MatInput,
     MatPaginator,
-    SaleButtonComponent
+    SaleButtonComponent,
+    ReactiveFormsModule
   ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
@@ -57,6 +59,7 @@ export class GamePageComponent implements OnInit {
   activePatterns: GamePatternInfo[] = []
   activeRound: Round | undefined = undefined
   actualTab = 0;
+  cardForm = new FormControl<string>('')
 
 
   ngOnInit() {
@@ -81,6 +84,8 @@ export class GamePageComponent implements OnInit {
   }
   getPaginatedList() {
     return this.gameService.gameCards()
+        .filter(card =>
+            card.cardNumber.toString().includes(this.cardForm.value?.toString() ?? ''))
       .slice(this.pageIndex() * this.pageSize(),
         (this.pageIndex() * this.pageSize()) + this.pageSize())
   }
