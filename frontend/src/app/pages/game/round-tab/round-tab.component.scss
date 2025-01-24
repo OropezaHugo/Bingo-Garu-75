@@ -7,6 +7,12 @@
   gap: 1rem;
 }
 
+.raffle-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
 .last-raffled-number {
   display: flex;
   flex-direction: column;
