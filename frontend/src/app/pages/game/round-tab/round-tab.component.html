@@ -1,11 +1,28 @@
 <div class="round-content-div">
   <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
-  <button [disabled]="round().raffleNumbers.length > 74" mat-flat-button (click)="raffleNumber()">Gira la tombola</button>
-  <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
-    <h3>
-      {{lastNumber}}
-    </h3>
-  </div>
+  @if (roundService.gameService.actualGame()?.automaticRaffle) {
+    <div class="raffle-actions">
+      <mat-form-field appearance="outline">
+        <mat-label>Intervalo(seg)</mat-label>
+        <input  (keyup)="pauseRaffle(); start.disabled = false; pause.disabled = true" matInput [formControl]="intervalTime" type="number">
+      </mat-form-field>
+      <button [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="startRaffle(); start.disabled = true; pause.disabled = false" #start><mat-icon>play_arrow</mat-icon></button>
+      <button [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="pauseRaffle(); pause.disabled = true; start.disabled = false" #pause><mat-icon>pause</mat-icon></button>
+      <h3>{{timeLeft}}s</h3>
+    </div>
+    <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
+      <h3>
+        {{lastNumber}}
+      </h3>
+    </div>
+  } @else {
+    <button [disabled]="round().raffleNumbers.length > 74" mat-flat-button (click)="raffleNumber()">Gira la tombola</button>
+    <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
+      <h3>
+        {{lastNumber}}
+      </h3>
+    </div>
+  }
 </div>
 
 

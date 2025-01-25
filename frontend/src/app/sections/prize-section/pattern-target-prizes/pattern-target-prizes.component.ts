@@ -46,6 +46,7 @@ export class PatternTargetPrizesComponent implements OnInit {
   roundsFormGroup = new FormGroup({
     roundNumber: new FormControl<number>(1, Validators.required),
     hasBonus: new FormControl<boolean>(false),
+    automaticRaffle: new FormControl<boolean>(false),
   })
 
   ngOnInit() {
@@ -74,6 +75,8 @@ export class PatternTargetPrizesComponent implements OnInit {
     if (this.roundsFormGroup.value.roundNumber
     && this.roundsFormGroup.value.hasBonus !== undefined
       && this.roundsFormGroup.value.hasBonus !== null
+        && this.roundsFormGroup.value.automaticRaffle !== undefined
+        && this.roundsFormGroup.value.automaticRaffle !== null
     ) {
       if (this.gameService.gameCards().length < 1) {
         this.snackBar.error('Primero adjunta un serial a la partida actual')
@@ -89,7 +92,7 @@ export class PatternTargetPrizesComponent implements OnInit {
         inProgress: true,
         finished: false,
         id: this.gameService.actualGame()!.id,
-        automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+        automaticRaffle: this.roundsFormGroup.value.automaticRaffle,
         sharePrizes: this.gameService.actualGame()!.sharePrizes,
         randomPatterns: this.gameService.actualGame()!.randomPatterns,
       })

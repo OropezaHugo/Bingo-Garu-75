@@ -16,6 +16,9 @@
       <mat-checkbox [formControl]="roundsFormGroup.controls.hasBonus">
         Incluir ronda bonus
       </mat-checkbox>
+      <mat-checkbox [formControl]="roundsFormGroup.controls.automaticRaffle">
+        activar tombola automatica
+      </mat-checkbox>
 
         <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
 
