@@ -51,6 +51,7 @@ export class PatternTargetPrizesComponent implements OnInit {
 
   ngOnInit() {
     this.gameService.getActualGamePatternsInfo()
+    this.gameService.getCardsByGameId()
   }
   startGame() {
     if(this.gameService.gameCards().length > 0 &&

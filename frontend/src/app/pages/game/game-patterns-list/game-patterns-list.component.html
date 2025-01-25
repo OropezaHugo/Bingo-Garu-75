@@ -1,6 +1,6 @@
-<h1 class="pattern-section-title">Patrones seleccionados</h1>
-<div class="selected-patterns-div">
 
+  <h1 class="pattern-section-title">Patrones seleccionados</h1>
+  <div class="selected-patterns-div">
   @for (pattern of gameService.gamePatterns(); track $index) {
     <div class="pattern-data-div">
       <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
