@@ -18,16 +18,20 @@ $accent-light: #9d4edd;
 
 .created-patterns-div {
   display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 575px;
   gap: 1rem;
 }
 .pattern-data-div {
+  border-radius: 0.5rem;
+  border: 2px solid $primary-color;
   display: flex;
   flex-direction: column;
   max-width: 196px;
   align-items: center;
+  padding: 0.5rem;
 }
 
 .pattern-name-text {

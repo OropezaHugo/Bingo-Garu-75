@@ -11,8 +11,10 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar patrones</ng-template>
       @defer (on viewport) {
-      <app-game-pattern-section-list/>
-      <app-pattern-list-component [inGame]="true"/>
+        <div class="pattern-section-div">
+          <app-game-pattern-section-list/>
+          <app-pattern-list-component [inGame]="true"/>
+        </div>
       } @placeholder {
         <h1>Loading</h1>
       }

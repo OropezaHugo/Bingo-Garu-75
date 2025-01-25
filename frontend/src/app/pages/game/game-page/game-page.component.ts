@@ -112,6 +112,7 @@ export class GamePageComponent implements OnInit {
 
 
   verifyCardDialog(card: GameCardInfo) {
+    this.roundService.getRounds()
     this.rounds = this.roundService.actualRounds();
     this.activeRound = this.roundService.actualRounds().find(round => round.id == this.activeRound?.id)
     this.activePatterns = this.gameService.gamePatternsInfo()
@@ -119,7 +120,7 @@ export class GamePageComponent implements OnInit {
     this.dialog.open(VerifyCardDialogComponent, {
       data: {
         card: card,
-        raffledNumbers: this.activeRound?.raffleNumbers,
+        raffledNumbers: this.activeRound?.raffleNumbers ?? [],
         patterns: this.activePatterns,
         roundId: this.activeRound?.id
       },
