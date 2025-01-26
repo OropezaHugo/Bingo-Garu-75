@@ -1,75 +1,84 @@
 $primary-color: #7b2cbf;
-$text: #fff;
+$text: #2d3748;
 $secondary-color: #FCA311;
-$text-color: #2d3748;
+$text-color: #FFF;
 $gradient-start: #7b2cbf;
 $gradient-end: #9d4edd;
 
 .manual-container {
-  max-width: 800px;
-  margin: 70px auto 0;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-  color: $text-color;
-  background: linear-gradient(135deg, $gradient-start, $gradient-end);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: bold;
+  padding: 2rem;
+  background: #f7f7f7;
+  border-radius: 16px;
   color: $text;
-  text-align: center;
-  margin-bottom: 20px;
-}
+  font-family: Arial, sans-serif;
 
-.description {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  text-align: justify;
-  color: $text;
-}
+  .sections-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
 
-.section {
-  margin-bottom: 30px;
-}
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
 
-.section-title {
-  font-size: 1.5rem;
-  color: $secondary-color;
-  margin-bottom: 15px;
-}
+  .title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: $primary-color;
+  }
 
-.subsection-title {
-  font-size: 1.25rem;
-  color: $secondary-color;
-  margin-bottom: 10px;
-}
+  .description {
+    font-size: 1.2rem;
+    text-align: justify;
+    margin-bottom: 2rem;
+    color: $text;
 
-.features-list, .functionality-list {
-  list-style: none;
-  padding-left: 0;
-}
+  }
 
-.features-list li, .functionality-list li {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  position: relative;
-  padding-left: 20px;
-  color: $text;
-}
+  .section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid $text-color;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-.features-list li::before, .functionality-list li::before {
-  content: '\2022';
-  color: $secondary-color;
-  font-weight: bold;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: $primary-color;
+    }
 
-strong {
-  color: $secondary-color;
+    .features-list {
+      list-style: none;
+      padding-left: 1.5rem;
+
+      li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: $text;
+
+        ul {
+          list-style: circle;
+          margin-left: 1.5rem;
+          color: $text;
+        }
+      }
+    }
+
+    .functionality-list {
+      list-style: disc;
+      padding-left: 1.5rem;
+
+      li {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: $text;
+      }
+    }
+  }
 }
