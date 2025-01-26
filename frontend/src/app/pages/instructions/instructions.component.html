@@ -5,38 +5,111 @@
     Esta aplicación está diseñada para la gestión de cartones y partidas de Bingo 75. Uno de los conceptos clave en la aplicación es el <strong>SERIAL</strong>, que representa un conjunto o lote de cartones.
   </p>
 
-  <section class="section">
-    <h2 class="section-title">Instrucciones para Gestionar Seriales</h2>
-    <ul class="features-list">
-      <li>Se mostrará una tabla con todos los seriales existentes, incluyendo columnas de <strong>Nombre</strong>, <strong>Tamaño</strong>, y <strong>Fecha de Creación</strong>.</li>
-      <li>Se puede filtrar por:
-        <ul>
-          <li><strong>Tamaño:</strong> De más cartones a menos.</li>
-          <li><strong>Fecha de Creación:</strong> De más antigua a más reciente.</li>
-        </ul>
-      </li>
-      <li>Se puede buscar por el <strong>Nombre</strong> de los seriales.</li>
-    </ul>
+  <div class="sections-container">
+    <!-- Sección Seriales -->
+    <section class="section">
+      <h2 class="section-title">Instrucciones para Gestionar Seriales</h2>
+      <ul class="features-list">
+        <li>Se mostrará una tabla con todos los seriales existentes, incluyendo columnas de <strong>Nombre</strong>, <strong>Tamaño</strong>, y <strong>Fecha de Creación</strong>.</li>
+        <li>Se puede filtrar por:
+          <ul>
+            <li><strong>Tamaño:</strong> De más cartones a menos.</li>
+            <li><strong>Fecha de Creación:</strong> De más antigua a más reciente.</li>
+          </ul>
+        </li>
+        <li>Se puede buscar por el <strong>Nombre</strong> de los seriales.</li>
+      </ul>
 
-    <h3 class="subsection-title">Funcionalidades</h3>
-    <ul class="functionality-list">
-      <li>Añadir nuevos seriales.</li>
-      <li>Editar el <strong>Nombre</strong> de un serial (no su contenido).</li>
-      <li>Eliminar seriales existentes.</li>
-    </ul>
-  </section>
+      <h3 class="subsection-title">Funcionalidades</h3>
+      <ul class="functionality-list">
+        <li>Añadir nuevos seriales mediante un modal donde se ingresa el nombre y cantidad de cartones.</li>
+        <li>Editar el <strong>Nombre</strong> de un serial existente.</li>
+        <li>Eliminar seriales existentes.</li>
+      </ul>
+    </section>
 
-  <section class="section">
-    <h2 class="section-title">Instrucciones para Gestionar Patrones</h2>
-    <ul class="features-list">
-      <li>Se mostrará una lista de todos los patrones existentes con su <strong>Nombre</strong> y una <strong>previsualización</strong> del mismo.</li>
-    </ul>
+    <!-- Sección Patrones -->
+    <section class="section">
+      <h2 class="section-title">Instrucciones para Gestionar Patrones</h2>
+      <ul class="features-list">
+        <li>Se mostrará una lista de todos los patrones existentes con su <strong>Nombre</strong> y una <strong>previsualización</strong> del mismo.</li>
+      </ul>
 
-    <h3 class="subsection-title">Funcionalidades</h3>
-    <ul class="functionality-list">
-      <li>Añadir nuevos patrones.</li>
-      <li>Editar el <strong>Nombre</strong> y el contenido del patrón.</li>
-      <li>Eliminar patrones existentes.</li>
-    </ul>
-  </section>
+      <h3 class="subsection-title">Funcionalidades</h3>
+      <ul class="functionality-list">
+        <li>Añadir nuevos patrones mediante un modal que incluye un tablero 5x5 para definir el diseño.</li>
+        <li>Editar el <strong>Nombre</strong> y el contenido del patrón existente mediante un modal interactivo.</li>
+        <li>Eliminar patrones existentes.</li>
+      </ul>
+    </section>
+
+    <!-- Sección Partidas -->
+    <section class="section">
+      <h2 class="section-title">Instrucciones para Gestionar Historial de Partidas</h2>
+      <ul class="features-list">
+        <li>Se mostrará una lista de partidas disponibles.</li>
+        <li>Al seleccionar una partida, se desplegarán los datos de cada ronda, incluyendo:
+          <ul>
+            <li><strong>Ronda</strong></li>
+            <li><strong>Figura</strong></li>
+            <li><strong>Ganador</strong></li>
+            <li><strong>Monto</strong></li>
+          </ul>
+        </li>
+        <li>Al lado del número de la partida, se mostrará el monto total premiado en todas las rondas.</li>
+      </ul>
+    </section>
+  </div>
+
+    <!-- Sección Crear Nueva Partida -->
+    <section class="section">
+      <h2 class="section-title">Instrucciones Crear Nueva Partida</h2>
+      <p>Al acceder al Home Page, encontrarás un atajo llamado <strong>"Iniciar/Continuar Partida"</strong>. Este te llevará a una serie de pasos divididos en cinco configuraciones principales:</p>
+
+      <ol class="step-list">
+        <li>
+          <strong>Adjuntar Serial:</strong>
+          <p>Se mostrará una tabla con los seriales existentes. Podrás seleccionar uno para adjuntarlo a la partida. La tabla incluirá columnas como Nombre, Número de Cartas, y Fecha de Creación. También existe la opción de crear un nuevo serial mediante un modal que solicita el Nombre y el Número de Cartas.</p>
+        </li>
+
+        <li>
+          <strong>Adjuntar Patrones:</strong>
+          <p>Esta sección está dividida en dos partes:</p>
+          <ul>
+            <li><strong>Patrones Existentes:</strong> Lista de patrones actuales con su previsualización y nombre. Podrás editar, eliminar o adjuntar un patrón a la partida. También existe la opción de crear nuevos patrones.</li>
+            <li><strong>Patrones Seleccionados:</strong> Muestra los patrones adjuntados a la partida. Puedes quitar un patrón si lo deseas.</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>Venta de Seriales:</strong>
+          <p>En esta etapa, puedes:</p>
+          <ul>
+            <li>Visualizar una previsualización de cualquier carta seleccionada.</li>
+            <li>Seleccionar uno o más cartones y venderlos. Los cartones tienen los siguientes colores según su estado: Rojo (no vendido), Verde (vendido), Azul (seleccionado).</li>
+            <li>Buscar y exportar cartas individuales mediante un modal que genera un PDF o PNG del cartón seleccionado.</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>Ajustes y Exportación:</strong>
+          <p>Configura el diseño de las cartas, incluyendo:</p>
+          <ul>
+            <li>Colores de contorno, fondo, números y texto mediante un selector de color.</li>
+            <li>Patrones predeterminados o personalizaciones completas.</li>
+          </ul>
+          <p>Además, puedes exportar múltiples cartas a PDF en lotes de hasta 150 unidades. Si tienes más cartas, se dividirán automáticamente en varios archivos.</p>
+        </li>
+
+        <li>
+          <strong>Adjuntar Premios:</strong>
+          <p>Define los premios para cada patrón seleccionado. Los premios pueden ser objetivos, con posibilidad de compartirlos entre varios ganadores en caso de empate. También puedes:</p>
+          <ul>
+            <li>Configurar el número de rondas para la partida.</li>
+            <li>Incluir rondas bonus.</li>
+            <li>Activar la tómbola automática para intervalos de extracción de números.</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
 </div>
