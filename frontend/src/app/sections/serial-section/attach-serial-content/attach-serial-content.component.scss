@@ -1,19 +1,60 @@
 $secondary-color: #fca311;
 $primary-color: #7b2cbf;
+$background-color: #f7f7f7;
+$table-border-color: #ddd;
+$text-color: #333;
 
 .serial-searcher {
   min-width: 100%;
+  margin-bottom: 1rem;
+  mat-form-field {
+    background: white;
+    border-radius: 8px;
+  }
 }
+
 .attach-serial-content-div {
-  padding-top: 1.5rem;
+  padding: 2rem;
   display: grid;
   grid-template-columns: 4fr 1fr;
-  grid-gap: 4rem;
-  place-content: space-between;
+  grid-gap: 2rem;
+  background-color: $background-color;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
 .example-table {
-  border-bottom: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+  border: 1px solid $table-border-color;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background-color: $primary-color;
+    color: white;
+    font-weight: bold;
+  }
+
+  tr:hover {
+    background-color: $secondary-color;
+  }
+
+  .mat-column-cardQuantity,
+  .mat-column-creationDate,
+  .mat-column-serialName {
+    border: 1px solid $table-border-color;
+  }
 }
+
 .serial-table-header {
   color: $primary-color;
 }
@@ -34,6 +75,7 @@ $primary-color: #7b2cbf;
   color: white;
   font-weight: bold;
 }
+
 .generate-serial-content-div {
   display: flex;
   flex-direction: column;
@@ -46,6 +88,7 @@ $primary-color: #7b2cbf;
   justify-content: center;
   align-items: center;
 }
+
 
 @media (max-width: 900px){
 
