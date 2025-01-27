@@ -29,7 +29,7 @@ export class CreateSerialDialogComponent {
 
 
   serialFormGroup = new FormGroup({
-    quantity: new FormControl<number>(this.newSerialData().cardNumber, Validators.required),
+    quantity: new FormControl<number>(this.newSerialData().cardNumber, [Validators.required, Validators.max(1000)]),
     name: new FormControl<string>('', [Validators.required, Validators.minLength(2)]),
   })
   createSerial() {

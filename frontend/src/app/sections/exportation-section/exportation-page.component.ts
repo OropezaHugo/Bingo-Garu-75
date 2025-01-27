@@ -16,7 +16,7 @@ export class ExportationPageComponent implements OnInit {
   @ViewChild('cardsGrid') cardsGrid!: ElementRef;
   cardsArray: Card[] = [];
   paginatedCards: Card[][] = [];
-  cardsPerPage = 150;
+  cardsPerPage = 100;
   currentPage = 0;
   isExporting = false;
   statusMessage = '';

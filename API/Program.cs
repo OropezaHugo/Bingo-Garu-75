@@ -1,3 +1,4 @@
+using System.Net;
 using API.Profiles;
 using Core.Interfaces;
 using Infrastructure.BingoContext;
@@ -6,10 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddDbContext<Bingo75Context>(optionsBuilder =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Bingo75ConnectionString");
     optionsBuilder.UseSqlServer(connectionString);
+});
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, 5075); 
 });
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -23,10 +30,9 @@ var app = builder.Build();
 app.UseCors(policyBuilder =>
 {
     policyBuilder
-        .AllowCredentials()
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .WithOrigins("http://localhost:4200");
+        .AllowAnyOrigin();
 });
 app.MapControllers();
 
