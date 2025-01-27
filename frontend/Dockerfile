@@ -1,16 +1,14 @@
-# Imagen base de Node.js para construir Angular
-FROM node:20 AS build
-WORKDIR /app
+FROM node:18-alpine
 
-# Instalar dependencias y construir
-COPY package.json package-lock.json ./
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install -g @angular/cli
 RUN npm install
-COPY . .
-RUN npm run build --prod
 
-# Imagen base de Nginx para servir la aplicación
-FROM nginx:alpine
-COPY --from=build /app/dist/frontend /usr/share/nginx/html
-# Expone el puerto de la aplicación
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY . .
+
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll=2000"]

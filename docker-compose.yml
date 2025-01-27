@@ -1,34 +1,44 @@
-
 services:
   sql:
     image: mcr.microsoft.com/azure-sql-edge
     environment:
-      ACCEPT_EULA: "1"
-      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:-Password@1}
     ports:
-      - "${SQL_PORT}:1433"
+      - "${SQL_PORT:-1433}:1433"
     volumes:
-      - sql-datas:/var/opt/mssql
+      - sql-data:/var/opt/mssql
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
   backend:
     build:
       context: .
-      dockerfile: ./API/Dockerfile
+      dockerfile: API/Dockerfile
     ports:
-      - "${API_PORT}:80"
+      - "${API_PORT:-5075}:80"
     environment:
-      - ConnectionStrings__AuthContextString=Server=sql,1433;Database=bingoGaru;User Id=SA;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Bingo75ConnectionString=Server=sql,1433;Database=bingoGaru;User Id=sa;Password=${MSSQL_SA_PASSWORD:-Password@1};TrustServerCertificate=True
     depends_on:
-      - sql
+      sql:
+        condition: service_healthy
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "${FRONTEND_PORT}:4200"
+      - "${FRONTEND_PORT:-4200}:4200"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - backend
 
 volumes:
-  sql-datas:
+  sql-data:
