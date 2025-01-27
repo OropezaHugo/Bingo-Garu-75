@@ -30,10 +30,9 @@ var app = builder.Build();
 app.UseCors(policyBuilder =>
 {
     policyBuilder
-        .AllowCredentials()
         .AllowAnyMethod()
         .AllowAnyHeader()
-        .WithOrigins("http://localhost:4200");
+        .AllowAnyOrigin();
 });
 app.MapControllers();
 

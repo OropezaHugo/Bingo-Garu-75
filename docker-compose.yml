@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: API/Dockerfile
     ports:
-      - "${API_PORT:-5075}:80"
+      - "${API_PORT:-5075}:5075"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Bingo75ConnectionString=Server=sql,1433;Database=bingoGaru;User Id=sa;Password=${MSSQL_SA_PASSWORD:-Password@1};TrustServerCertificate=True
