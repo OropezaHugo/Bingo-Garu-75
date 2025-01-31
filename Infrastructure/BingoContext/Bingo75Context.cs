@@ -66,6 +66,66 @@ public class Bingo75Context(DbContextOptions options): DbContext(options)
             .WithMany(r => r.Prizes)
             .HasForeignKey(p => p.RoundId)
             .OnDelete(DeleteBehavior.Restrict); 
+
+        modelBuilder.Entity<Pattern>().HasData(
+            new Pattern
+            {
+                Id = 1,
+                PatternMatrix = new List<bool> 
+                { 
+                    true, false, false, false, true,
+                    true, false, false, false, true,
+                    true, true, true, true, true,
+                    true, false, false, false, true,
+                    true, false, false, false, true
+                },
+                PatternName = "H"
+            },
+            new Pattern
+            {
+                Id = 2,
+                PatternMatrix = new List<bool> 
+                { 
+                    true, false, false, false, true,
+                    false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false, false,
+                    true, false, false, false, true
+                },
+                PatternName = "4 Esquinas"
+            },
+            new Pattern
+            {
+                Id = 3,
+                PatternMatrix = new List<bool> 
+                { 
+                    false, false, true, false, false,
+                    false, false, true, false, false,
+                    false, false, true, false, false,
+                    false, false, true, false, false,
+                    false, false, true, false, false
+                },
+                PatternName = "Línea Vertical"
+            }
+        );
+
+        DateOnly currentDate = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        modelBuilder.Entity<Serial>().HasData(
+            new Serial
+            {
+                Id = 1,
+                SerialName = "Serial-Default-50",
+                CreationDate = currentDate,
+                StrokeColor = "#000000",
+                BoxFillColor = "#ffffff",
+                CardFillColor = "#7b2cbf",
+                CardNameColor = "#fca311",
+                BoxNumberColor = "#7b2cbf",
+                CardNumberColor = "#7b2cbf"
+            }
+        );
+
         base.OnModelCreating(modelBuilder);
     }
 }
