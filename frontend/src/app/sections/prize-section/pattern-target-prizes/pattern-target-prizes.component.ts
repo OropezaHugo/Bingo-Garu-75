@@ -38,66 +38,12 @@ import {SnackbarService} from '../../../core/services/snackbar.service';
 })
 export class PatternTargetPrizesComponent implements OnInit {
   gameService = inject(GameService);
-  roundService = inject(RoundService);
-  snackBar = inject(SnackbarService);
-  dialog = inject(MatDialog);
-  router = inject(Router);
 
-  roundsFormGroup = new FormGroup({
-    roundNumber: new FormControl<number>(1, Validators.required),
-    hasBonus: new FormControl<boolean>(false),
-    automaticRaffle: new FormControl<boolean>(false),
-  })
+
 
   ngOnInit() {
     this.gameService.getActualGamePatternsInfo()
     this.gameService.getCardsByGameId()
   }
-  startGame() {
-    if(this.gameService.gameCards().length > 0 &&
-        this.gameService.gamePatternsInfo().length > 0)
-    {
 
-      let dialogRef = this.dialog.open(ConfirDialogComponent, {
-        data: false
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.createRounds()
-        }
-      })
-    } else {
-      this.snackBar.error('adjunte un serial y un patron para iniciar la partida')
-    }
-
-  }
-
-  createRounds(){
-    if (this.roundsFormGroup.value.roundNumber
-    && this.roundsFormGroup.value.hasBonus !== undefined
-      && this.roundsFormGroup.value.hasBonus !== null
-        && this.roundsFormGroup.value.automaticRaffle !== undefined
-        && this.roundsFormGroup.value.automaticRaffle !== null
-    ) {
-      if (this.gameService.gameCards().length < 1) {
-        this.snackBar.error('Primero adjunta un serial a la partida actual')
-      }
-      if (this.gameService.gamePatternsInfo().length < 1) {
-        this.snackBar.error('Primero adjunta al menos 1 patron a la partida actual')
-      }
-      this.roundService.postRounds({
-        roundQuantity: this.roundsFormGroup.value.roundNumber,
-        hasBonusRound: this.roundsFormGroup.value.hasBonus
-      })
-      this.gameService.updateGame({
-        inProgress: true,
-        finished: false,
-        id: this.gameService.actualGame()!.id,
-        automaticRaffle: this.roundsFormGroup.value.automaticRaffle,
-        sharePrizes: this.gameService.actualGame()!.sharePrizes,
-        randomPatterns: this.gameService.actualGame()!.randomPatterns,
-      })
-      this.router.navigate(['/game']);
-    }
-  }
 }

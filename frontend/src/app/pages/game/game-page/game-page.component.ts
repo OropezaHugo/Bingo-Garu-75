@@ -86,8 +86,6 @@ export class GamePageComponent implements OnInit {
     return this.gameService.gameCards()
         .filter(card =>
             card.cardNumber.toString().includes(this.cardForm.value?.toString() ?? ''))
-      .slice(this.pageIndex() * this.pageSize(),
-        (this.pageIndex() * this.pageSize()) + this.pageSize())
   }
   endRound(index: number) {
     let dialogRef = this.dialog.open(ConfirDialogComponent, {

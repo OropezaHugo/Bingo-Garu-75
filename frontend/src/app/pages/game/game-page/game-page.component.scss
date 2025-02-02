@@ -31,11 +31,13 @@ h4 {
 }
 .in-game-div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
+  justify-self: start;
   gap: 1rem;
-  max-height: 500px;
-  overflow-y: scroll;
+  max-height: 300px;
+  overflow-x: scroll;
+  
 }
 
 .in-game-card-cell {

@@ -19,14 +19,6 @@
         <h1>Loading</h1>
       }
     </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Venta de Seriales</ng-template>
-      @defer (on viewport) {
-      <app-sale-panel/>
-      } @placeholder {
-        <h1>Loading</h1>
-      }
-    </mat-step>
   <mat-step>
     <ng-template matStepLabel>Personalizacion y Exportacion</ng-template>
     @defer (on viewport) {
@@ -51,6 +43,15 @@
     }
   </mat-step>
     <mat-step>
+      <ng-template matStepLabel>Venta de Seriales</ng-template>
+      @defer (on viewport) {
+      <app-sale-panel/>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
+
+    <mat-step>
       <ng-template matStepLabel>Adjuntar premios</ng-template>
       @defer (on viewport) {
       <app-pattern-target-prize-section>></app-pattern-target-prize-section>
@@ -58,6 +59,14 @@
         <h1>Loading</h1>
       }
     </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Generar invitacion</ng-template>
+    @defer (on viewport) {
+        <app-invitation-section/>
+    } @placeholder {
+      <h1>Loading</h1>
+    }
+  </mat-step>
 </mat-stepper>
 
 
