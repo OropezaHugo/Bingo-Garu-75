@@ -39,14 +39,6 @@
           <h2>no se encontro carta Nº {{cardForm.value}}</h2>
         }
       </div>
-      <mat-paginator [length]="this.gameService.gameCards().length"
-                     [pageSize]="pageSize()"
-                     [pageSizeOptions]="pageSizeOptions"
-                     [pageIndex]="pageIndex()"
-                     (page)="updateLocalPagination($event)"
-                     showFirstLastButtons="true"
-                     aria-label="Select page">
-      </mat-paginator>
     </div>
     <button (click)="finishGame()" mat-stroked-button>Terminar partida</button>
   </div>

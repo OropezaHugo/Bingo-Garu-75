@@ -18,33 +18,34 @@
   flex-direction: column;
   background-color: red;
   color: white;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 1rem;
+  width: 6rem;
+  height: 6rem;
+  border-radius: 5rem;
   place-content: center;
 }
 .animated {
-  animation: fallDown 1s linear;
+  animation: fallDown 0.5s linear;
 }
-h3 {
+h2 {
   margin: 0;
   padding: 0;
+  font-size: 4rem;
   text-align: center;
 }
 
 @keyframes fallDown {
   0% {
-    transform: translateY(-50vh);
-    height: 6rem;
-    width: 6rem;
+    transform: translateY(-70vh);
+    height: 8rem;
+    width: 8rem;
     background-color: blue;
     color: white;
-    border-radius: 3rem;
+    border-radius: 7rem;
   }
   100% {
     transform: translateY(0);
-    height: 2rem;
-    width: 2rem;
-    border-radius: 1rem;
+    height: 6rem;
+    width: 6rem;
+    border-radius: 5rem;
   }
 }

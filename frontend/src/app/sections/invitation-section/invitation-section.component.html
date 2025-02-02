@@ -28,11 +28,11 @@
       <mat-hint>formato 24h</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Dinero en premios</mat-label>
+      <mat-label>Dinero en premios(Bs)</mat-label>
       <input matInput [formControl]="gamePricesForm" >
     </mat-form-field>
     <mat-checkbox [formControl]="withOfferForm">
-      Oferta 2x1
+      Incluir Oferta 2x1
     </mat-checkbox>
   </div>
   <div id="content-to-export" class="generate-invitation-div">
@@ -65,7 +65,7 @@
       }
     </div>
     <div class="invitation-pattern-info">
-      <h3>{{gameService.gameCards().length}} cartones en juego</h3>
+      <h3>{{gameService.gameCards().length}} cartones en venta</h3>
       @if (withOfferForm.value === true) {
         <h3>Compra al 2x1</h3>
       }
