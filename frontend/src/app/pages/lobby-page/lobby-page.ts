@@ -17,6 +17,7 @@ import {SalePanelComponent} from '../../sections/sales-section/sale-panel/sale-p
 import {PatternTargetPrizesComponent} from '../../sections/prize-section/pattern-target-prizes/pattern-target-prizes.component';
 import { PersonalizationPageComponent } from "../../sections/personalization-section/personalization-page.component";
 import { ExportationPageComponent } from '../../sections/exportation-section/exportation-page.component';
+import {InvitationSectionComponent} from '../../sections/invitation-section/invitation-section.component';
 
 
 @Component({
@@ -34,8 +35,9 @@ import { ExportationPageComponent } from '../../sections/exportation-section/exp
     SalePanelComponent,
     PatternTargetPrizesComponent,
     PersonalizationPageComponent,
-    ExportationPageComponent
-],
+    ExportationPageComponent,
+    InvitationSectionComponent
+  ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
 })

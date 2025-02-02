@@ -1,0 +1,35 @@
+.invitation-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.start-game-div {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  place-content: start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.generate-invitation-div {
+  background-color: cornflowerblue;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 1rem;
+  border: 1rem solid yellow;
+  min-width: 800px;
+  max-width: 900px;
+}
+
+.water-mark {
+  place-self: center;
+  position: absolute;
+  opacity: 20%;
+}
+.invitation-pattern-info {
+  display: flex;
+  flex-direction: row;
+  padding: 0 5rem;
+  place-content: space-between;
+}
