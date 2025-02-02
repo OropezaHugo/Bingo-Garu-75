@@ -1,3 +1,28 @@
 <div class="patterns-page">
-  <app-pattern-list-component/>
+  <h1 class="pattern-section-title">Gestión de Patrones</h1>
+  <div class="pattern-actions">
+    <button matTooltip="añadir patron" mat-icon-button (click)="openCreatePatternDialog()"><mat-icon>add</mat-icon></button>
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar Por Nombre</mat-label>
+      <input (keyup)="filterPatterns($event)" matInput placeholder="Buscar Por Nombre">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="patterns-grid">
+    @for (pattern of patternService.patterns(); track $index) {
+      <div class="pattern-card">
+        <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
+        <h3 class="pattern-name-text">{{ pattern.patternName }}</h3>
+        <div class="existent-pattern-actions">
+          <button mat-icon-button (click)="openEditPatternDialog(pattern)" matTooltip="Editar patrón">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deletePattern(pattern)" matTooltip="Eliminar patrón">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
 </div>
