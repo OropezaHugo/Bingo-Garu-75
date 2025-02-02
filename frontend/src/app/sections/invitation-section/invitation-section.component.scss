@@ -2,9 +2,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem 0;
   gap: 1rem;
 }
 
+.start-game-div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 .generate-invitation-div {
   background: linear-gradient(135deg, #7b2cbf, #9d4edd);
   display: flex;
@@ -72,7 +79,7 @@
 }
 
 .invitation-pattern-info:nth-child(even) {
-  background: rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid white;
 }
 
 mat-divider {

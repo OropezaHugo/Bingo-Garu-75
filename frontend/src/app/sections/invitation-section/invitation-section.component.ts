@@ -76,6 +76,8 @@ export class InvitationSectionComponent implements OnInit {
   eventTimeForm = new FormControl<string>('13:30', Validators.pattern('^([01]?[0-9]|2[0-3]):[0-5][0-9]$'))
   withOfferForm = new FormControl<boolean>(false)
   ngOnInit() {
+    this.gameService.getActualGamePrizes()
+    this.gameService.getActualGamePatterns()
     this.gameService.getActualGamePatternsInfo()
     this.gameService.getCardsByGameId()
   }

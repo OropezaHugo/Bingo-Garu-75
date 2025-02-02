@@ -62,12 +62,7 @@
   <mat-step>
     <ng-template matStepLabel>Generar invitacion</ng-template>
     @defer (on viewport) {
-      @if (gameService.gameCards().length < 1 || gameService.gamePatternsInfo().length < 1) {
-        <h1>Adjunta 1 serial y almenos 1 patron para continuar</h1>
-      } @else {
         <app-invitation-section/>
-      }
-
     } @placeholder {
       <h1>Loading</h1>
     }
