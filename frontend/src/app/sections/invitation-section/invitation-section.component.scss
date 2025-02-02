@@ -4,32 +4,79 @@
   align-items: center;
   gap: 1rem;
 }
-.start-game-div {
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: row;
-  place-content: start;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
+
 .generate-invitation-div {
-  background-color: cornflowerblue;
+  background: linear-gradient(135deg, #7b2cbf, #9d4edd);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 3rem 1rem;
-  border: 1rem solid yellow;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   min-width: 800px;
   max-width: 900px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.generate-invitation-div h1,
+.generate-invitation-div h2,
+.generate-invitation-div h3,
+.generate-invitation-div h4 {
+  margin: 0.5rem 0;
+}
+
+.generate-invitation-div h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #FCA311;
+}
+
+.generate-invitation-div h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.generate-invitation-div h3 {
+  font-size: 1.5rem;
+}
+
+.generate-invitation-div h4 {
+  font-size: 1.2rem;
 }
 
 .water-mark {
-  place-self: center;
   position: absolute;
-  opacity: 20%;
+  opacity: 0.1;
+  width: 70%;
+  max-width: 400px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
+
 .invitation-pattern-info {
   display: flex;
   flex-direction: row;
-  padding: 0 5rem;
-  place-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.invitation-pattern-info:nth-child(even) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+mat-divider {
+  background: rgba(255, 255, 255, 0.4);
+  height: 2px;
+  margin: 1rem 0;
 }
