@@ -1,44 +1,6 @@
 $primary-color: #7b2cbf;
 $secondary-color: #fca311;
+.selected-patterns-div {
 
-.in-game-patterns {
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  max-height: 700px;
-  max-width: 244px;
-  gap: 1rem;
-}
 
-.pattern-data-div {
-  display: flex;
-  flex-direction: column;
-  max-width: 196px;
-  padding: 0.5rem;
-  border: 2px solid $primary-color;
-  border-radius: 0.5rem;
-}
-
-.pattern-name-text {
-  height: 3rem;
-}
-
-.lobby-actions {
-  display: flex;
-  flex-direction: row;
-  place-content: flex-end;
-  margin-top: 3rem;
-  padding-bottom: 1rem;
-}
-
-.icon-button-settings {
-  color: $secondary-color;
-  scale: 3;
-}
-.pattern-name-text {
-  color: $secondary-color;
-}
-.pattern-section-title {
-  color: $primary-color;
 }

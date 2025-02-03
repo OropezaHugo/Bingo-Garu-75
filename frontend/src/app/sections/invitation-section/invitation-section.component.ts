@@ -95,6 +95,14 @@ export class InvitationSectionComponent implements OnInit {
       })
       dialogRef.afterClosed().subscribe(result => {
         if (result === true) {
+          this.gameService.updateGame({
+            finished: this.gameService.actualGame()!.finished,
+            inProgress: true,
+            id: this.gameService.actualGame()!.id,
+            automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+            sharePrizes: this.gameService.actualGame()!.sharePrizes,
+            randomPatterns: this.gameService.actualGame()!.randomPatterns,
+          })
           this.router.navigateByUrl('/game')
         }
       })

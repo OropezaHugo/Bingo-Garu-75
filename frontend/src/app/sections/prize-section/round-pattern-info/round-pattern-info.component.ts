@@ -58,4 +58,11 @@ export class RoundPatternInfoComponent implements OnInit {
     })
     this.roundService.getRounds()
   }
+  reloadRoundPatterns() {
+    this.roundService.getPatternsInfoByRoundId(this.round().id!).subscribe({
+      next: result => {
+        this.roundPatterns = result
+      }
+    })
+  }
 }

@@ -1,6 +1,10 @@
-
-<mat-stepper >
-
+@if (!gameService.actualGame()?.inProgress) {
+  <button mat-raised-button (click)="cancelGame()">Deshacer configuraciones</button>
+} @else if (gameService.actualGame()?.inProgress){
+  <button mat-raised-button (click)="continueGameInProgress()">Continuar ultima partida</button>
+  <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
+}
+<mat-stepper>
   <mat-step>
     <ng-template matStepLabel>Configuracion inicial</ng-template>
     @defer (on viewport) {

@@ -3,9 +3,15 @@ $secondary-color: #fca311;
 
 .game-div {
   display: grid;
-  grid-template-columns: 33% 66%;
+  grid-template-columns: 35% 60%;
+  grid-gap: 1rem;
+  max-height: 100%;
 }
-
+.game-actions-div{
+  display: flex;
+  flex-direction: row;
+  place-content: space-around;
+}
 .round-tab-content {
   display: flex;
   flex-direction: column;
@@ -37,7 +43,7 @@ h4 {
   gap: 1rem;
   max-height: 300px;
   overflow-x: scroll;
-  
+
 }
 
 .in-game-card-cell {
@@ -52,7 +58,6 @@ h4 {
   flex-direction: column;
   gap: 1rem;
   overflow: hidden;
-
 }
 
 @media (max-width: 800px) {

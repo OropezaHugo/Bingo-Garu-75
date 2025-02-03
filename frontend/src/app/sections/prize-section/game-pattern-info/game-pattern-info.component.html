@@ -4,7 +4,7 @@
   @for (round of roundService.actualRounds(); track $index) {
     @if (round.id){
       <mat-tab [label]="round.roundName">
-        <div class="in-game-patterns">
+        <div>
           <app-round-pattern-info [round]="round"/>
         </div>
       </mat-tab>

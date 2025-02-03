@@ -54,9 +54,6 @@ import {RounListInGameComponent} from '../roun-list-in-game/roun-list-in-game.co
 })
 export class GamePageComponent implements OnInit {
 
-  pageSize = model<number>(25);
-  pageIndex = model<number>(0);
-  pageSizeOptions = [15, 25, 40];
   rounds: Round[] = []
   disableRounds: boolean[] = []
   dialog = inject(MatDialog);
@@ -64,27 +61,24 @@ export class GamePageComponent implements OnInit {
   roundService = inject(RoundService)
   router = inject(Router)
   activePatterns: RoundPatternInfo[] = []
-  activeRound: Round | undefined = undefined
+  activeRound = signal<Round | undefined>(undefined)
   actualTab = 0;
   cardForm = new FormControl<string>('')
 
 
   ngOnInit() {
-    this.roundService.getRounds()
-    this.gameService.getCardsByGameId()
-    this.rounds = this.roundService.actualRounds();
-    this.activeRound = this.roundService.actualRounds()[0]
-    this.rounds.forEach(() => {this.disableRounds.push(false);});
-    this.updateLocalPagination({
-      pageIndex: 0,
-      pageSize: 15,
-      previousPageIndex: 1,
-      length: this.gameService.gameCards().length
+    this.gameService.createNewGame().subscribe({
+      next: result => {
+        if (this.gameService.actualGame()?.finished) {
+          this.router.navigateByUrl('/prizes');
+        }
+        this.roundService.getRounds()
+        this.gameService.getCardsByGameId()
+      }
     })
-  }
-  updateLocalPagination(event: PageEvent){
-    this.pageSize.set(event.pageSize);
-    this.pageIndex.set(event.pageIndex);
+    this.rounds = this.roundService.actualRounds();
+    this.activeRound.set(this.roundService.actualRounds()[0])
+    this.rounds.forEach(() => {this.disableRounds.push(false);});
   }
   getPaginatedList() {
     return this.gameService.gameCards()
@@ -116,16 +110,16 @@ export class GamePageComponent implements OnInit {
   verifyCardDialog(card: GameCardInfo) {
     this.roundService.getRounds()
     this.rounds = this.roundService.actualRounds();
-    this.activeRound = this.roundService.actualRounds().find(round => round.id == this.activeRound?.id)
-    this.roundService.getPatternsInfoByRoundId(this.activeRound!.id!).subscribe( {
+    this.activeRound.set(this.roundService.actualRounds().find(round => round.id == this.activeRound()?.id))
+    this.roundService.getPatternsInfoByRoundId(this.activeRound()!.id!).subscribe( {
       next: result => {
         if (result) {
           this.dialog.open(VerifyCardDialogComponent, {
             data: {
               card: card,
-              raffledNumbers: this.activeRound?.raffleNumbers ?? [],
+              raffledNumbers: this.activeRound()?.raffleNumbers ?? [],
               patterns: result.filter(pattern => pattern.active),
-              roundId: this.activeRound?.id
+              roundId: this.activeRound()?.id
             },
             minHeight: '600px',
             minWidth: '400px',
@@ -141,8 +135,8 @@ export class GamePageComponent implements OnInit {
   }
   loadRound(event: MatTabChangeEvent) {
     this.rounds = this.roundService.actualRounds();
-    this.activeRound = this.rounds[event.index];
-    this.roundService.getPatternsInfoByRoundId(this.activeRound!.id!).subscribe( {
+    this.activeRound.set(this.rounds[event.index]);
+    this.roundService.getPatternsInfoByRoundId(this.activeRound()!.id!).subscribe( {
       next: result => {
         if (result) {
           this.activePatterns = result
