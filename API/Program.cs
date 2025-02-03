@@ -20,7 +20,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped<IGamePatternsRepository, GamePatternsRepository>();
+builder.Services.AddScoped<IRoundPatternsRepository, RoundPatternsRepository>();
 builder.Services.AddScoped<IGameCardsRepository, GameCardsRepository>();
 builder.Services.AddAutoMapper(typeof(PatternProfile));
 builder.Services.AddControllers();

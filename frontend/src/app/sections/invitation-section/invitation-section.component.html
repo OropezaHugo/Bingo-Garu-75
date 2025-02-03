@@ -1,9 +1,5 @@
 <div class="invitation-section">
-  <div class="start-game-div" [formGroup]="roundsFormGroup">
-    <mat-form-field appearance="outline">
-      <mat-label>Número de rondas</mat-label>
-      <input matInput [formControl]="roundsFormGroup.controls.roundNumber">
-    </mat-form-field>
+  <div class="start-game-div" >
     <mat-form-field appearance="outline">
       <mat-label>Fecha del evento</mat-label>
       <input matInput [matDatepicker]="datepicker" [formControl]="dateForm"/>
@@ -25,12 +21,6 @@
       <mat-label>Dinero en premios(Bs)</mat-label>
       <input matInput [formControl]="gamePricesForm" >
     </mat-form-field>
-    <mat-checkbox [formControl]="roundsFormGroup.controls.hasBonus">
-      Incluir ronda bonus
-    </mat-checkbox>
-    <mat-checkbox [formControl]="roundsFormGroup.controls.automaticRaffle">
-      activar tombola automatica
-    </mat-checkbox>
     <mat-checkbox [formControl]="withOfferForm">
       Incluir Oferta 2x1
     </mat-checkbox>
@@ -45,24 +35,9 @@
       <h2>Premios en juego:</h2>
     </div>
     <img src="Logo.png" class="water-mark">
-    @for (pattern of gameService.gamePatternsInfo(); track $index){
-      <div class="invitation-pattern-info">
-        @if (pattern.patternMatrix.includes(false)) {
-          <h4>{{pattern.patternName}} <mat-icon>change_history</mat-icon></h4>
-        } @else {
-          <h4>{{pattern.patternName}} <mat-icon>check_box_outline_blank</mat-icon></h4>
-        }
 
-        <h4>{{pattern.targetPrice}} Bs</h4>
-      </div>
-      <mat-divider/>
-    }
     <h1 style="text-align: center">Llevate hasta {{gamePricesForm.value}} Bs</h1>
     <div class="invitation-pattern-info">
-      <h2>Nº Rondas: {{roundsFormGroup.value.roundNumber}}</h2>
-      @if (roundsFormGroup.value.hasBonus === true){
-        <h2>Incluye ronda bonus!</h2>
-      }
     </div>
     <div class="invitation-pattern-info">
       <h3>{{gameService.gameCards().length}} cartones en venta</h3>

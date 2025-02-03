@@ -33,7 +33,7 @@ export class PrizesBoardComponent implements OnInit {
   dialog = inject(MatDialog)
   ngOnInit() {
     this.gameService.getActualGamePrizes()
-    this.gameService.getActualGamePatternsInfo()
+
     this.roundService.getRounds()
     if (this.gameId() !== undefined) {
       this.historyService.getGamePrizesById(this.gameId()).subscribe({

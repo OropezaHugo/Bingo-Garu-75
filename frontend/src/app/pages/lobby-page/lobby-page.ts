@@ -18,6 +18,8 @@ import {PatternTargetPrizesComponent} from '../../sections/prize-section/pattern
 import { PersonalizationPageComponent } from "../../sections/personalization-section/personalization-page.component";
 import { ExportationPageComponent } from '../../sections/exportation-section/exportation-page.component';
 import {InvitationSectionComponent} from '../../sections/invitation-section/invitation-section.component';
+import {PatternSectionComponent} from '../../sections/pattern-section/pattern-section.component';
+import {GameConfigurationComponent} from '../../sections/game-configuration/game-configuration.component';
 
 
 @Component({
@@ -36,7 +38,9 @@ import {InvitationSectionComponent} from '../../sections/invitation-section/invi
     PatternTargetPrizesComponent,
     PersonalizationPageComponent,
     ExportationPageComponent,
-    InvitationSectionComponent
+    InvitationSectionComponent,
+    PatternSectionComponent,
+    GameConfigurationComponent
   ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
@@ -51,6 +55,7 @@ export class LobbyPage implements OnInit {
 
   ngOnInit() {
     this.gameService.createNewGame().subscribe()
+    this.gameService.getCardsByGameId()
   }
 
 }

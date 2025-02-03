@@ -1,0 +1,9 @@
+.in-game-patterns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 700px;
+
+  gap: 1rem;
+}

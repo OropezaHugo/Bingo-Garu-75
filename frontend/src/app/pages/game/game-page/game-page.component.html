@@ -12,18 +12,12 @@
   <div class="section-for-cards">
 
     <div class="game-patterns-section">
-      @for (pattern of gameService.gamePatternsInfo(); track $index) {
-        @if (pattern.active) {
-          <div class="game-pattern-cell-selected">
-            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
-            <h4>Activo esta ronda</h4>
-          </div>
-        } @else {
-          <div class="">
-            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
-          </div>
-        }
+      @if (activeRound) {
+        <app-roun-list-in-game [round]="activeRound"></app-roun-list-in-game>
+      } @else {
+        <button mat-icon-button (click)="location.reload()"><mat-icon>refresh</mat-icon></button>
       }
+
     </div>
     <mat-form-field appearance="outline">
       <mat-label>Ingrese el numero de la carta</mat-label>

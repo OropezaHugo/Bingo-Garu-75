@@ -5,17 +5,17 @@ using Core.Entities;
 
 namespace API.Profiles;
 
-public class GamePatternsProfile: Profile
+public class RoundPatternsProfile: Profile
 {
-    public GamePatternsProfile()
+    public RoundPatternsProfile()
     {
-        CreateMap<PostGamePatternsDTO, GamePatterns>()
-            .ForMember(dest => dest.GameId, opt => opt.MapFrom(src => src.GameId))
+        CreateMap<PostRoundPatternDTO, RoundPatterns>()
+            .ForMember(dest => dest.RoundId, opt => opt.MapFrom(src => src.RoundId))
             .ForMember(dest => dest.PatternId, opt => opt.MapFrom(src => src.PatternId))
             .ForMember(dest => dest.TargetPrice, opt => opt.MapFrom(src => src.TargetPrice))
             .ForMember(dest => dest.Active, opt => opt.MapFrom(src => src.Active));
 
-        CreateMap<(GamePatterns, Pattern), PatternInfoResponseDTO>()
+        CreateMap<(RoundPatterns, Pattern), PatternInfoResponseDTO>()
             .ForMember(dest => dest.TargetPrice, opt => opt.MapFrom(src => src.Item1.TargetPrice))
             .ForMember(dest => dest.Active, opt => opt.MapFrom(src => src.Item1.Active))
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Item2.Id))

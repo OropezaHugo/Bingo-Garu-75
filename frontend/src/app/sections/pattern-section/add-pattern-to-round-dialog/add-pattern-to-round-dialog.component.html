@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Adjuntar {{modelData().patternName}} a:</h2>
+<mat-dialog-content>
+  @for (round of roundService.actualRounds(); track $index) {
+    @if (round.id) {
+      <button mat-stroked-button (click)="addToRound(round.id)">añadir a {{ round.roundName }}</button>
+    }
+  }
+</mat-dialog-content>

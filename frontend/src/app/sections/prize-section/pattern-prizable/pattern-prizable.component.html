@@ -1,0 +1,9 @@
+<div class="pattern-data-div">
+  <app-pattern-card [editable]="false" [pattern]="roundPattern().patternMatrix"></app-pattern-card>
+  <h3 class="pattern-name-text">{{roundPattern().patternName}}</h3>
+  <mat-form-field appearance="outline">
+    <mat-label>premio objetivo(Bs)</mat-label>
+    <input matInput [formControl]="amountForm" type="number" min="0">
+  </mat-form-field>
+  <button mat-stroked-button (click)="updatePrize()">guardar</button>
+</div>

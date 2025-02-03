@@ -68,11 +68,6 @@ export class PatternsComponent implements OnInit {
     this.patternService.getPatterns((event.target as HTMLInputElement).value);
   }
 
-  addToGame(pattern: Pattern) {
-    if (!this.gameService.gamePatterns().includes(pattern)) {
-      this.gameService.addPatternToActualGame(pattern.id);
-    }
-  }
 
   deletePattern(pattern: Pattern) {
     this.patternService.deletePattern(pattern.id);

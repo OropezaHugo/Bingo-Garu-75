@@ -1,0 +1,19 @@
+
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{round().roundName}}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="in-game-patterns">
+    <button mat-icon-button (click)="reloadRoundPatterns()"><mat-icon>cached</mat-icon></button>
+    @for (pattern of roundPatterns; track $index) {
+      <div class="pattern-data-div">
+        <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
+        <h3 class="pattern-name-text">{{pattern.patternName}}</h3>
+        <button mat-flat-button (click)="removeFromRound(pattern)" >Quitar de la partida</button>
+      </div>
+    }
+  </div>
+
+</mat-expansion-panel>

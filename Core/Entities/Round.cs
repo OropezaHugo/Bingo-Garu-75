@@ -12,4 +12,5 @@ public class Round: BaseEntity
     public Game? Game { get; set; }
     
     public List<Prize> Prizes { get; set; } = new List<Prize>();
+    public List<RoundPatterns> RoundPatterns { get; set; } = new List<RoundPatterns>();
 }

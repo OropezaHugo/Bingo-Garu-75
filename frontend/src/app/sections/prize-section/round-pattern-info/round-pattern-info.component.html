@@ -1,0 +1,7 @@
+
+  <div class="in-game-patterns">
+    @for (pattern of roundPatterns; track $index) {
+      <app-pattern-prizable [roundPattern]="pattern" [roundId]="round().id!"/>
+    }
+  </div>
+

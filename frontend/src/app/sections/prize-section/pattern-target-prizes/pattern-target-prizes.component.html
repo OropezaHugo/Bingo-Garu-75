@@ -1,14 +1,8 @@
-@if (gameService.gamePatternsInfo().length < 1) {
+@if (roundService.actualRounds().length < 1) {
   <h2>Primero adjunta almenos 1 patron para adjuntar un premio objetivo</h2>
 } @else {
-
   <div class="prize-step-div">
-    <div class="attached-patterns">
-      @for (gamePattern of gameService.gamePatternsInfo(); track $index) {
-        <app-game-pattern-info [gamePattern]="gamePattern"></app-game-pattern-info>
-      }
-    </div>
-
+      <app-game-pattern-info></app-game-pattern-info>
   </div>
 
 }

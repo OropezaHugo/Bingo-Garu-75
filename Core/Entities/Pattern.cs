@@ -5,6 +5,6 @@ public class Pattern: BaseEntity
     public required List<bool> PatternMatrix { get; set; }
     public required string PatternName { get; set; }
     
-    public List<GamePatterns> GamePatterns { get; set; } = new List<GamePatterns>();
+    public List<RoundPatterns> RoundPatterns { get; set; } = new List<RoundPatterns>();
     public List<Prize> Prizes { get; set; } = new List<Prize>();
 }

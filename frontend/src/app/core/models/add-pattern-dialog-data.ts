@@ -10,7 +10,7 @@ export interface Pattern {
   patternName: string
 }
 
-export interface GamePatternInfo {
+export interface RoundPatternInfo {
   id: number
   patternMatrix: boolean[]
   patternName: string

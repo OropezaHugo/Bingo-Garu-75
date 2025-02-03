@@ -1,0 +1,8 @@
+@if (roundService.actualRounds().length > 0) {
+  <div class="pattern-section-div">
+    <app-game-pattern-section-list/>
+    <app-pattern-list-component [inGame]="true"/>
+  </div>
+} @else {
+  <h2>Configura tu partida para adjuntar patrones a sus rondas</h2>
+}

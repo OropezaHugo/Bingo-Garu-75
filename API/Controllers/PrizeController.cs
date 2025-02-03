@@ -16,7 +16,7 @@ public class PrizeController
         IGenericRepository<Round> roundRepository,
         IGenericRepository<Game> gameRepository,
         IGameCardsRepository gameCardsRepository,
-        IGamePatternsRepository gamePatternsRepository
+        IRoundPatternsRepository roundPatternsRepository
         ): ControllerBase
 {
     [HttpGet("round/{roundId}")]
@@ -46,8 +46,7 @@ public class PrizeController
         var round = await roundRepository.GetByIdAsync(prizeDto.RoundId);
         if (!gameCardsRepository.ExistsGameCardRelation(gameId, prizeDto.CardId))
             return Conflict("carton no registrado en la partida actual");
-        if (!gamePatternsRepository.ExistsPatternGameRelation(gameId, prizeDto.PatternId))
-            return Conflict("patron no registrado en la partida actual");
+//TODO: verify pattern is in game
         if (round == null) return NotFound();
         if (round.GameId != gameId) return Conflict("la ronda no existe en la partida actual");
         

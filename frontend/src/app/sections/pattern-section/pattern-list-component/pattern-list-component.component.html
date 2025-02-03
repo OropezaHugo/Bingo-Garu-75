@@ -14,9 +14,9 @@
       <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
       <h3 class="pattern-name-text">{{pattern.patternName}}</h3>
       <div class="existent-pattern-actions">
-          @if (inGame()) {
-            <button mat-icon-button (click)="addToGame(pattern)" matTooltip="añadir a la partida"><mat-icon>upload</mat-icon></button>
-          }
+        @if (inGame()){
+          <button mat-icon-button (click)="openAddPatternToRoundDialog(pattern)"><mat-icon>add</mat-icon></button>
+        }
         <button mat-icon-button (click)="openEditPatternDialog(pattern)" matTooltip="editar patron"><mat-icon>edit</mat-icon></button>
         <button mat-icon-button (click)="deletePattern(pattern)" matTooltip="eliminar patron"><mat-icon>delete</mat-icon></button>
       </div>
