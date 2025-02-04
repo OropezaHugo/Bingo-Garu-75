@@ -27,6 +27,7 @@ public class SerialProfile: Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Item2));
         CreateMap< (Serial, int), SerialResponseDTO>()
             .ForMember(dest => dest.SerialName, opt => opt.MapFrom(src => src.Item1.SerialName))
+            .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.Item1.CreationDate))
             .ForMember(dest => dest.StrokeColor, opt => opt.MapFrom(src => src.Item1.StrokeColor))
             .ForMember(dest => dest.CardFillColor, opt => opt.MapFrom(src => src.Item1.CardFillColor))
             .ForMember(dest => dest.BoxFillColor, opt => opt.MapFrom(src => src.Item1.BoxFillColor))
