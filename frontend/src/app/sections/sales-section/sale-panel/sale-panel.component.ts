@@ -8,6 +8,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {SaleCardDialogComponent} from '../sale-card-dialog/sale-card-dialog.component';
 import {RectanglebuttonComponent} from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import { ExportCardDialogComponent } from '../export-card-dialog/export-card-dialog.component';
+import {MatButton} from '@angular/material/button';
+import {MatStepperNext} from '@angular/material/stepper';
 
 @Component({
   selector: 'app-sale-panel',
@@ -15,7 +17,9 @@ import { ExportCardDialogComponent } from '../export-card-dialog/export-card-dia
     SaleButtonComponent,
     BingoCardComponent,
     MatPaginator,
-    RectanglebuttonComponent
+    RectanglebuttonComponent,
+    MatButton,
+    MatStepperNext
   ],
   templateUrl: './sale-panel.component.html',
   styleUrl: './sale-panel.component.scss'

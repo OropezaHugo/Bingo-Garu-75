@@ -1,6 +1,6 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {Round} from '../../../core/models/round';
-import {Pattern} from '../../../core/models/add-pattern-dialog-data';
+import {Pattern, RoundPatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {RoundService} from '../../../core/services/round.service';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
@@ -23,19 +23,19 @@ import {PatternCardComponent} from '../../../shared/pattern-card/pattern-card.co
 })
 export class RounListInGameComponent implements OnInit {
   round = input.required<Round>()
-  roundPatterns: Pattern[] = []
+  roundPatterns: RoundPatternInfo[] = []
   roundService = inject(RoundService)
   ngOnInit() {
-    this.roundService.getPatternsByRoundId(this.round().id!).subscribe({
+    this.roundService.getPatternsInfoByRoundId(this.round().id!).subscribe({
       next: result => {
-        this.roundPatterns = result
+        this.roundPatterns = result.filter(p => p.active)
       }
     })
   }
   reloadRoundPatterns() {
-    this.roundService.getPatternsByRoundId(this.round().id!).subscribe({
+    this.roundService.getPatternsInfoByRoundId(this.round().id!).subscribe({
       next: result => {
-        this.roundPatterns = result
+        this.roundPatterns = result.filter(p => p.active)
       }
     })
   }

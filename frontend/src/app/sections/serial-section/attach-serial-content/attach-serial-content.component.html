@@ -35,7 +35,7 @@
         [class.selected-row]="selectedSerial == row"
       ></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10]"pageSize="10" aria-label="Elige pagina de seriales"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10]" pageSize="10" aria-label="Elige pagina de seriales"></mat-paginator>
   </div>
   @if (useToGenerate() === false) {
     <div class="generate-serial-content-div">
@@ -43,6 +43,7 @@
       <div class="button-div">
         <app-rectanglebutton [disabled]="!ableToAttach" (click)="attachSerialToActualGame(selectedSerial)" class="attach-serial-button" text="Adjuntar Serial Seleccionado" color="primary" heightClass="50px" widthClass="150px" fontSize="16px"></app-rectanglebutton>
       </div>
+      <button mat-raised-button matStepperNext>Siguiente</button>
     </div>
 
   } @else {

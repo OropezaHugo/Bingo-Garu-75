@@ -11,7 +11,7 @@ import {
 import {PatternListComponentComponent} from '../../sections/pattern-section/pattern-list-component/pattern-list-component.component';
 import { GameService } from '../../core/services/game.service';
 import {GamePatternsListComponent} from "../game/game-patterns-list/game-patterns-list.component";
-import {MatStep, MatStepLabel, MatStepper} from '@angular/material/stepper';
+import {MatStep, MatStepLabel, MatStepper, MatStepperNext} from '@angular/material/stepper';
 import {AttachSerialContentComponent} from '../../sections/serial-section/attach-serial-content/attach-serial-content.component';
 import {SalePanelComponent} from '../../sections/sales-section/sale-panel/sale-panel.component';
 import {PatternTargetPrizesComponent} from '../../sections/prize-section/pattern-target-prizes/pattern-target-prizes.component';
@@ -41,7 +41,8 @@ import {Router} from '@angular/router';
     ExportationPageComponent,
     InvitationSectionComponent,
     PatternSectionComponent,
-    GameConfigurationComponent
+    GameConfigurationComponent,
+    MatStepperNext
   ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
@@ -54,7 +55,12 @@ export class LobbyPage implements OnInit {
   toggleView(): void {
     this.personalization = !this.personalization;
   }
-
+  stepperOrientation() {
+    if(window.innerWidth <= 1000) {
+      return 'vertical';
+    }
+    return 'horizontal';
+  }
   ngOnInit() {
     this.gameService.createNewGame().subscribe()
     this.gameService.getCardsByGameId()

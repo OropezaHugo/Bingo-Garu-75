@@ -5,7 +5,11 @@
   justify-content: center;
   gap: 1rem;
 }
-
+.next-step-div {
+  display: flex;
+  flex-direction: row;
+  place-content: end;
+}
 .card-preview-sale {
   width: 320px;
   display: flex;

@@ -1,10 +1,13 @@
-@if (!gameService.actualGame()?.inProgress) {
-  <button mat-raised-button (click)="cancelGame()">Deshacer configuraciones</button>
-} @else if (gameService.actualGame()?.inProgress){
-  <button mat-raised-button (click)="continueGameInProgress()">Continuar ultima partida</button>
-  <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
-}
-<mat-stepper>
+<div class="lobby-div">
+  @if (!gameService.actualGame()?.inProgress) {
+    <button mat-stroked-button (click)="cancelGame()">Deshacer todos los ajustes</button>
+  } @else if (gameService.actualGame()?.inProgress){
+    <button mat-stroked-button (click)="continueGameInProgress()">Continuar ultima partida</button>
+    <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
+  }
+
+</div>
+<mat-stepper [orientation]="stepperOrientation()">
   <mat-step>
     <ng-template matStepLabel>Configuracion inicial</ng-template>
     @defer (on viewport) {
@@ -47,6 +50,10 @@
             <app-exportation-section></app-exportation-section>
           }
         </div>
+        <div class="next-step-div">
+          <button mat-raised-button matStepperNext>Siguiente</button>
+        </div>
+
       }
     } @placeholder {
       <h1>Loading</h1>
@@ -64,7 +71,7 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar premios</ng-template>
       @defer (on viewport) {
-      <app-pattern-target-prize-section>></app-pattern-target-prize-section>
+      <app-pattern-target-prize-section></app-pattern-target-prize-section>
       } @placeholder {
         <h1>Loading</h1>
       }
@@ -78,5 +85,4 @@
     }
   </mat-step>
 </mat-stepper>
-
 

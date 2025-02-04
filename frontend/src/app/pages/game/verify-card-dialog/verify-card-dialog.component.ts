@@ -96,7 +96,7 @@ export class VerifyCardDialogComponent {
       })
       this.roundService.updatePatternInRound({
         id: this.prizeFormGroup.value.patternControl.id,
-        active: true,
+        active: this.gameService.actualGame()?.sharePrizes ?? false,
         patternMatrix: this.prizeFormGroup.value.patternControl.patternMatrix,
         patternName: this.prizeFormGroup.value.patternControl.patternName,
         targetPrice: this.prizeFormGroup.value.patternControl.targetPrice,

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
-import {MatIconButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatTooltip} from '@angular/material/tooltip';
 import {PatternCardComponent} from '../../../shared/pattern-card/pattern-card.component';
 import {GameService} from '../../../core/services/game.service';
@@ -17,6 +17,7 @@ import {RoundService} from '../../../core/services/round.service';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {SnackbarService} from '../../../core/services/snackbar.service';
 import {GamePatternsListComponent} from '../../../pages/game/game-patterns-list/game-patterns-list.component';
+import {MatStepperNext} from '@angular/material/stepper';
 
 @Component({
   selector: 'app-pattern-target-prize-section',
@@ -33,7 +34,9 @@ import {GamePatternsListComponent} from '../../../pages/game/game-patterns-list/
     RectanglebuttonComponent,
     ReactiveFormsModule,
     MatCheckbox,
-    GamePatternsListComponent
+    GamePatternsListComponent,
+    MatButton,
+    MatStepperNext
   ],
   templateUrl: './pattern-target-prizes.component.html',
   styleUrl: './pattern-target-prizes.component.scss'

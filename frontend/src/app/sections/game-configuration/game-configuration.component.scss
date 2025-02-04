@@ -1,0 +1,12 @@
+.game-config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  place-items: center;
+  padding: 1rem 0;
+}
+.next-step-div {
+  display: flex;
+  flex-direction: row;
+  place-content: end;
+}
