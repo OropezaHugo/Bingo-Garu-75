@@ -28,6 +28,10 @@ export class GameService {
     )
   }
 
+  everyRoundHasAPattern(){
+    return this.http.get<boolean>(`${this.baseUrl}Game/${this.actualGame()?.id}/patterns`)
+  }
+
   getActualGamePrizes() {
     this.createNewGame().subscribe({
       next: () => {

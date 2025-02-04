@@ -87,30 +87,31 @@ export class InvitationSectionComponent implements OnInit {
     });
   }
   startGame() {
-    if(this.gameService.gameCards().length > 0 )
-    {
-
-      let dialogRef = this.dialog.open(ConfirDialogComponent, {
-        data: false
-      })
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === true) {
-          this.gameService.updateGame({
-            finished: this.gameService.actualGame()!.finished,
-            inProgress: true,
-            id: this.gameService.actualGame()!.id,
-            automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
-            sharePrizes: this.gameService.actualGame()!.sharePrizes,
-            randomPatterns: this.gameService.actualGame()!.randomPatterns,
+    this.gameService.everyRoundHasAPattern().subscribe({
+      next: result => {
+        if(this.gameService.gameCards().length > 0
+          && result)
+        {
+          let dialogRef = this.dialog.open(ConfirDialogComponent, {
+            data: false
           })
-          this.router.navigateByUrl('/game')
+          dialogRef.afterClosed().subscribe(result => {
+            if (result === true) {
+              this.gameService.updateGame({
+                finished: this.gameService.actualGame()!.finished,
+                inProgress: true,
+                id: this.gameService.actualGame()!.id,
+                automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+                sharePrizes: this.gameService.actualGame()!.sharePrizes,
+                randomPatterns: this.gameService.actualGame()!.randomPatterns,
+              })
+              this.router.navigateByUrl('/game')
+            }
+          })
+        } else {
+          this.snackBar.error('adjunte un serial y un patron para iniciar la partida')
         }
-      })
-    } else {
-      this.snackBar.error('adjunte un serial y un patron para iniciar la partida')
-    }
-
+      }
+    })
   }
-
-
 }

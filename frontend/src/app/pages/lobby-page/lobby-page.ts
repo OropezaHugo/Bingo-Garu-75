@@ -62,8 +62,12 @@ export class LobbyPage implements OnInit {
     return 'horizontal';
   }
   ngOnInit() {
-    this.gameService.createNewGame().subscribe()
-    this.gameService.getCardsByGameId()
+    this.gameService.createNewGame().subscribe({
+      next: value => {
+        this.gameService.getCardsByGameId()
+      }
+    })
+
   }
 
   cancelGame() {

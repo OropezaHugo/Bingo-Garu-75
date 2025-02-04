@@ -14,6 +14,7 @@ public class GameProfile: Profile
             .ForMember(dest => dest.AutomaticRaffle, opt => opt.MapFrom(src => src.AutomaticRaffle))
             .ForMember(dest => dest.SharePrizes, opt => opt.MapFrom(src => src.SharePrizes))
             .ForMember(dest => dest.InProgress, opt => opt.MapFrom(src => src.InProgress))
+            .ForMember(dest => dest.TargetStartDate, opt => opt.MapFrom(src => src.TargetStartDate))
             .ForMember(dest => dest.Finished, opt => opt.MapFrom(src => src.Finished));
         CreateMap<Game, GameResponseDTO>();
         CreateMap< (PostGameDTO, int), Game>()

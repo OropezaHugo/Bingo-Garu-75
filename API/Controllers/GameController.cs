@@ -12,6 +12,8 @@ namespace API.Controllers;
 public class GameController
     (
         IGenericRepository<Game> repository,
+        IRoundPatternsRepository roundPatternsRepository,
+        IGenericRepository<Round> roundsRepository,
         IMapper mapper
         ): ControllerBase
 {
@@ -56,6 +58,20 @@ public class GameController
             return Ok(mapper.Map<GameResponseDTO>(newGame));
         }
         return Conflict("hubo un problema al editar la informacion del juego");
+    }
+    
+    
+    [HttpGet("{id}/patterns")]
+    public async Task<ActionResult<bool>> HasPatterns(int id)
+    {
+        var game = await repository.GetByIdAsync(id);
+        if (game == null) return NotFound();
+        var rounds = await roundsRepository.ListAllAsync();
+        rounds = rounds.Where(round => round.GameId == id).ToList();
+        bool hasPatterns = rounds
+            .All(round => roundPatternsRepository
+                .GetRoundPatternRelationsByRoundId(round.Id).Result.Count > 0);
+        return Ok(hasPatterns);
     }
     
 }

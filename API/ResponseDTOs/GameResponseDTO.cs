@@ -8,4 +8,6 @@ public class GameResponseDTO
     public bool SharePrizes { get; set; }
     public bool InProgress { get; set; }
     public bool Finished { get; set; }
+    public DateTime? TargetStartDate { get; set; }
+    public DateTime? CreatedAt { get; set; }
 }
