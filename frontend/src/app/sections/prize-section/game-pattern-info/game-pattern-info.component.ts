@@ -4,11 +4,16 @@ import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {PatternCardComponent} from "../../../shared/pattern-card/pattern-card.component";
-import {GamePatternInfo} from '../../../core/models/add-pattern-dialog-data';
+import {RoundPatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {GameService} from '../../../core/services/game.service';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatTooltip} from '@angular/material/tooltip';
 import {SnackbarService} from "../../../core/services/snackbar.service";
+import {RoundService} from '../../../core/services/round.service';
+import {MatAccordion} from '@angular/material/expansion';
+import {RoundPatternsListComponent} from '../../../pages/game/round-patterns-list/round-patterns-list.component';
+import {RoundPatternInfoComponent} from '../round-pattern-info/round-pattern-info.component';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-game-pattern-info',
@@ -20,31 +25,22 @@ import {SnackbarService} from "../../../core/services/snackbar.service";
     MatLabel,
     PatternCardComponent,
     ReactiveFormsModule,
-    MatTooltip
+    MatTooltip,
+    MatAccordion,
+    RoundPatternsListComponent,
+    RoundPatternInfoComponent,
+    MatTabGroup,
+    MatTab
   ],
   templateUrl: './game-pattern-info.component.html',
   styleUrl: './game-pattern-info.component.scss'
 })
 export class GamePatternInfoComponent implements OnInit {
   gameService = inject(GameService);
-  gamePattern = input.required<GamePatternInfo>()
-  editablePrize = input<boolean>(true);
-  amountForm = new FormControl<number>(0);
-  snackBar = inject(SnackbarService);
+  roundService = inject(RoundService);
   ngOnInit() {
-    this.amountForm.setValue(this.gamePattern().targetPrice)
+    this.roundService.getRounds()
   }
-  updatePrize(){
-    const latestValue = this.amountForm.value
-    if (latestValue !== null) {
-      this.gameService.updateGamePatternInfo({
-        id: this.gamePattern().id,
-        patternName: this.gamePattern().patternName,
-        patternMatrix: this.gamePattern().patternMatrix,
-        active: this.gamePattern().active,
-        targetPrice: latestValue
-      })
-      this.snackBar.success(`premio registrado: ${latestValue}Bs`)
-    }
-  }
+
+
 }

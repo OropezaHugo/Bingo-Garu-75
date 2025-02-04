@@ -1,0 +1,11 @@
+.in-game-patterns {
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: scroll;
+  align-items: center;
+}
+
+.pattern-data-div {
+  max-width: 196px;
+}

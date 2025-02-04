@@ -18,7 +18,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {GameService} from '../../../core/services/game.service';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {Card, GameCardInfo} from '../../../core/models/card';
-import {GamePatternInfo} from '../../../core/models/add-pattern-dialog-data';
+import {RoundPatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {SnackbarService} from '../../../core/services/snackbar.service';
 
 @Component({
@@ -54,7 +54,7 @@ export class VerifyCardDialogComponent {
   machineResponse = "no verificado";
   gameService = inject(GameService);
   prizeFormGroup = new FormGroup({
-    patternControl: new FormControl<GamePatternInfo | undefined>(undefined, Validators.required),
+    patternControl: new FormControl<RoundPatternInfo | undefined>(undefined, Validators.required),
     userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     amountControl: new FormControl<number>(0, Validators.required)
   })
@@ -93,6 +93,15 @@ export class VerifyCardDialogComponent {
         patternId: this.prizeFormGroup.value.patternControl.id,
         prizeAmount: this.prizeFormGroup.value.amountControl!,
         userName: this.prizeFormGroup.value.userNameControl
+      })
+      this.roundService.updatePatternInRound({
+        id: this.prizeFormGroup.value.patternControl.id,
+        active: true,
+        patternMatrix: this.prizeFormGroup.value.patternControl.patternMatrix,
+        patternName: this.prizeFormGroup.value.patternControl.patternName,
+        targetPrice: this.prizeFormGroup.value.patternControl.targetPrice,
+      }, this.verificationData().roundId).subscribe({
+        next: result => {}
       })
       this.snackBar.success('premio registrado')
       this.dialogRef.close()

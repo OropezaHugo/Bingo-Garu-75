@@ -13,7 +13,7 @@ namespace API.Controllers;
 public class PatternController(
     IGenericRepository<Pattern> patternRepository,
     IGenericRepository<Game> gameRepository,
-    IGamePatternsRepository gamePatternsRepository,
+    IRoundPatternsRepository roundPatternsRepository,
     IMapper mapper): ControllerBase
 {
     [HttpGet]
@@ -43,7 +43,7 @@ public class PatternController(
     {
         var pattern = await patternRepository.GetByIdAsync(id);
         if (pattern == null) return NotFound();
-        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("Patrones yá usados no pueden ser editados");
+        if (roundPatternsRepository.ExistsPatternInAnyRound(id)) return Conflict("Patrones yá usados no pueden ser editados");
         var newPattern = mapper.Map<Pattern>((patternDto, id));
         patternRepository.UpdateAsync(newPattern);
         return Ok(await patternRepository.SaveChangesAsync());
@@ -54,60 +54,52 @@ public class PatternController(
     {
         var pattern = await patternRepository.GetByIdAsync(id);
         if (pattern == null) return NotFound();
-        if (gamePatternsRepository.ExistsPatternInAnyGame(id)) return Conflict("Patrones yá usados no pueden ser eliminados");
+        if (roundPatternsRepository.ExistsPatternInAnyRound(id)) return Conflict("Patrones yá usados no pueden ser eliminados");
         patternRepository.DeleteAsync(pattern);
         return Ok(await patternRepository.SaveChangesAsync());
     }
 
-    [HttpPost("game")]
-    public async Task<ActionResult<bool>> AddPatternToGame(PostGamePatternsDTO gamePatternsDto)
+    [HttpGet("round/{roundId}")]
+    public async Task<ActionResult<IList<PatternResponseDTO>>> GetPatternsByRoundId([FromRoute]int roundId)
     {
-        var pattern = await patternRepository.GetByIdAsync(gamePatternsDto.PatternId);
-        if (pattern == null) return NotFound("pattern not found");
-        var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
-        if (game == null) return NotFound("game not found");
-        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
-        if (gamePatternsRepository.ExistsPatternGameRelation(gamePatternsDto.GameId, gamePatternsDto.PatternId)) return Conflict("el patron ya existe en la partida");
-        gamePatternsRepository.CreatePatternGameRelation(mapper.Map<GamePatterns>(gamePatternsDto));
-        return Ok(await gamePatternsRepository.SaveChangesAsync());
+        var patterns = await roundPatternsRepository.GetPatternsByRoundId(roundId);
+        return Ok(patterns.AsEnumerable().Select(pattern => mapper.Map<PatternResponseDTO>(pattern)));
+    }
+    
+    [HttpPost("round")]
+    public async Task<ActionResult<bool>> AddPatternToRound(PostRoundPatternDTO patternDto)
+    {
+        if (roundPatternsRepository.ExistsRoundPatternRelation(patternDto.RoundId, patternDto.PatternId)) return Conflict("patron ya adjuntado en esta ronda");
+        roundPatternsRepository.CreateRoundPatternRelation(mapper.Map<RoundPatterns>(patternDto));
+        return Ok(await roundPatternsRepository.SaveChangesAsync());
+    }
+    
+    [HttpDelete("{patternId}/round/{roundId}")]
+    public async Task<ActionResult<bool>> RemovePatternFromRound([FromRoute] PostRoundPatternDTO patternDto)
+    {
+        if (!roundPatternsRepository.ExistsRoundPatternRelation(patternDto.RoundId, patternDto.PatternId)) return Conflict("patron no existe en esta ronda");
+        roundPatternsRepository.DeleteRoundPatternRelation(mapper.Map<RoundPatterns>(patternDto));
+        return Ok(await roundPatternsRepository.SaveChangesAsync());
     }
     
     
-    [HttpDelete("{patternId}/game/{gameId}")]
-    public async Task<ActionResult<bool>> DeletePatternFromGame([FromRoute] PostGamePatternsDTO gamePatternsDto)
+    [HttpPut("round")]
+    public async Task<ActionResult<bool>> UpdatePatternInRound(PostRoundPatternDTO patternDto)
     {
-        var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
-        if (game == null) return NotFound();
-        if (game.Finished || game.InProgress) return Conflict("una partida ya en progreso o terminada no se puede actualizar");
-        gamePatternsRepository.DeleteGamePatternRelation(mapper.Map<GamePatterns>(gamePatternsDto));
-        return Ok(await gamePatternsRepository.SaveChangesAsync());
+        if (!roundPatternsRepository.ExistsRoundPatternRelation(patternDto.RoundId, patternDto.PatternId)) return Conflict("patron no existe en esta ronda");
+        roundPatternsRepository.UpdateRoundPatternRelation(mapper.Map<RoundPatterns>(patternDto));
+        return Ok(await roundPatternsRepository.SaveChangesAsync());
     }
     
-    [HttpGet("{id}/game")]
-    public async Task<ActionResult<PatternResponseDTO>> GetGamePatternsByGameId(int id)
+    [HttpGet("round/{roundId}/info")]
+    public async Task<ActionResult<IList<PatternInfoResponseDTO>>> GetRoundPatternsByRoundId(int roundId)
     {
-        var patterns = await gamePatternsRepository.ListPatternsByGameId(id);
-        return Ok(patterns.Select(pattern => mapper.Map<PatternResponseDTO>(pattern)));
-    }
-    
-    [HttpGet("game/{id}/prizes")]
-    public async Task<ActionResult<PatternResponseDTO>> GetGamePatternsInfoByGameId(int id)
-    {
-        var patterns = await gamePatternsRepository.ListPatternsByGameId(id);
-        var gamePatterns = await gamePatternsRepository.ListGamePatternsByGameId(id);
-        var response = patterns
-            .Join(gamePatterns, pattern => pattern.Id,
-                gamePattern => gamePattern.PatternId,
-                (pattern, gamePattern) => mapper.Map<PatternInfoResponseDTO>((gamePattern, pattern)));
-        return Ok(response.ToList());
-    }
-
-    [HttpPut("game/prizes")]
-    public async Task<ActionResult<bool>> UpdateGamePatternsInfoByGameId(PostGamePatternsDTO gamePatternsDto)
-    {
-        var game = await gameRepository.GetByIdAsync(gamePatternsDto.GameId);
-        if (game == null) return NotFound();
-        gamePatternsRepository.UpdateGamePattern(mapper.Map<GamePatterns>(gamePatternsDto));
-        return Ok(await gamePatternsRepository.SaveChangesAsync());
+        var roundPatternsList = await roundPatternsRepository.GetRoundPatternRelationsByRoundId(roundId);
+        return Ok(roundPatternsList.AsEnumerable()
+            .Select(roundPatterns =>
+            {
+                var pattern = patternRepository.GetByIdAsync(roundPatterns.PatternId).Result;
+                return mapper.Map<PatternInfoResponseDTO>((roundPatterns, pattern));
+            }));
     }
 }

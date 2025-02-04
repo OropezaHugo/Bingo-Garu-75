@@ -16,6 +16,7 @@ import {NewPatternDialogComponent} from '../new-pattern-dialog/new-pattern-dialo
 import {MatDialog} from '@angular/material/dialog';
 import {PatternService} from '../../../core/services/pattern.service';
 import {GameService} from '../../../core/services/game.service';
+import {AddPatternToRoundDialogComponent} from '../add-pattern-to-round-dialog/add-pattern-to-round-dialog.component';
 
 @Component({
   selector: 'app-pattern-list-component',
@@ -74,12 +75,16 @@ export class PatternListComponentComponent implements OnInit {
   filterPatterns(event: Event) {
     this.patternService.getPatterns((event.target as HTMLInputElement).value)
   }
-  addToGame(pattern: Pattern) {
-    if (!this.gameService.gamePatterns().includes(pattern)) {
-      this.gameService.addPatternToActualGame(pattern.id)
-    }
-  }
 
+  openAddPatternToRoundDialog(pattern: Pattern){
+    this.dialog.open(AddPatternToRoundDialogComponent, {
+      data: pattern,
+    }).afterClosed().subscribe(result => {
+      if (result === true){
+
+      }
+    })
+  }
   deletePattern(pattern: Pattern) {
     this.patternService.deletePattern(pattern.id)
   }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Bingo75Context))]
-    [Migration("20250115145249_RaffleNumbersOnRound")]
-    partial class RaffleNumbersOnRound
+    [Migration("20250203002130_RoundsPatterns")]
+    partial class RoundsPatterns
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardNumber")
+                        .HasColumnType("int");
 
                     b.PrimitiveCollection<string>("ContentMatrix")
                         .IsRequired()
@@ -56,6 +59,12 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("AutomaticRaffle")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InProgress")
                         .HasColumnType("bit");
 
                     b.Property<bool>("RandomPatterns")
@@ -89,27 +98,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CardId");
 
                     b.ToTable("GameCards");
-                });
-
-            modelBuilder.Entity("Core.Entities.GamePatterns", b =>
-                {
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatternId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("TargetPrice")
-                        .HasColumnType("float");
-
-                    b.HasKey("GameId", "PatternId");
-
-                    b.HasIndex("PatternId");
-
-                    b.ToTable("GamePatterns");
                 });
 
             modelBuilder.Entity("Core.Entities.Pattern", b =>
@@ -194,6 +182,30 @@ namespace Infrastructure.Migrations
                     b.ToTable("Rounds");
                 });
 
+            modelBuilder.Entity("Core.Entities.RoundPatterns", b =>
+                {
+                    b.Property<int>("RoundId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatternId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<double>("TargetPrice")
+                        .HasColumnType("float");
+
+                    b.HasKey("RoundId", "PatternId");
+
+                    b.HasIndex("PatternId");
+
+                    b.ToTable("RoundPatterns");
+                });
+
             modelBuilder.Entity("Core.Entities.Serial", b =>
                 {
                     b.Property<int>("Id")
@@ -268,25 +280,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Game");
                 });
 
-            modelBuilder.Entity("Core.Entities.GamePatterns", b =>
-                {
-                    b.HasOne("Core.Entities.Game", "Game")
-                        .WithMany("GamePatterns")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Pattern", "Pattern")
-                        .WithMany("GamePatterns")
-                        .HasForeignKey("PatternId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Pattern");
-                });
-
             modelBuilder.Entity("Core.Entities.Prize", b =>
                 {
                     b.HasOne("Core.Entities.Card", "Card")
@@ -325,6 +318,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Game");
                 });
 
+            modelBuilder.Entity("Core.Entities.RoundPatterns", b =>
+                {
+                    b.HasOne("Core.Entities.Pattern", "Pattern")
+                        .WithMany("RoundPatterns")
+                        .HasForeignKey("PatternId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Round", "Round")
+                        .WithMany("RoundPatterns")
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Pattern");
+
+                    b.Navigation("Round");
+                });
+
             modelBuilder.Entity("Core.Entities.Card", b =>
                 {
                     b.Navigation("GameCards");
@@ -335,20 +347,20 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Game", b =>
                 {
                     b.Navigation("GameCards");
-
-                    b.Navigation("GamePatterns");
                 });
 
             modelBuilder.Entity("Core.Entities.Pattern", b =>
                 {
-                    b.Navigation("GamePatterns");
-
                     b.Navigation("Prizes");
+
+                    b.Navigation("RoundPatterns");
                 });
 
             modelBuilder.Entity("Core.Entities.Round", b =>
                 {
                     b.Navigation("Prizes");
+
+                    b.Navigation("RoundPatterns");
                 });
 #pragma warning restore 612, 618
         }

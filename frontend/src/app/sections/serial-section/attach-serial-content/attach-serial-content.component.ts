@@ -85,6 +85,10 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
         this.dataSource.paginator = this.paginator()
       }
     })
+    if (this.gameService.gameCards().length > 0) {
+      this.ableToAttach = false;
+    }
+
   }
   attachSerialToActualGame(serial?: Serial) {
     if(serial) {

@@ -9,5 +9,4 @@ public class Game: BaseEntity
     public bool Finished { get; set; }
     
     public List<GameCards> GameCards { get; set; } = new List<GameCards>();
-    public List<GamePatterns> GamePatterns { get; set; } = new List<GamePatterns>();
 }

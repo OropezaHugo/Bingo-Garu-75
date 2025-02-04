@@ -1,46 +1,37 @@
-<div class="game-div">
-    <mat-tab-group (selectedTabChange)="loadRound($event)" [(selectedIndex)]="actualTab">
+
+    <mat-tab-group (selectedTabChange)="loadRound($event)" [(selectedIndex)]="actualTab" fitInkBarToContent>
       @for (round of roundService.actualRounds(); track $index) {
-        <mat-tab [label]="round.roundName" [disabled]="disableRounds[$index]">
-          <div class="round-tab-content">
-            <app-round-tab [round]="round"></app-round-tab>
-            <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
+        <mat-tab  [label]="round.roundName" [disabled]="disableRounds[$index]">
+          <div class="game-div">
+            <div class="round-tab-content">
+              <app-round-tab [round]="round"></app-round-tab>
+            </div>
+            <div class="section-for-cards">
+              <app-roun-list-in-game [round]="round"></app-roun-list-in-game>
+              <mat-form-field appearance="outline">
+                <mat-label>Ingrese el numero de la carta</mat-label>
+                <input matInput type="number" [formControl]="cardForm">
+              </mat-form-field>
+              <div>
+                <div class="in-game-div">
+                  @if (getPaginatedList().length > 0) {
+                    @for (card of getPaginatedList(); track card.cardNumber) {
+                      <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
+                    }
+                  } @else {
+                    <h2>no se encontro carta Nº {{cardForm.value}}</h2>
+                  }
+                </div>
+              </div>
+              <div class="game-actions-div">
+                <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
+                <button (click)="finishGame()" mat-flat-button>Terminar partida</button>
+              </div>
+            </div>
           </div>
         </mat-tab>
       }
     </mat-tab-group>
-  <div class="section-for-cards">
 
-    <div class="game-patterns-section">
-      @for (pattern of gameService.gamePatternsInfo(); track $index) {
-        @if (pattern.active) {
-          <div class="game-pattern-cell-selected">
-            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
-            <h4>Activo esta ronda</h4>
-          </div>
-        } @else {
-          <div class="">
-            <app-game-pattern-info (click)="switchActivePattern(pattern)" [gamePattern]="pattern" [editablePrize]="false"/>
-          </div>
-        }
-      }
-    </div>
-    <mat-form-field appearance="outline">
-      <mat-label>Ingrese el numero de la carta</mat-label>
-      <input matInput type="number" [formControl]="cardForm">
-    </mat-form-field>
-    <div>
-      <div class="in-game-div">
-        @if (getPaginatedList().length > 0) {
-          @for (card of getPaginatedList(); track card.cardNumber) {
-            <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
-          }
-        } @else {
-          <h2>no se encontro carta Nº {{cardForm.value}}</h2>
-        }
-      </div>
-    </div>
-    <button (click)="finishGame()" mat-stroked-button>Terminar partida</button>
-  </div>
 
-</div>
+

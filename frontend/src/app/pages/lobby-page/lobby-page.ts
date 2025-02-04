@@ -18,6 +18,9 @@ import {PatternTargetPrizesComponent} from '../../sections/prize-section/pattern
 import { PersonalizationPageComponent } from "../../sections/personalization-section/personalization-page.component";
 import { ExportationPageComponent } from '../../sections/exportation-section/exportation-page.component';
 import {InvitationSectionComponent} from '../../sections/invitation-section/invitation-section.component';
+import {PatternSectionComponent} from '../../sections/pattern-section/pattern-section.component';
+import {GameConfigurationComponent} from '../../sections/game-configuration/game-configuration.component';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -36,13 +39,16 @@ import {InvitationSectionComponent} from '../../sections/invitation-section/invi
     PatternTargetPrizesComponent,
     PersonalizationPageComponent,
     ExportationPageComponent,
-    InvitationSectionComponent
+    InvitationSectionComponent,
+    PatternSectionComponent,
+    GameConfigurationComponent
   ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
 })
 export class LobbyPage implements OnInit {
   gameService = inject(GameService);
+  router = inject(Router);
   personalization = true;
 
   toggleView(): void {
@@ -51,6 +57,36 @@ export class LobbyPage implements OnInit {
 
   ngOnInit() {
     this.gameService.createNewGame().subscribe()
+    this.gameService.getCardsByGameId()
   }
 
+  cancelGame() {
+    this.gameService.disposeActualGame()
+    this.gameService.createNewGame().subscribe({
+      next: () => {
+        location.reload();
+      }
+    })
+  }
+
+  continueGameInProgress() {
+    this.router.navigateByUrl('/game')
+  }
+
+  closeGameInProgress() {
+    this.gameService.updateGame({
+      finished: true,
+      inProgress: this.gameService.actualGame()!.inProgress,
+      id: this.gameService.actualGame()!.id,
+      automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+      sharePrizes: this.gameService.actualGame()!.sharePrizes,
+      randomPatterns: this.gameService.actualGame()!.randomPatterns,
+    })
+    this.gameService.disposeActualGame()
+    this.gameService.createNewGame().subscribe({
+      next: () => {
+        location.reload();
+      }
+    })
+  }
 }

@@ -1,5 +1,18 @@
-
-<mat-stepper >
+@if (!gameService.actualGame()?.inProgress) {
+  <button mat-raised-button (click)="cancelGame()">Deshacer configuraciones</button>
+} @else if (gameService.actualGame()?.inProgress){
+  <button mat-raised-button (click)="continueGameInProgress()">Continuar ultima partida</button>
+  <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
+}
+<mat-stepper>
+  <mat-step>
+    <ng-template matStepLabel>Configuracion inicial</ng-template>
+    @defer (on viewport) {
+      <app-game-configuration/>
+    } @placeholder {
+      <h1>Loading</h1>
+    }
+  </mat-step>
     <mat-step>
       <ng-template matStepLabel>Adjuntar serial</ng-template>
       @defer (on viewport) {
@@ -11,10 +24,7 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar patrones</ng-template>
       @defer (on viewport) {
-        <div class="pattern-section-div">
-          <app-game-pattern-section-list/>
-          <app-pattern-list-component [inGame]="true"/>
-        </div>
+        <app-pattern-section/>
       } @placeholder {
         <h1>Loading</h1>
       }

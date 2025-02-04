@@ -1,15 +1,14 @@
-<div class="pattern-data-div">
-  <app-pattern-card [editable]="false" [pattern]="gamePattern().patternMatrix"></app-pattern-card>
-  <h3 class="pattern-name-text">{{gamePattern().patternName}}</h3>
-  @if (editablePrize()){
-    <div class="pattern-prize-actions">
-      <mat-form-field appearance="outline">
-        <mat-label>Premio Objetivo (Bs)</mat-label>
-        <input (keyup)="updatePrize()" matInput type="number" [formControl]="amountForm">
-      </mat-form-field>
-    </div>
-  } @else {
-    <h2>{{gamePattern().targetPrice + ' Bs'}}</h2>
-  }
 
-</div>
+<h1 class="pattern-section-title">Patrones a premiar</h1>
+<mat-tab-group>
+  @for (round of roundService.actualRounds(); track $index) {
+    @if (round.id){
+      <mat-tab [label]="round.roundName">
+        <div>
+          <app-round-pattern-info [round]="round"/>
+        </div>
+      </mat-tab>
+
+    }
+  }
+</mat-tab-group>

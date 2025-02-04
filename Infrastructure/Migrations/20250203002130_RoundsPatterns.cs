@@ -6,11 +6,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class RoundsPatterns : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AutomaticRaffle = table.Column<bool>(type: "bit", nullable: false),
+                    RandomPatterns = table.Column<bool>(type: "bit", nullable: false),
+                    SharePrizes = table.Column<bool>(type: "bit", nullable: false),
+                    InProgress = table.Column<bool>(type: "bit", nullable: false),
+                    Finished = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Patterns",
                 columns: table => new
@@ -46,13 +63,35 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Rounds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoundName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    RaffleNumbers = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rounds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rounds_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContentMatrix = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SerialId = table.Column<int>(type: "int", nullable: false)
+                    SerialId = table.Column<int>(type: "int", nullable: false),
+                    CardNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,25 +105,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Games",
+                name: "RoundPatterns",
                 columns: table => new
                 {
+                    RoundId = table.Column<int>(type: "int", nullable: false),
+                    PatternId = table.Column<int>(type: "int", nullable: false),
+                    TargetPrice = table.Column<double>(type: "float", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AutomaticRaffle = table.Column<bool>(type: "bit", nullable: false),
-                    RandomPatterns = table.Column<bool>(type: "bit", nullable: false),
-                    SharePrizes = table.Column<bool>(type: "bit", nullable: false),
-                    SerialId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.PrimaryKey("PK_RoundPatterns", x => new { x.RoundId, x.PatternId });
                     table.ForeignKey(
-                        name: "FK_Games_Serials_SerialId",
-                        column: x => x.SerialId,
-                        principalTable: "Serials",
+                        name: "FK_RoundPatterns_Patterns_PatternId",
+                        column: x => x.PatternId,
+                        principalTable: "Patterns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoundPatterns_Rounds_RoundId",
+                        column: x => x.RoundId,
+                        principalTable: "Rounds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,52 +155,6 @@ namespace Infrastructure.Migrations
                         principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GamePatterns",
-                columns: table => new
-                {
-                    GameId = table.Column<int>(type: "int", nullable: false),
-                    PatternId = table.Column<int>(type: "int", nullable: false),
-                    TargetPrice = table.Column<double>(type: "float", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GamePatterns", x => new { x.GameId, x.PatternId });
-                    table.ForeignKey(
-                        name: "FK_GamePatterns_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_GamePatterns_Patterns_PatternId",
-                        column: x => x.PatternId,
-                        principalTable: "Patterns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rounds",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoundName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rounds", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Rounds_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,16 +203,6 @@ namespace Infrastructure.Migrations
                 column: "CardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GamePatterns_PatternId",
-                table: "GamePatterns",
-                column: "PatternId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Games_SerialId",
-                table: "Games",
-                column: "SerialId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Prizes_CardId",
                 table: "Prizes",
                 column: "CardId");
@@ -230,6 +218,11 @@ namespace Infrastructure.Migrations
                 column: "RoundId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RoundPatterns_PatternId",
+                table: "RoundPatterns",
+                column: "PatternId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rounds_GameId",
                 table: "Rounds",
                 column: "GameId");
@@ -242,10 +235,10 @@ namespace Infrastructure.Migrations
                 name: "GameCards");
 
             migrationBuilder.DropTable(
-                name: "GamePatterns");
+                name: "Prizes");
 
             migrationBuilder.DropTable(
-                name: "Prizes");
+                name: "RoundPatterns");
 
             migrationBuilder.DropTable(
                 name: "Cards");
@@ -257,10 +250,10 @@ namespace Infrastructure.Migrations
                 name: "Rounds");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "Serials");
 
             migrationBuilder.DropTable(
-                name: "Serials");
+                name: "Games");
         }
     }
 }

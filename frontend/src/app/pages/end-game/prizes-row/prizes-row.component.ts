@@ -1,6 +1,6 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {PatternCardComponent} from '../../../shared/pattern-card/pattern-card.component';
-import {GamePatternInfo} from '../../../core/models/add-pattern-dialog-data';
+import {RoundPatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {PrizeData} from '../../../core/models/round';
 import {GameService} from '../../../core/services/game.service';
 import {RoundService} from '../../../core/services/round.service';

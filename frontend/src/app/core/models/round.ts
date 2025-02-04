@@ -1,5 +1,5 @@
 import {Card, GameCardInfo} from './card';
-import {GamePatternInfo} from './add-pattern-dialog-data';
+import {RoundPatternInfo} from './add-pattern-dialog-data';
 
 export interface Round {
   id?: number;
@@ -11,7 +11,7 @@ export interface Round {
 export interface VerifyCardDialogData {
   card: GameCardInfo,
   raffledNumbers: number[];
-  patterns: GamePatternInfo[];
+  patterns: RoundPatternInfo[];
   roundId: number;
 }
 export interface CreateRoundsData {
