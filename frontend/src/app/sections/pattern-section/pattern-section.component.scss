@@ -4,3 +4,9 @@
   flex-direction: row;
   place-content: space-evenly;
 }
+
+.next-step-div {
+  display: flex;
+  flex-direction: row;
+  place-content: end;
+}

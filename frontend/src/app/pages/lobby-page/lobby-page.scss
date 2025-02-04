@@ -1,1 +1,11 @@
-
+.lobby-div {
+  display: flex;
+  flex-direction: row;
+  place-content: space-around;
+  padding: 1rem;
+}
+.next-step-div {
+  display: flex;
+  flex-direction: row;
+  place-content: end;
+}

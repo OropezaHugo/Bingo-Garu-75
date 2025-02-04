@@ -22,6 +22,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../../shared/dialogs/confir-dialog/confir-dialog.component';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CreateSerialDialogComponent} from '../create-serial-dialog/create-serial-dialog.component';
+import {MatStepperNext} from '@angular/material/stepper';
+import {MatButton} from '@angular/material/button';
+import {SnackbarService} from '../../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-attach-serial-content',
@@ -48,7 +51,9 @@ import {CreateSerialDialogComponent} from '../create-serial-dialog/create-serial
     MatPaginator,
     RectanglebuttonComponent,
     MatHint,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatStepperNext,
+    MatButton
   ],
   templateUrl: './attach-serial-content.component.html',
   styleUrl: './attach-serial-content.component.scss'
@@ -61,12 +66,16 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
   gameService = inject(GameService)
   selectedSerial?: Serial
   ableToAttach = true
+  snackbar = inject(SnackbarService)
   readonly dialog = inject(MatDialog);
   sort = viewChild.required<MatSort>(MatSort)
   paginator = viewChild.required<MatPaginator>(MatPaginator)
   ngAfterViewInit() {
     this.dataSource.sort = this.sort()
     this.dataSource.paginator = this.paginator()
+    if (this.gameService.gameCards().length > 0) {
+      this.ableToAttach = false;
+    }
   }
 
   applyFilter(event: Event) {
@@ -100,6 +109,8 @@ export class AttachSerialContentComponent implements OnInit, AfterViewInit {
           this.ableToAttach = false;
         }
       })
+    } else {
+      this.snackbar.error("selecciona un serial de la tabla")
     }
   }
   createSerial() {

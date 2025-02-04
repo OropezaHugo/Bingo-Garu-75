@@ -6,6 +6,7 @@ import {map, Observable} from "rxjs";
 import {Serial} from "../models/serial";
 import {GameCardInfo} from '../models/card';
 import {PrizeData} from '../models/round';
+import {SnackbarService} from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class GameService {
   actualGame = signal<Game | undefined>(undefined)
   gameCards = signal<GameCardInfo[]>([])
   gamePrizes = signal<PrizeData[]>([])
+  snackBar = inject(SnackbarService)
 
   getGameById(id: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
@@ -96,6 +98,7 @@ export class GameService {
                   this.getCardsByGameId()
                 }
               })
+              this.snackBar.success("serial adjunto correctamente")
             }
           }
         })
