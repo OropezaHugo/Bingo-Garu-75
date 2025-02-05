@@ -1,9 +1,10 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {CreateRoundsData, PrizeData, Round} from '../models/round';
+import {CreateRoundsData, PostPrizeData, PrizeData, Round} from '../models/round';
 import {GameService} from './game.service';
 import {RoundPatternInfo, Pattern} from '../models/add-pattern-dialog-data';
 import {map, Observable} from 'rxjs';
+import {Card} from '../models/card';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,23 @@ export class RoundService {
     })
   }
 
+  isBingoValidAndNotPassed(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]) {
+    let asserts = patternMatrix.filter(value => value).length
+    let withLastNumber = false;
+    patternMatrix.forEach((patternMatrixCell, index) => {
+      if (patternMatrixCell) {
+        if (raffleNumbers.includes(cardContent[index]) || index === 12) {
+          if (raffleNumbers.length > 0 && cardContent[index] == raffleNumbers[raffleNumbers.length - 1])
+          {
+            withLastNumber = true;
+          }
+          asserts -= 1
+        }
+      }
+    })
+    return (!(asserts > 0) && withLastNumber);
+  }
+
   isBingoValid(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]) {
     let asserts = patternMatrix.filter(value => value).length
     patternMatrix.forEach((patternMatrixCell, index) => {
@@ -89,10 +107,14 @@ export class RoundService {
         }
       }
     })
-    return !(asserts > 0);
+    return (!(asserts > 0));
   }
 
-  postPrize(prize: PrizeData) {
+  existsAnyWinnerInRoundPattern(roundId: number, patternId: number) {
+    return this.http.get<boolean>(`${this.baseUrl}Round/${roundId}/pattern/${patternId}/winner`)
+  }
+
+  postPrize(prize: PostPrizeData) {
     this.gameService.createNewGame().subscribe({
       next: () => {
         return this.http.post<boolean>(`${this.baseUrl}Prize/game/${this.gameService.actualGame()?.id}`, prize).subscribe()
@@ -110,5 +132,9 @@ export class RoundService {
         })
       }
     })
+  }
+
+  getPrizesByRoundId(roundId: number) {
+    return this.http.get<PrizeData[]>(`${this.baseUrl}Prize/round/${roundId}`)
   }
 }

@@ -36,6 +36,8 @@
   </mat-tab-group>
 </mat-dialog-content>
 <mat-dialog-actions class="dialog-actions">
-  <h4>{{machineResponse}}</h4>
+  <h3>ultima jugada: {{mapCard(verificationData().card).lastNumber ?? 'no hubo'}}</h3>
+  <h4 class="formated-text">{{machineResponse}}</h4>
   <button mat-button (click)="verifyWithMachine()">verificar</button>
+  <button (click)="openBottomPrizes(verificationData().round)" mat-stroked-button>ver premios</button>
 </mat-dialog-actions>

@@ -1,0 +1,14 @@
+@if (roundPrizes.length < 1 ) {
+  <h2>No se regitraron premios en esta ronda</h2>
+} @else {
+  <h3 >Premios de {{round.roundName}}</h3>
+  <div class="prizes-list-panel">
+
+    <mat-divider/>
+      @for (prize of roundPrizes; track prize.id) {
+        <app-prizes-row [shortInfo]="true" [prizeData]="prize"/>
+        <mat-divider/>
+      }
+  </div>
+
+}

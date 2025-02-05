@@ -1,6 +1,16 @@
 <div class="prize-row-div">
-  <h3>{{prizeRound}}</h3>
-  <app-pattern-card [editable]="false" [pattern]="patternMatrix"/>
-  <h3 class="name-div">{{prizeData().userName}}</h3>
-  <h3>{{prizeData().prizeAmount}} Bs.</h3>
+  @if (shortInfo()) {
+    <h4>"{{patternName}}"</h4>
+    <h4 class="name-div">{{prizeData().userName | titlecase}}</h4>
+    <p></p>
+    <h4>Carta Nº{{prizeData().cardNumber}}</h4>
+    <h4>{{prizeData().prizeAmount}} Bs.</h4>
+  } @else {
+    <h3>{{prizeRound}}</h3>
+    <app-pattern-card [editable]="false" [pattern]="patternMatrix"/>
+    <h3 class="name-div">{{prizeData().userName | titlecase}}</h3>
+    <app-bingo-card [card]="mapCard()" [showOwnerInfo]="false"/>
+    <h3>{{prizeData().prizeAmount}} Bs.</h3>
+  }
+
 </div>

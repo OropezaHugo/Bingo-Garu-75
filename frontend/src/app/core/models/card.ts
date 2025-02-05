@@ -1,6 +1,7 @@
 export interface Card {
   cardNumber: number;
   content: CardBox[]
+  lastNumber?: number;
 }
 
 export interface CardBox {

@@ -7,19 +7,19 @@
       <h1>Ronda</h1>
       <h1>Figura</h1>
       <h1>Ganador</h1>
+      <h1>Carton</h1>
       <h1>Monto</h1>
     </div>
     <mat-divider/>
     @if (forActualGame() !== false) {
       @for (prize of gameService.gamePrizes(); track prize.id) {
-        <app-prizes-row [prizeData]="prize"/>
+        <app-prizes-row [shortInfo]="shortInfo()" [prizeData]="prize"/>
         <mat-divider/>
       }
       <button mat-flat-button (click)="leaveGame()">Abandonar partida permanentemente</button>
     } @else {
-
       @for (prize of gamePrizes; track prize.id) {
-        <app-prizes-row [prizeData]="prize"/>
+        <app-prizes-row [shortInfo]="shortInfo()" [prizeData]="prize"/>
         <mat-divider/>
       }
 

@@ -12,7 +12,7 @@ export interface VerifyCardDialogData {
   card: GameCardInfo,
   raffledNumbers: number[];
   patterns: RoundPatternInfo[];
-  roundId: number;
+  round: Round;
 }
 export interface CreateRoundsData {
   roundQuantity: number;
@@ -20,6 +20,17 @@ export interface CreateRoundsData {
 }
 
 export interface PrizeData {
+  id?: number;
+  prizeAmount: number;
+  userName: string;
+  patternId: number;
+  roundId: number;
+  cardId: number;
+  cardNumber: number;
+  cardContentMatrix: number[];
+}
+
+export interface PostPrizeData {
   id?: number;
   prizeAmount: number;
   userName: string;
