@@ -25,6 +25,9 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {RoundPatternsListComponent} from '../round-patterns-list/round-patterns-list.component';
 import {MatIcon} from '@angular/material/icon';
 import {RounListInGameComponent} from '../roun-list-in-game/roun-list-in-game.component';
+import {PrizesBoardComponent} from '../../end-game/prizes-board/prizes-board.component';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {RoundPrizesBoardComponent} from '../round-prizes-board/round-prizes-board.component';
 
 @Component({
   selector: 'app-game-page',
@@ -47,7 +50,8 @@ import {RounListInGameComponent} from '../roun-list-in-game/roun-list-in-game.co
     RoundPatternsListComponent,
     MatIconButton,
     MatIcon,
-    RounListInGameComponent
+    RounListInGameComponent,
+    PrizesBoardComponent
   ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
@@ -64,7 +68,7 @@ export class GamePageComponent implements OnInit {
   activeRound = signal<Round | undefined>(undefined)
   actualTab = 0;
   cardForm = new FormControl<string>('')
-
+  bottomSheet = inject(MatBottomSheet);
 
   ngOnInit() {
     this.gameService.createNewGame().subscribe({
@@ -119,19 +123,26 @@ export class GamePageComponent implements OnInit {
               card: card,
               raffledNumbers: this.activeRound()?.raffleNumbers ?? [],
               patterns: result.filter(pattern => pattern.active),
-              roundId: this.activeRound()?.id
+              round: this.activeRound()
             },
             minHeight: '600px',
             minWidth: '400px',
             maxWidth: '400px',
             position: {
-              top: '0'
+              top: '0',
+              right: '0',
             }
           })
         }
       }
     })
+  }
 
+  openBottomPrizes(round: Round) {
+    this.bottomSheet.open(RoundPrizesBoardComponent, {
+      data: round,
+      maxHeight: '400px'
+    })
   }
   loadRound(event: MatTabChangeEvent) {
     this.rounds = this.roundService.actualRounds();

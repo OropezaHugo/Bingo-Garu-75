@@ -1,0 +1,13 @@
+@if (hasWinner) {
+  <div class="has-winner">
+    <app-pattern-card [editable]="false" [pattern]="pattern().patternMatrix"></app-pattern-card>
+
+  </div>
+  <h3 class="pattern-name-text">{{pattern().patternName}}</h3>
+} @else {
+  <div >
+    <app-pattern-card [editable]="false" [pattern]="pattern().patternMatrix"></app-pattern-card>
+    <h3 class="pattern-name-text">{{pattern().patternName}}</h3>
+  </div>
+}
+

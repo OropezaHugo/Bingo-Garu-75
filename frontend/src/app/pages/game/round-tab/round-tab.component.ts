@@ -26,7 +26,7 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
   templateUrl: './round-tab.component.html',
   styleUrl: './round-tab.component.scss'
 })
-export class RoundTabComponent{
+export class RoundTabComponent implements OnInit {
   roundService = inject(RoundService);
   round = input.required<Round>();
   lastNumber = 0
@@ -36,6 +36,10 @@ export class RoundTabComponent{
   countdownId:any = null
   timeLeft: number = this.intervalTime.value ?? 2
 
+
+  ngOnInit() {
+    this.lastNumber = this.round().raffleNumbers[this.round().raffleNumbers.length - 1] ?? 0
+  }
 
   raffleNumber() {
     this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)

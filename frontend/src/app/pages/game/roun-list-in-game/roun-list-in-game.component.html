@@ -3,10 +3,6 @@
   <div class="in-game-patterns">
 
     @for (pattern of roundPatterns; track $index) {
-      <div class="pattern-data-div">
-        <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
-        <h3 class="pattern-name-text">{{pattern.patternName}}</h3>
-
-      </div>
+      <app-round-pattern-in-game [pattern]="pattern" [roundId]="round().id!"/>
     }
   </div>

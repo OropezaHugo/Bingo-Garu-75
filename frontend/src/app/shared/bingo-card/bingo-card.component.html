@@ -17,6 +17,10 @@
         <button class="star-box">
           <mat-icon>star</mat-icon>
         </button>
+      } @else if (box.number === card().lastNumber) {
+        <button class="last-number-marked-box" (click)="clickBox($event, $index)">
+          {{box.number}}
+        </button>
       } @else if (box.marked) {
         <button class="marked-box" (click)="clickBox($event, $index)">
           {{box.number}}

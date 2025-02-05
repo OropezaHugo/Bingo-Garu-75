@@ -66,3 +66,10 @@ $secondary-color: #fca311;
   @extend .marked-box;
   color: white;
 }
+
+
+.last-number-marked-box {
+  @extend .box;
+  background-color: red;
+  color: white;
+}

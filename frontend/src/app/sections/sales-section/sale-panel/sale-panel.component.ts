@@ -38,7 +38,7 @@ export class SalePanelComponent implements OnInit{
     this.displayedCard = {
       cardNumber: gameCard.cardNumber,
       content: gameCard.contentMatrix
-        .map<CardBox>(value => ({number: value, marked: false}))
+        .map<CardBox>(value => ({number: value, marked: false, lastNumber: 0}))
     }
     if (gameCard.userName.length > 2) {
       this.displayedCardBuyer = gameCard.userName;

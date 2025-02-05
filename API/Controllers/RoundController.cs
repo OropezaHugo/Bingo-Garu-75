@@ -13,6 +13,9 @@ public class RoundController
     (
         IGenericRepository<Round> repository,
         IGenericRepository<Game> gameRepository,
+        IGenericRepository<Pattern> patternRepository,
+        IGenericRepository<Prize> prizeRepository,
+        IGameCardsRepository gameCardsRepository,
         IMapper mapper
     ) :  ControllerBase
 {
@@ -67,5 +70,45 @@ public class RoundController
         var newRound = repository.UpdateAsync(mapper.Map<Round>((roundDto, roundId)));
         await repository.SaveChangesAsync();
         return Ok(mapper.Map<RoundResponseDTO>(newRound));
+    }
+
+    [HttpGet("{roundId}/pattern/{patternId}/winner")]
+    public async Task<ActionResult<bool>> ExistWinner(int roundId, int patternId)
+    {
+        var round = await repository.GetByIdAsync(roundId);
+        if (round == null) return NotFound();
+        var pattern = await patternRepository.GetByIdAsync(patternId);
+        if (pattern == null) return NotFound();
+        var cards = await gameCardsRepository.ListCardsByGameId(round.GameId);
+        var prizes = await prizeRepository.ListAllAsync();
+        prizes = prizes.Where(prize => prize.RoundId == roundId && prize.PatternId == patternId).ToList();
+        foreach (Card card in cards)
+        {
+            if (prizes.Any(prize => prize.CardId == card.Id))
+            {
+                continue;
+            }
+            var asserts = pattern.PatternMatrix.Count(p => p);
+            bool withLastNumber = false;
+            for (int i = 0; i < pattern.PatternMatrix.Count; i++)
+            {
+                if (pattern.PatternMatrix[i])
+                {
+                    if (round.RaffleNumbers.Contains(card.ContentMatrix[i]) || i == 12)
+                    {
+                        if (round.RaffleNumbers.Count > 0 && card.ContentMatrix[i] == round.RaffleNumbers[^1])
+                        {
+                            withLastNumber = true;
+                        }
+                        asserts--;
+                    }
+                }
+            }
+            if (asserts <= 0 && withLastNumber)
+            {
+                return Ok(true);
+            }
+        }
+        return Ok(false);
     }
 }

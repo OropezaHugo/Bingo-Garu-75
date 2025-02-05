@@ -1,6 +1,6 @@
 .prize-row-div {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   place-items: center;
   align-items: center;
 
@@ -10,3 +10,4 @@
   overflow-wrap: break-word;
   max-width: 200px;
 }
+

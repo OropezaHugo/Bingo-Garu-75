@@ -16,14 +16,17 @@ public class PrizeController
         IGenericRepository<Round> roundRepository,
         IGenericRepository<Game> gameRepository,
         IGameCardsRepository gameCardsRepository,
-        IRoundPatternsRepository roundPatternsRepository
-        ): ControllerBase
+        IGenericRepository<Card> cardRepository): ControllerBase
 {
     [HttpGet("round/{roundId}")]
     public async Task<ActionResult<List<PrizeResponseDTO>>> GetPrizesByRoundId(int roundId)
     {
         var prizes = await repository.ListAllAsync();
-        return Ok(prizes.Select(prize => mapper.Map<PrizeResponseDTO>(prize)));
+        return Ok(prizes.Where(prize => prize.RoundId == roundId).Select(prize =>
+        {
+            var card = cardRepository.GetByIdAsync(prize.CardId).Result;
+            return mapper.Map<PrizeResponseDTO>((prize, card));
+        }));
     }
 
     [HttpGet("game/{gameId}")]
@@ -34,7 +37,11 @@ public class PrizeController
         var gameRounds = rounds.Where(round => round.GameId == gameId);
         var gamePrizes = prizes
             .Where(prize => gameRounds.Any(round => round.Id == prize.RoundId));
-        return Ok(gamePrizes.Select(prize => mapper.Map<PrizeResponseDTO>(prize)));
+        return Ok(gamePrizes.Select(prize => 
+        {
+            var card = cardRepository.GetByIdAsync(prize.CardId).Result;
+            return mapper.Map<PrizeResponseDTO>((prize, card));
+        }));
     }
 
     [HttpPost("game/{gameId}")]

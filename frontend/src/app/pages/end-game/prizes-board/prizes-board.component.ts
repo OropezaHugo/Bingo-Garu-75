@@ -28,6 +28,7 @@ export class PrizesBoardComponent implements OnInit {
   historyService = inject(HistoryService)
   forActualGame = input<boolean>(true)
   gameId = input<number>(1);
+  shortInfo = input<boolean>(true)
   gamePrizes: PrizeData[] = []
   router = inject(Router)
   dialog = inject(MatDialog)
