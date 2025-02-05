@@ -28,6 +28,7 @@ import {RounListInGameComponent} from '../roun-list-in-game/roun-list-in-game.co
 import {PrizesBoardComponent} from '../../end-game/prizes-board/prizes-board.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoundPrizesBoardComponent} from '../round-prizes-board/round-prizes-board.component';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-game-page',
@@ -51,7 +52,8 @@ import {RoundPrizesBoardComponent} from '../round-prizes-board/round-prizes-boar
     MatIconButton,
     MatIcon,
     RounListInGameComponent,
-    PrizesBoardComponent
+    PrizesBoardComponent,
+    MatCheckbox
   ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
