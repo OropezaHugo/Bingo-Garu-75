@@ -88,6 +88,7 @@ export class SalePanelComponent implements OnInit, AfterViewInit{
       this.dataSource = new MatTableDataSource(this.gameService.gameCards())
       this.dataSource.sort = this.sort()
       this.dataSource.paginator = this.paginator()
+      this.dataSource.filterPredicate = (data, filter) => data.userName.trim().toLowerCase().includes(filter.trim()) || data.cardNumber.toString().includes(filter);
     }, 1000)
 
  }
