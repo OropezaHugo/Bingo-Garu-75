@@ -1,0 +1,16 @@
+<mat-card class="login-card">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <p class="login-tittle">Login</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Email Address</mat-label>
+      <input formControlName="email" matInput type="email" placeholder="name@example.com">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput type="password" placeholder="Password">
+    </mat-form-field>
+    <button mat-flat-button type="submit" class="input-button">
+      Log In
+    </button>
+  </form>
+</mat-card>

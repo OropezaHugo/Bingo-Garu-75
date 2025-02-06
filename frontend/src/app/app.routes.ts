@@ -7,15 +7,20 @@ import {GamePageComponent} from './pages/game/game-page/game-page.component';
 import {PrizesBoardComponent} from './pages/end-game/prizes-board/prizes-board.component';
 import {HistoryComponent} from './pages/history/history.component';
 import {PatternsComponent} from './pages/patterns/patterns.component';
+import {LoginComponent} from './pages/login/login.component';
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
-    { path: "serials", component: AttachSerialContentComponent },
-    { path: "", component: HomePageComponent, pathMatch: 'full'},
-    {path: "lobby", component: LobbyPage},
-    {path: "instructions", component: InstructionsComponent},
-    {path: "patterns", component: PatternsComponent},
-    {path: "game", component: GamePageComponent},
-    {path: "prizes", component: PrizesBoardComponent},
-  {path: "history", component: HistoryComponent},
-    {path: "**", redirectTo: ""},
+  {path: "login", component: LoginComponent},
+  { path: "", component: HomePageComponent, pathMatch: 'full'},
+  {path: "bingo", canActivate: [authGuard], children: [
+      { path: "serials", component: AttachSerialContentComponent },
+      {path: "lobby", component: LobbyPage},
+      {path: "instructions", component: InstructionsComponent},
+      {path: "patterns", component: PatternsComponent},
+      {path: "game", component: GamePageComponent},
+      {path: "prizes", component: PrizesBoardComponent},
+      {path: "history", component: HistoryComponent},
+    ]},
+    {path: "**", redirectTo: "login"},
 ];
