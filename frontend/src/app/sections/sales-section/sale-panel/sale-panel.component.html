@@ -67,7 +67,7 @@
             [class.unsold-row]="!row.sold && !selectedCards().includes(row)"
           ></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10]" pageSize="10" aria-label="Elige pagina de seriales"></mat-paginator>
+        <mat-paginator [showFirstLastButtons]="true"  [pageSizeOptions]="[5, 10]" pageSize="10" aria-label="Elige pagina de seriales"></mat-paginator>
       </div>
     </div>
 
