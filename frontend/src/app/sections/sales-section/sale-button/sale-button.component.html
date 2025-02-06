@@ -1,4 +1,4 @@
-@if (viewOnly()) {
+@if (viewOnly() && !selected()) {
   <button class="view-only-button">
     {{ gameCard().cardNumber }}
   </button>

@@ -81,7 +81,7 @@ export class RoundService {
     })
   }
 
-  isBingoValidAndNotPassed(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]) {
+  isBingoValidAndNotPassed(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]): boolean {
     let asserts = patternMatrix.filter(value => value).length
     let withLastNumber = false;
     patternMatrix.forEach((patternMatrixCell, index) => {
@@ -96,6 +96,16 @@ export class RoundService {
       }
     })
     return (!(asserts > 0) && withLastNumber);
+  }
+
+  isBingoValidAndNotPassedOnAnyPattern(patternInfos: RoundPatternInfo[], cardContent: number[], raffleNumbers: number[]): boolean {
+    let result = false
+    patternInfos.forEach(pattern => {
+      if (this.isBingoValidAndNotPassed(pattern.patternMatrix, cardContent, raffleNumbers)) {
+        result = true
+      }
+    })
+    return result
   }
 
   isBingoValid(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]) {

@@ -16,7 +16,7 @@
                 <div class="in-game-div">
                   @if (getPaginatedList().length > 0) {
                     @for (card of getPaginatedList(); track card.cardNumber) {
-                      <app-sale-button (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
+                      <app-sale-button [selected]="roundService.isBingoValidAndNotPassedOnAnyPattern(activePatterns, card.contentMatrix, round.raffleNumbers)" (click)="verifyCardDialog(card)" [viewOnly]="true" [gameCard]="card" />
                     }
                   } @else {
                     <h2>no se encontro carta Nº {{cardForm.value}}</h2>

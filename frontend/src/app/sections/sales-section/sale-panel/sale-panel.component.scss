@@ -10,6 +10,16 @@
   flex-direction: row;
   place-content: end;
 }
+.selected-row {
+  background-color: cornflowerblue;
+}
+
+.sold-row {
+  background-color: lightgreen;
+}
+.unsold-row {
+  background-color: indianred;
+}
 .card-preview-sale {
   width: 320px;
   display: flex;
@@ -62,6 +72,7 @@ button {
 }
 
 .sale-panel-div {
+  padding: 1rem 0;
   display: grid;
   grid-template-columns: 2fr 3fr;
   grid-gap: 1rem;
