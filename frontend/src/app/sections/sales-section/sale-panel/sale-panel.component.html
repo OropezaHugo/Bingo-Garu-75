@@ -15,28 +15,60 @@
     </div>
     <div>
       <div class="sale-cards-panel-div">
-        @for (card
-          of getPaginatedList()
-          ; track card.cardId) {
-          <app-sale-button
-            [viewOnly]="false"
-            [selected]="selectedCards().includes(card)"
-            [gameCard]="card"
-            (mouseover)="displayCard(card)"
-            (click)="selectCard(card); pageIndex.set(pageIndex())"
-            (tap)="displayCard(card); selectCard(card)"
-          />
-        }
-      </div>
+        <mat-form-field appearance="outline" class="serial-searcher">
+          <mat-label>Buscar por nombre...</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre..." #input>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" class="example-table" matSort>
+          <ng-container matColumnDef="cardNumber">
+            <th class="serial-table-header" mat-header-cell *matHeaderCellDef mat-sort-header>
+              Número de carton
+            </th>
+            <td mat-cell *matCellDef="let row">Nº {{row.cardNumber}}</td>
+          </ng-container>
+          <ng-container matColumnDef="sold">
+            <th class="serial-table-header" mat-header-cell *matHeaderCellDef mat-sort-header>
+              Estado de la carta
+            </th>
+            <td mat-cell *matCellDef="let row">
+              @if (row.sold) {
+                VENDIDO
+              } @else {
+                NO VENDIDO
+              }
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="userName">
+            <th class="serial-table-header" mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nombre del comprador
+            </th>
+            <td mat-cell *matCellDef="let row">
+              @if (row.userName.length > 0) {
+                {{row.userName | titlecase}}
+              } @else {
+                 - - - - - - - - - - - - - -
+              }
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matNoDataRow>
+            <td colspan="4">no se encontro un carton con el nombre "{{input.value}}"</td>
+          </tr>
+          <tr
+            mat-row
 
-      <mat-paginator [length]="this.gameService.gameCards().length"
-                     [pageSize]="pageSize()"
-                     [pageSizeOptions]="pageSizeOptions"
-                     [pageIndex]="pageIndex()"
-                     (page)="updateLocalPagination($event)"
-                     showFirstLastButtons="true"
-                     aria-label="Select page">
-      </mat-paginator>
+            *matRowDef="let row; columns: columns;"
+            (click)="selectCard(row)"
+            (mouseover)="displayCard(row)"
+            (tap)="displayCard(row)"
+            [class.selected-row]="selectedCards().includes(row)"
+            [class.sold-row]="row.sold && !selectedCards().includes(row)"
+            [class.unsold-row]="!row.sold && !selectedCards().includes(row)"
+          ></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10]" pageSize="10" aria-label="Elige pagina de seriales"></mat-paginator>
+      </div>
     </div>
 
   </div>

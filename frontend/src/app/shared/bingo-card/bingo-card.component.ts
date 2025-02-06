@@ -2,11 +2,13 @@ import {Component, input} from '@angular/core';
 import {Card, CardBox, GameCardInfo} from '../../core/models/card';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {TitleCasePipe} from '@angular/common';
 
 @Component({
   selector: 'app-bingo-card',
   imports: [
-    MatIcon
+    MatIcon,
+    TitleCasePipe
   ],
   templateUrl: './bingo-card.component.html',
   styleUrl: './bingo-card.component.scss'
