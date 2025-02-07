@@ -42,4 +42,10 @@ export class AddPatternToRoundDialogComponent implements OnInit {
   ngOnInit() {
     this.roundService.getRounds()
   }
+
+  addToEveryRound() {
+    this.roundService.actualRounds().forEach((round) => {
+      this.addToRound(round.id!)
+    })
+  }
 }
