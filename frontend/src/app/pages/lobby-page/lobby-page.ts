@@ -80,7 +80,7 @@ export class LobbyPage implements OnInit {
   }
 
   continueGameInProgress() {
-    this.router.navigateByUrl('/game')
+    this.router.navigateByUrl('bingo/game')
   }
 
   closeGameInProgress() {

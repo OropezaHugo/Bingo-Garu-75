@@ -7,13 +7,14 @@ import {Serial} from "../models/serial";
 import {GameCardInfo} from '../models/card';
 import {PrizeData} from '../models/round';
 import {SnackbarService} from './snackbar.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
   actualGame = signal<Game | undefined>(undefined)
   gameCards = signal<GameCardInfo[]>([])

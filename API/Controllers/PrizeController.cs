@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PrizeController
     (
         IGenericRepository<Prize> repository,

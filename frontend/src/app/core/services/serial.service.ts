@@ -3,13 +3,14 @@ import {HttpClient} from '@angular/common/http';
 
 import { SerialColorsDTO } from '../models/ColorSerials';
 import {NewSerialData, Serial} from '../models/serial';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SerialService {
 
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
 
   getSerials() {

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class PatternController(
     IGenericRepository<Pattern> patternRepository,
     IGenericRepository<Game> gameRepository,

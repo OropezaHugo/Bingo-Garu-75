@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {PrizeData} from '../models/round';
 import {Game} from '../models/game';
+import {environment} from '../../../environments/environment';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import {Game} from '../models/game';
 })
 export class HistoryService {
 
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
 
   getAllFinishedGames() {

@@ -2,13 +2,14 @@ import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {RoundPatternInfo, NewPatternDialogData, Pattern} from '../models/add-pattern-dialog-data';
 import {GameService} from './game.service';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatternService {
 
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
   constructor() {
     this.getPatterns()

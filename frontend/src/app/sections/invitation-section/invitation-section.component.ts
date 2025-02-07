@@ -186,7 +186,7 @@ export class InvitationSectionComponent implements OnInit {
                 randomPatterns: this.gameService.actualGame()!.randomPatterns,
                 targetStartDate:this.dateForm.value !== null && this.eventTimeForm.value !== null ? this.combineDateAndTime(this.dateForm.value, this.eventTimeForm.value).toISOString() : undefined
               })
-              this.router.navigateByUrl('bingo//game')
+              this.router.navigateByUrl('bingo/game')
             }
           })
         } else {

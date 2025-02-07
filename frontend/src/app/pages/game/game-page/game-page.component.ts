@@ -76,7 +76,7 @@ export class GamePageComponent implements OnInit {
     this.gameService.createNewGame().subscribe({
       next: result => {
         if (this.gameService.actualGame()?.finished) {
-          this.router.navigateByUrl('/prizes');
+          this.router.navigateByUrl('bingo/prizes');
         }
         this.roundService.getRounds()
         this.gameService.getCardsByGameId()
@@ -164,7 +164,7 @@ export class GamePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.gameService.finishGame()
-        this.router.navigate(['/prizes'], {replaceUrl: true});
+        this.router.navigate(['/bingo/prizes'], {replaceUrl: true});
       }
     })
   }

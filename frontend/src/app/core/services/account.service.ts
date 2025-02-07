@@ -2,12 +2,13 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {inject, Injectable, signal} from '@angular/core';
 import {AuthToken, User} from '../models/user';
 import {map} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
   currentUser = signal<User | null>(null)
 
@@ -24,7 +25,6 @@ export class AccountService {
     return this.http.get<User>(this.baseUrl + 'Auth/user-info').pipe(
       map( user => {
         this.currentUser.set(user);
-        console.log(user);
         return user;
       })
     )
