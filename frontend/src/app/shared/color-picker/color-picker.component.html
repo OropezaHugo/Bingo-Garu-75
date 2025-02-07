@@ -4,6 +4,15 @@
       <div class="color-preview" [style.background-color]="formGroup.get('color')?.value"></div>
       <label>{{ selectedElementLabel }}</label>
     </div>
+
+    <input
+      type="text"
+      formControlName="color"
+      [value]="formGroup.get('color')?.value"
+      (input)="onHexInput($event)"
+      placeholder="Enter HEX color"
+    />
+
     <p-colorpicker
       formControlName="color"
       [inline]="true"

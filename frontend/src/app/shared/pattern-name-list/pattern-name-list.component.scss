@@ -1,0 +1,58 @@
+.pattern-name-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 100%;
+  padding: 1rem;
+
+  div {
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: calc(100% / 2 - 1rem);
+    min-width: 250px;
+    max-width: 400px;
+    text-align: center;
+
+    h2 {
+      font-size: 1.5rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+      li {
+        padding: 0.5rem;
+        border-bottom: 1px solid #ddd;
+        font-size: 1rem;
+      }
+
+      li:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    div {
+      width: 100%;
+    }
+  }
+}

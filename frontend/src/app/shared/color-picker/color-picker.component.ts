@@ -33,11 +33,18 @@ export class ColorPickerComponent {
       CardFillColor: 'Card Background Color',
       CardNameColor: 'Card Title Color',
       BoxNumberColor: 'Box Number Color',
-      CardNumberColor: 'Card Number Color'
+      CardNumberColor: 'Card Number Color',
+      BackgroundColor: 'Background',
+      TextColor: 'Text',
+      HeaderColor: 'Header',
+      PrizeColor: 'Prize',
+      RoundInfoColor: 'RoundInfo',
+      OfferColor: 'Offer'
     };
 
     this.selectedElementLabel = labelMap[element] || 'Select an element';
-  }
+}
+
 
   onColorSelect(event: any) {
     if (this.selectedElement) {
@@ -45,6 +52,18 @@ export class ColorPickerComponent {
         color: event.value,
         element: this.selectedElement
       });
+    }
+  }
+
+  onHexInput(event: any) {
+    const inputColor = event.target.value;
+    const isValidHex = /^#[0-9A-Fa-f]{6}$/.test(inputColor);
+
+    if (isValidHex) {
+      this.formGroup.patchValue({ color: inputColor });
+      this.onColorSelect({ value: inputColor });
+    } else {
+      console.warn("Invalid HEX color");
     }
   }
 }

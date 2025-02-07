@@ -1,0 +1,22 @@
+@if (rounds()!.length > 0) {
+  @for (round of rounds(); track round.id) {
+    <div>
+      <h2>{{ round.roundName }}</h2>
+
+      <h3>Patrones y Premios:</h3>
+      <ul>
+        @if (patternsByRound().has(round.id!)) {
+          @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
+            <li>
+              {{ pattern.patternName }} - Premio: {{ pattern.targetPrice }} Bs
+            </li>
+          }
+        } @else {
+          <li>Cargando patrones...</li>
+        }
+      </ul>
+    </div>
+  }
+} @else {
+  <p>No hay rondas disponibles.</p>
+}
