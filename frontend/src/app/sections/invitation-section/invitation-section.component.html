@@ -45,10 +45,6 @@
       <h1 [style.color]="HeaderColor">Black Bingo</h1>
       <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
     </div>
-    <div class="invitation-pattern-info" [style.color]="TextColor">
-      <h2>Figuras:</h2>
-      <h2>Premios en juego:</h2>
-    </div>
 
     <div class="rounds-section" [style.color]="RoundInfoColor">
       <div class="rounds-section" [style.color]="RoundInfoColor">
@@ -64,6 +60,9 @@
     <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
     <div class="invitation-pattern-info" [style.color]="RoundInfoColor">
       <h3>{{gameService.gameCards().length}} cartones en venta</h3>
+      @if (withOfferForm.value === true) {
+        <h3>Compra al 2x1</h3>
+      }
     </div>
   </div>
 
@@ -87,5 +86,5 @@
 
   <button mat-stroked-button (click)="exportToImage()">Export invitation</button>
 
-  <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
+  <app-rectanglebutton (click)="startGame(); updateTargetStartDate()" text="Iniciar Partida"/>
 </div>

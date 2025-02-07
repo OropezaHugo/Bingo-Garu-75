@@ -214,4 +214,70 @@ export class InvitationSectionComponent implements OnInit {
     this.isColorPickerOpen = true;
     this.selectElement(element, (this as any)[element]);
   }
+
+  private combineDateAndTime(date: Date, timeStr: string): Date {
+    console.log('🔵 Entering combineDateAndTime method');
+    console.log('📅 Input date:', date);
+    console.log('⏰ Input time string:', timeStr);
+
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    console.log('🕐 Parsed hours:', hours);
+    console.log('🕐 Parsed minutes:', minutes);
+
+    const combinedDate = new Date(date);
+    console.log('📅 Initial date object:', combinedDate);
+
+    combinedDate.setHours(hours, minutes, 0);
+    console.log('📅 Final combined date:', combinedDate);
+    console.log('📅 Final date in ISO format:', combinedDate.toISOString());
+
+    return combinedDate;
+  }
+
+  // Add this method to handle the update
+  updateTargetStartDate() {
+    console.log('🟢 Starting updateTargetStartDate');
+    console.log('📝 Current form values:');
+    console.log('   - Date form value:', this.dateForm.value);
+    console.log('   - Event time form value:', this.eventTimeForm.value);
+
+    if (this.dateForm.value && this.eventTimeForm.value) {
+      console.log('✅ Both date and time values are present');
+
+      const targetStartDate = this.combineDateAndTime(this.dateForm.value, this.eventTimeForm.value);
+      console.log('🎯 Generated targetStartDate:', targetStartDate);
+
+      console.log('🎮 Current game details:');
+      console.log('   - Game ID:', this.gameService.actualGame()?.id);
+      console.log('   - Current inProgress:', this.gameService.actualGame()?.inProgress);
+      console.log('   - Current finished:', this.gameService.actualGame()?.finished);
+      console.log('   - Current automaticRaffle:', this.gameService.actualGame()?.automaticRaffle);
+      console.log('   - Current sharePrizes:', this.gameService.actualGame()?.sharePrizes);
+      console.log('   - Current randomPatterns:', this.gameService.actualGame()?.randomPatterns);
+
+      console.log('📤 Preparing to update game with new data');
+
+      const updateData = {
+        id: this.gameService.actualGame()!.id,
+        targetStartDate: targetStartDate,
+        inProgress: this.gameService.actualGame()!.inProgress,
+        finished: this.gameService.actualGame()!.finished,
+        automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
+        sharePrizes: this.gameService.actualGame()!.sharePrizes,
+        randomPatterns: this.gameService.actualGame()!.randomPatterns,
+      };
+      console.log('📦 Update payload:', updateData);
+
+      this.gameService.updateGame(updateData)
+      console.log('📨 Update request sent to gameService');
+    } else {
+      console.log('❌ Missing required values:');
+      console.log('   - Date present:', !!this.dateForm.value);
+      console.log('   - Time present:', !!this.eventTimeForm.value);
+      this.snackBar.error('Debe seleccionar una fecha y una hora');
+    }
+    console.log('🔚 Ending updateTargetStartDate');
+  }
+
+
 }

@@ -4,17 +4,19 @@
       <h2>{{ round.roundName }}</h2>
 
       <h3>Patrones y Premios:</h3>
-      <ul>
+
+      <div class="pattern-container">
         @if (patternsByRound().has(round.id!)) {
           @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
-            <li>
-              {{ pattern.patternName }} - Premio: {{ pattern.targetPrice }} Bs
-            </li>
+            <div class="pattern-item">
+              <span>{{ pattern.patternName }}</span>
+              <span>{{ pattern.targetPrice }} Bs</span>
+            </div>
           }
         } @else {
-          <li>Cargando patrones...</li>
+          <div class="pattern-item">Cargando patrones...</div>
         }
-      </ul>
+      </div>
     </div>
   }
 } @else {
