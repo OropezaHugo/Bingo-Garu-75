@@ -15,6 +15,10 @@ export class HistoryService {
   getAllFinishedGames() {
     return this.http.get<Game[]>(`${this.baseUrl}Game/finished`);
   }
+
+  getAllUnstartedGames() {
+    return this.http.get<Game[]>(`${this.baseUrl}Game/unstarted`);
+  }
   getGamePrizesById(id: number) {
     return this.http.get<PrizeData[]>(`${this.baseUrl}Prize/game/${id}`);
   }
