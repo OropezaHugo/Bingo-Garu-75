@@ -156,4 +156,39 @@ export class SalePanelComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
+
+  generateCSV() {
+    this.gameService.getCardsByGameId()
+    setTimeout(() => {
+      let data: any[] = this.gameService.gameCards().map((card: GameCardInfo) => ({
+        Numero_de_carton: card.cardNumber,
+        Vendido: card.sold ? 'vendido': 'no vendido',
+        Nombre_del_comprador: card.userName,
+      }))
+      if (!data || data.length === 0) {
+        console.error("No hay datos para exportar");
+        return;
+      }
+
+      const headers = Object.keys(data[0]).join(",");
+
+      const csvRows = data.map(row =>
+        Object.values(row)
+          .map(value => `"${value}"`)
+          .join(",")
+      );
+      const csvContent = [headers, ...csvRows].join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+
+      link.setAttribute("href", url);
+      link.setAttribute("download", `ventas-${this.gameService.actualGame()?.id}-${new Date().toDateString()}`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 1000)
+  }
 }
