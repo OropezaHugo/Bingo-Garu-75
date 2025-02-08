@@ -5,7 +5,7 @@
     <button mat-stroked-button (click)="continueGameInProgress()">Continuar ultima partida</button>
     <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
   }
-
+  <h5>game code: {{gameService.actualGame()?.id}}</h5>
 </div>
 <mat-stepper [orientation]="stepperOrientation()">
   <mat-step>
