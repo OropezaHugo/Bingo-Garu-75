@@ -48,10 +48,11 @@
 
     <div class="rounds-section" [style.color]="RoundInfoColor">
       <div class="rounds-section" [style.color]="RoundInfoColor">
-        <h2>Rondas y Patrones:</h2>
-        <div class="rounds-container">
-          <app-pattern-name-list></app-pattern-name-list>
-        </div>
+        <h2 style="text-align: center">Rondas y Premios</h2>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="rounds-container">
+        <app-pattern-name-list></app-pattern-name-list>
       </div>
     </div>
 
@@ -84,7 +85,7 @@
       }
     </div>
 
-  <button mat-stroked-button (click)="exportToImage()">Export invitation</button>
+  <button mat-stroked-button (click)="exportToImage(); updateTargetStartDate()">Export invitation</button>
 
-  <app-rectanglebutton (click)="startGame(); updateTargetStartDate()" text="Iniciar Partida"/>
+  <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
 </div>

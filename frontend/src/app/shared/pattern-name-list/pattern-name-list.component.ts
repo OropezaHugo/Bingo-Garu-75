@@ -3,10 +3,16 @@ import { Round } from '../../core/models/round';
 import { RoundPatternInfo } from '../../core/models/add-pattern-dialog-data';
 import { RoundService } from '../../core/services/round.service';
 import { signal, effect } from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-pattern-name-list',
   templateUrl: './pattern-name-list.component.html',
+  imports: [
+    MatIcon,
+    MatDivider
+  ],
   styleUrl: './pattern-name-list.component.scss'
 })
 export class PatternNameListComponent implements OnInit {
@@ -14,7 +20,6 @@ export class PatternNameListComponent implements OnInit {
   patternsByRound = signal<Map<number, RoundPatternInfo[]>>(new Map());
 
   constructor(private roundService: RoundService) {
-    // Suscribirse a los cambios del signal actualRounds
     effect(() => {
       const currentRounds = this.roundService.actualRounds();
       if (currentRounds.length > 0) {

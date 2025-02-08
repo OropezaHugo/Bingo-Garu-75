@@ -32,6 +32,7 @@ import { Round } from '../../core/models/round';
 import { RoundPatternsListComponent } from "../../pages/game/round-patterns-list/round-patterns-list.component";
 import { Pattern } from '../../core/models/add-pattern-dialog-data';
 import { PatternNameListComponent } from "../../shared/pattern-name-list/pattern-name-list.component";
+import {Game} from '../../core/models/game';
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
 
@@ -104,9 +105,11 @@ export class InvitationSectionComponent implements OnInit {
     });
   }
 
-  dateForm = new FormControl<Date>(new Date())
+  dateForm = new FormControl<Date>(new Date(this.gameService.actualGame()?.targetStartDate!))
   gamePricesForm = new FormControl<number>(0)
-  eventTimeForm = new FormControl<string>('13:30', Validators.pattern('^([01]?[0-9]|2[0-3]):[0-5][0-9]$'))
+  eventTimeForm = new FormControl<string>(
+    this.parseTimeString(this.gameService.actualGame()?.targetStartDate!),
+    Validators.pattern('^([01]?[0-9]|2[0-3]):[0-5][0-9]$'))
   withOfferForm = new FormControl<boolean>(false)
   invitationColors: { BackgroundColor: string; TextColor: string; HeaderColor: string; PrizeColor: string; RoundInfoColor: string; OfferColor: string; } | undefined;
 
@@ -117,6 +120,22 @@ export class InvitationSectionComponent implements OnInit {
     this.roundService.getRounds();
   }
 
+  parseTimeString(dateTimeString: string): string {
+    let dateTime = new Date(dateTimeString);
+    let result = ''
+    if (dateTime.getHours() < 10) {
+      result += '0' + dateTime.getHours();
+    } else {
+      result += dateTime.getHours();
+    }
+    result += ':'
+    if (dateTime.getMinutes() < 10) {
+      result += '0' + dateTime.getMinutes();
+    } else {
+      result += dateTime.getMinutes();
+    }
+    return result;
+  }
   exportToImage() {
     const element = document.getElementById('content-to-export') as HTMLElement;
 
@@ -146,6 +165,7 @@ export class InvitationSectionComponent implements OnInit {
                 automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
                 sharePrizes: this.gameService.actualGame()!.sharePrizes,
                 randomPatterns: this.gameService.actualGame()!.randomPatterns,
+                targetStartDate:this.dateForm.value !== null && this.eventTimeForm.value !== null ? this.combineDateAndTime(this.dateForm.value, this.eventTimeForm.value).toISOString() : undefined
               })
               this.router.navigateByUrl('/game')
             }
@@ -215,68 +235,42 @@ export class InvitationSectionComponent implements OnInit {
     this.selectElement(element, (this as any)[element]);
   }
 
-  private combineDateAndTime(date: Date, timeStr: string): Date {
-    console.log('🔵 Entering combineDateAndTime method');
-    console.log('📅 Input date:', date);
-    console.log('⏰ Input time string:', timeStr);
+  private combineDateAndTime(date: Date, time: string): Date {
 
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    console.log('🕐 Parsed hours:', hours);
-    console.log('🕐 Parsed minutes:', minutes);
+    if (!date || !time) {
+      return new Date()
+    }
+
+    const [hours, minutes] = time.split(":").map(Number);
 
     const combinedDate = new Date(date);
-    console.log('📅 Initial date object:', combinedDate);
 
-    combinedDate.setHours(hours, minutes, 0);
-    console.log('📅 Final combined date:', combinedDate);
-    console.log('📅 Final date in ISO format:', combinedDate.toISOString());
+    combinedDate.setHours(hours, minutes, 0, 0);
 
     return combinedDate;
   }
 
-  // Add this method to handle the update
   updateTargetStartDate() {
-    console.log('🟢 Starting updateTargetStartDate');
-    console.log('📝 Current form values:');
-    console.log('   - Date form value:', this.dateForm.value);
-    console.log('   - Event time form value:', this.eventTimeForm.value);
 
     if (this.dateForm.value && this.eventTimeForm.value) {
-      console.log('✅ Both date and time values are present');
 
       const targetStartDate = this.combineDateAndTime(this.dateForm.value, this.eventTimeForm.value);
-      console.log('🎯 Generated targetStartDate:', targetStartDate);
 
-      console.log('🎮 Current game details:');
-      console.log('   - Game ID:', this.gameService.actualGame()?.id);
-      console.log('   - Current inProgress:', this.gameService.actualGame()?.inProgress);
-      console.log('   - Current finished:', this.gameService.actualGame()?.finished);
-      console.log('   - Current automaticRaffle:', this.gameService.actualGame()?.automaticRaffle);
-      console.log('   - Current sharePrizes:', this.gameService.actualGame()?.sharePrizes);
-      console.log('   - Current randomPatterns:', this.gameService.actualGame()?.randomPatterns);
 
-      console.log('📤 Preparing to update game with new data');
-
-      const updateData = {
+      const updateData: Game = {
         id: this.gameService.actualGame()!.id,
-        targetStartDate: targetStartDate,
+        targetStartDate: targetStartDate.toISOString(),
         inProgress: this.gameService.actualGame()!.inProgress,
         finished: this.gameService.actualGame()!.finished,
         automaticRaffle: this.gameService.actualGame()!.automaticRaffle,
         sharePrizes: this.gameService.actualGame()!.sharePrizes,
         randomPatterns: this.gameService.actualGame()!.randomPatterns,
       };
-      console.log('📦 Update payload:', updateData);
 
       this.gameService.updateGame(updateData)
-      console.log('📨 Update request sent to gameService');
     } else {
-      console.log('❌ Missing required values:');
-      console.log('   - Date present:', !!this.dateForm.value);
-      console.log('   - Time present:', !!this.eventTimeForm.value);
       this.snackBar.error('Debe seleccionar una fecha y una hora');
     }
-    console.log('🔚 Ending updateTargetStartDate');
   }
 
 

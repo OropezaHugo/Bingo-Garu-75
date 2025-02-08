@@ -1,3 +1,9 @@
+.round-invitation-div {
+  display: flex;
+  flex-direction: row;
+  place-content: space-between;
+  padding: 0 1rem;
+}
 .pattern-name-list {
   display: flex;
   flex-wrap: wrap;
