@@ -19,11 +19,6 @@
         </li>
         <li>Se puede buscar por el <strong>Nombre</strong> de los seriales.</li>
       </ul>
-
-      <h3 class="subsection-title">Funcionalidades</h3>
-      <ul class="functionality-list">
-        <li>Añadir nuevos seriales mediante un modal donde se ingresa el nombre y cantidad de cartones.</li>
-      </ul>
     </section>
 
     <!-- Sección Patrones -->
@@ -41,7 +36,7 @@
       </ul>
     </section>
 
-    <!-- Sección Partidas -->
+    <!-- Sección Historial -->
     <section class="section">
       <h2 class="section-title">Instrucciones para Gestionar Historial de Partidas</h2>
       <ul class="features-list">
@@ -52,62 +47,85 @@
             <li><strong>Figura</strong></li>
             <li><strong>Ganador</strong></li>
             <li><strong>Monto</strong></li>
+            <li><strong>Previsualización de la carta ganadora</strong></li>
           </ul>
         </li>
         <li>Al lado del número de la partida, se mostrará el monto total premiado en todas las rondas.</li>
       </ul>
     </section>
-  </div>
 
     <!-- Sección Crear Nueva Partida -->
     <section class="section">
       <h2 class="section-title">Instrucciones Crear Nueva Partida</h2>
-      <p>Al acceder al Home Page, encontrarás un atajo llamado <strong>"Iniciar/Continuar Partida"</strong>. Este te llevará a una serie de pasos divididos en cinco configuraciones principales:</p>
+      <p>La creación de una partida ahora se divide en 7 partes, con las siguientes secciones:</p>
 
-      <ol class="step-list">
-        <li>
-          <strong>Adjuntar Serial:</strong>
-          <p>Se mostrará una tabla con los seriales existentes. Podrás seleccionar uno para adjuntarlo a la partida. La tabla incluirá columnas como Nombre, Número de Cartas, y Fecha de Creación. También existe la opción de crear un nuevo serial mediante un modal que solicita el Nombre y el Número de Cartas.</p>
-        </li>
+      <h3 class="subsection-title">1. Configuración Inicial</h3>
+      <ul>
+        <li><strong>Numero de Rondas:</strong> Configura el número de rondas que se jugarán.</li>
+        <li><strong>Incluir Ronda Bonus:</strong> Activa esta opción si deseas incluir rondas bonus.</li>
+        <li><strong>Tómbola Automática:</strong> Activa esta opción para usar la tómbola automática para intervalos de extracción de números.</li>
+        <li><strong>Premios Compartidos:</strong> Activa esta opción si quieres que varios jugadores puedan ganar Bingo con el mismo patrón.</li>
+        <li><strong>Botón Confirmar Configuración:</strong> Es obligatorio presionar este botón para guardar la configuración.</li>
+      </ul>
 
-        <li>
-          <strong>Adjuntar Patrones:</strong>
-          <p>Esta sección está dividida en dos partes:</p>
-          <ul>
-            <li><strong>Patrones Existentes:</strong> Lista de patrones actuales con su previsualización y nombre. Podrás editar, eliminar o adjuntar un patrón a la partida. También existe la opción de crear nuevos patrones.</li>
-            <li><strong>Patrones Seleccionados:</strong> Muestra los patrones adjuntados a la partida. Puedes quitar un patrón si lo deseas.</li>
-          </ul>
-        </li>
+      <h3 class="subsection-title">2. Adjuntar Serial</h3>
+      <ul>
+        <li>Se mostrará una tabla con los seriales existentes, incluyendo <strong>Nombre</strong>, <strong>Número de Cartas</strong>, y <strong>Fecha de Creación</strong>.</li>
+        <li>Si no hay seriales creados, puedes crear uno nuevo ingresando <strong>Nombre</strong> y <strong>Número de Cartas</strong>.</li>
+        <li>Selecciona un serial de la tabla y presiona el botón <strong>Adjuntar</strong> para asociarlo a la partida.</li>
+      </ul>
 
-        <li>
-          <strong>Venta de Seriales:</strong>
-          <p>En esta etapa, puedes:</p>
-          <ul>
-            <li>Visualizar una previsualización de cualquier carta seleccionada.</li>
-            <li>Seleccionar uno o más cartones y venderlos. Los cartones tienen los siguientes colores según su estado: Rojo (no vendido), Verde (vendido), Azul (seleccionado).</li>
-            <li>Buscar y exportar cartas individuales mediante un modal que genera un PDF o PNG del cartón seleccionado.</li>
-          </ul>
-        </li>
+      <h3 class="subsection-title">3. Adjuntar Patrones</h3>
+      <h4>Patrones Existentes</h4>
+      <ul>
+        <li>Se mostrarán los patrones con opciones de <strong>editar</strong>, <strong>eliminar</strong> y <strong>añadir a una o a todas las rondas</strong>.</li>
+        <li>También puedes crear nuevos patrones desde esta sección.</li>
+      </ul>
+      <h4>Patrones Seleccionados</h4>
+      <ul>
+        <li>Se mostrarán dropdowns para cada ronda y ronda bonus.</li>
+        <li>Asegúrate de agregar un patrón a cada ronda y presionar el botón <strong>Cargar</strong> para adjuntar el patrón a la ronda seleccionada.</li>
+      </ul>
 
-        <li>
-          <strong>Ajustes y Exportación:</strong>
-          <p>Configura el diseño de las cartas, incluyendo:</p>
-          <ul>
-            <li>Colores de contorno, fondo, números y texto mediante un selector de color.</li>
-            <li>Patrones predeterminados o personalizaciones completas.</li>
-          </ul>
-          <p>Además, puedes exportar múltiples cartas a PDF en lotes de hasta 150 unidades. Si tienes más cartas, se dividirán automáticamente en varios archivos.</p>
-        </li>
+      <h3 class="subsection-title">4. Personalización y Exportación</h3>
+      <ul>
+        <li>Personaliza los colores de las cartas con un selector de colores o usando diseños predefinidos.</li>
+        <li>Verás una previsualización de la carta.</li>
+        <li>Exporta las cartas en lotes de 150 en formato PDF. Si hay más de 150, se dividirán automáticamente en varios archivos.</li>
+        <li>Haz clic en el botón <strong>"Cambiar Exportación"</strong> para ver y previsualizar las cartas.</li>
+      </ul>
 
-        <li>
-          <strong>Adjuntar Premios:</strong>
-          <p>Define los premios para cada patrón seleccionado. Los premios pueden ser objetivos, con posibilidad de compartirlos entre varios ganadores en caso de empate. También puedes:</p>
-          <ul>
-            <li>Configurar el número de rondas para la partida.</li>
-            <li>Incluir rondas bonus.</li>
-            <li>Activar la tómbola automática para intervalos de extracción de números.</li>
-          </ul>
-        </li>
-      </ol>
+      <h3 class="subsection-title">5. Venta de Seriales</h3>
+      <ul>
+        <li>Se muestra una tabla con todos los cartones disponibles, con su estado (Rojo - No vendido, Verde - Vendido, Azul - Seleccionado), <strong>número de cartón</strong> y <strong>nombre del comprador</strong>.</li>
+        <li>Vende cartones de uno en uno o en grupo.</li>
+        <li>Exporta cartas individuales o en 2x1 en formato PDF o PNG.</li>
+        <li>Exporta la tabla de venta en formato .CSV.</li>
+      </ul>
+
+      <h3 class="subsection-title">6. Adjuntar Premios</h3>
+      <ul>
+        <li>Define los premios para cada patrón de cada ronda, incluyendo rondas bonus.</li>
+        <li><strong>¡Recuerda presionar el botón <strong>Guardar</strong> para que los premios se guarden!</strong></li>
+      </ul>
+
+      <h3 class="subsection-title">7. Generar Invitación</h3>
+      <ul>
+        <li>Agrega la <strong>fecha</strong>, <strong>hora</strong>, <strong>dinero en premios</strong> y la opción de <strong>oferta 2x1</strong>.</li>
+        <li>La invitación incluye información sobre las rondas, premios, patrones, cantidad de cartones, y más.</li>
+        <li>La invitación se puede personalizar con diseños predefinidos o colores manuales, y se exporta como PNG.</li>
+      </ul>
     </section>
+  </div>
+
+  <!-- Botones adicionales -->
+  <section class="section">
+    <h2 class="section-title">Botones Importantes</h2>
+    <ul>
+      <li><strong>Continuar Última Partida:</strong> Si sales de la partida, puedes continuar donde la dejaste.</li>
+      <li><strong>Cerrar Partida en Progreso:</strong> Para cerrar una partida y poder iniciar una nueva.</li>
+      <li><strong>Deshacer Ajustes:</strong> Si estás creando una nueva partida, puedes deshacer todos los ajustes en cualquier momento.</li>
+    </ul>
+  </section>
+
 </div>
