@@ -1,4 +1,13 @@
-@for (game of historyGames; track game.id) {
-  <app-game-history-expansion-panel [gameId]="game.id"/>
+<mat-tab-group>
+  <mat-tab label="Premios de juegos pasados">
+    @for (game of historyGames; track game.id) {
+      <app-game-history-expansion-panel [gameId]="game.id"/>
 
-}
+    }
+  </mat-tab>
+  <mat-tab label="Juegos no iniciados">
+    @for (unstartedGame of unstartedGames; track $index) {
+      <app-unstarted-games-panel [unstartedGame]="unstartedGame"/>
+    }
+  </mat-tab>
+</mat-tab-group>

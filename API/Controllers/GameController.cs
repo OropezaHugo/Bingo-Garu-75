@@ -31,6 +31,14 @@ public class GameController
         var games = await repository.ListAllAsync();
         return Ok(games.Where(game => game.Finished).Select(game => mapper.Map<GameResponseDTO>(game)));
     }
+    
+    
+    [HttpGet("unstarted")]
+    public async Task<ActionResult<List<GameResponseDTO>>> GetUnStartedGames()
+    {
+        var games = await repository.ListAllAsync();
+        return Ok(games.Where(game => !game.Finished && !game.InProgress).Select(game => mapper.Map<GameResponseDTO>(game)));
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult<GameResponseDTO>> GetGameById(int id)
     {

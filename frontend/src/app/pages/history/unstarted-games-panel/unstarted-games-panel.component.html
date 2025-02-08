@@ -1,0 +1,30 @@
+<mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      Partida {{unstartedGame().id}}
+    </mat-panel-title>
+    <mat-panel-description>
+      Creado en {{unstartedGame().createdAt | date}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="unstarted-game-info">
+    <div>
+      <h1>informacion guardada:</h1>
+      @if (unstartedGame().sharePrizes) {
+        <h3>Con premios compartidos</h3>
+      } @else {
+        <h3>Sin premios compartidos</h3>
+      }
+      @if (unstartedGame().automaticRaffle) {
+        <h3>Con tombola automatica</h3>
+      } @else {
+        <h3>Con tombola manual</h3>
+      }
+      <h3>Inicia en {{unstartedGame().targetStartDate | date}}</h3>
+    </div>
+    <div>
+      <button mat-raised-button (click)="loadGame()">Ir al lobby</button>
+    </div>
+
+  </div>
+</mat-expansion-panel>
