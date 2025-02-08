@@ -7,7 +7,10 @@
         <div class="card-preview-sale">
           <app-bingo-card [card]="displayedCard" [boughtBy]="displayedCardBuyer" class="card"/>
           <button (click)="openExportDialog()" class="export-button">
-            Buscar y Exportar Carta
+            Exportar Carta
+          </button>
+          <button (click)="openExportTwoCardsDialog()" class="export-button">
+            Exportar 2x1
           </button>
         </div>
       }

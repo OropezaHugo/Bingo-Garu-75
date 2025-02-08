@@ -24,6 +24,7 @@ import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
 import {TitleCasePipe} from '@angular/common';
+import { ExportTwoCardsDialogComponent } from '../export-two-cards-dialog/export-two-cards-dialog.component';
 
 @Component({
   selector: 'app-sale-panel',
@@ -145,6 +146,12 @@ export class SalePanelComponent implements OnInit, AfterViewInit{
   openExportDialog() {
     this.dialog.open(ExportCardDialogComponent, {
       width: '500px',
+    });
+  }
+
+  openExportTwoCardsDialog() {
+    this.dialog.open(ExportTwoCardsDialogComponent, {
+      width: '800px',
     });
   }
 
