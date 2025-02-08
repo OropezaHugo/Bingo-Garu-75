@@ -1,0 +1,23 @@
+@if (rounds()!.length > 0) {
+  @for (round of rounds(); track round.id) {
+    <h2>{{ round.roundName }}</h2>
+    <div class="round-invitation-div">
+        @if (patternsByRound().has(round.id!)) {
+          @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
+
+              <h3>{{ pattern.patternName }} <mat-icon>@if (pattern.patternMatrix.includes(false)) {
+                change_history
+              } @else {
+                check_box_outline_blank
+              }</mat-icon></h3>
+              <h4>{{ pattern.targetPrice }} Bs</h4>
+          }
+        } @else {
+          <div class="pattern-item">Cargando patrones...</div>
+        }
+    </div>
+    <mat-divider></mat-divider>
+  }
+} @else {
+  <p>No hay rondas disponibles.</p>
+}

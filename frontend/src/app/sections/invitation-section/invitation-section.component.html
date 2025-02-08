@@ -25,29 +25,66 @@
       Incluir Oferta 2x1
     </mat-checkbox>
   </div>
-  <div id="content-to-export" class="generate-invitation-div">
+  <div class="color-customization">
+    @if (isColorPickerOpen) {
+      <app-color-picker #colorPicker
+        (colorChange)="onColorChange($event)">
+      </app-color-picker>
+    }
+    <h3>Personalizar colores</h3>
+    <button mat-stroked-button (click)="openColorPicker('BackgroundColor')">Fondo</button>
+    <button mat-stroked-button (click)="openColorPicker('HeaderColor')">Encabezado</button>
+    <button mat-stroked-button (click)="openColorPicker('PrizeColor')">Premios</button>
+    <button mat-stroked-button (click)="openColorPicker('RoundInfoColor')">Información Ronda</button>
+    <button mat-stroked-button (click)="openColorPicker('OfferColor')">Oferta</button>
+  </div>
+
+  <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
     <div class="invitation-pattern-info">
-      <h1>Black Bingo</h1>
-      <h1>{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
+      <h1 [style.color]="HeaderColor">Black Bingo</h1>
+      <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
     </div>
-    <div class="invitation-pattern-info">
-      <h2>Figuras:</h2>
-      <h2>Premios en juego:</h2>
+
+    <div class="rounds-section" [style.color]="RoundInfoColor">
+      <div class="rounds-section" [style.color]="RoundInfoColor">
+        <h2 style="text-align: center">Rondas y Premios</h2>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="rounds-container">
+        <app-pattern-name-list></app-pattern-name-list>
+      </div>
     </div>
+
     <img src="Logo.png" class="water-mark">
 
-    <h1 style="text-align: center">Llevate hasta {{gamePricesForm.value}} Bs</h1>
-    <div class="invitation-pattern-info">
-    </div>
-    <div class="invitation-pattern-info">
-      <h3>{{gameService.gameCards().length}} cartones en venta</h3>
+    <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
+    <div class="invitation-pattern-info" >
+      <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
       @if (withOfferForm.value === true) {
-        <h3>Compra al 2x1</h3>
+        <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+      }
+    </div>
+  </div>
+
+  <div class="palette-selection">
+    <h3>Diseños Predefinidos</h3>
+    <div class="palette-grid">
+      @for (palette of colorPalettes; track palette.id) {
+        <button
+          class="palette-button"
+          [class.active]="currentPalette === palette.id"
+          (click)="applyPalette(palette.id)">
+          <div class="palette-preview">
+            <div class="color-sample" [style.background-color]="palette.backgroundColor"></div>
+            <div class="color-sample" [style.background-color]="palette.headerColor"></div>
+            <div class="color-sample" [style.background-color]="palette.prizeColor"></div>
+          </div>
+          <span>{{ palette.label }}</span>
+        </button>
       }
     </div>
 
-  </div>
-  <button mat-stroked-button (click)="exportToImage()">Export invitation</button>
+  <button mat-stroked-button (click)="exportToImage(); updateTargetStartDate()">Export invitation</button>
 
   <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
 </div>

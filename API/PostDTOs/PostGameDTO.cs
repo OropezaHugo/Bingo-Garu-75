@@ -7,5 +7,5 @@ public class PostGameDTO
     public bool SharePrizes { get; set; }
     public bool InProgress { get; set; }
     public bool Finished { get; set; }
-    public DateTime? TargetStartDate { get; set; } = DateTime.UtcNow;
+    public string? TargetStartDate { get; set; }
 }

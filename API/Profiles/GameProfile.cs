@@ -14,7 +14,7 @@ public class GameProfile: Profile
             .ForMember(dest => dest.AutomaticRaffle, opt => opt.MapFrom(src => src.AutomaticRaffle))
             .ForMember(dest => dest.SharePrizes, opt => opt.MapFrom(src => src.SharePrizes))
             .ForMember(dest => dest.InProgress, opt => opt.MapFrom(src => src.InProgress))
-            .ForMember(dest => dest.TargetStartDate, opt => opt.MapFrom(src => src.TargetStartDate))
+            .ForMember(dest => dest.TargetStartDate, opt => opt.MapFrom(src => src.TargetStartDate != null ? DateTime.Parse(src.TargetStartDate) : DateTime.Now))
             .ForMember(dest => dest.Finished, opt => opt.MapFrom(src => src.Finished));
         CreateMap<Game, GameResponseDTO>();
         CreateMap< (PostGameDTO, int), Game>()
@@ -23,6 +23,7 @@ public class GameProfile: Profile
             .ForMember(dest => dest.RandomPatterns, opt => opt.MapFrom(src => src.Item1.RandomPatterns))
             .ForMember(dest => dest.SharePrizes, opt => opt.MapFrom(src => src.Item1.SharePrizes))
             .ForMember(dest => dest.InProgress, opt => opt.MapFrom(src => src.Item1.InProgress))
+            .ForMember(dest => dest.TargetStartDate, opt => opt.MapFrom(src => src.Item1.TargetStartDate != null ? DateTime.Parse(src.Item1.TargetStartDate) : DateTime.Now))
             .ForMember(dest => dest.Finished, opt => opt.MapFrom(src => src.Item1.Finished));
     }
 }
