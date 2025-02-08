@@ -35,7 +35,6 @@ export class ColorPickerComponent {
       BoxNumberColor: 'Box Number Color',
       CardNumberColor: 'Card Number Color',
       BackgroundColor: 'Background',
-      TextColor: 'Text',
       HeaderColor: 'Header',
       PrizeColor: 'Prize',
       RoundInfoColor: 'RoundInfo',

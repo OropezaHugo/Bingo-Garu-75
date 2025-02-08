@@ -84,7 +84,6 @@ export class InvitationSectionComponent implements OnInit {
   isColorPickerOpen = true;
 
   BackgroundColor = INVITATION_COLOR_PALETTES.default.backgroundColor;
-  TextColor = INVITATION_COLOR_PALETTES.default.textColor;
   HeaderColor = INVITATION_COLOR_PALETTES.default.headerColor;
   PrizeColor = INVITATION_COLOR_PALETTES.default.prizeColor;
   RoundInfoColor = INVITATION_COLOR_PALETTES.default.roundInfoColor;
@@ -92,7 +91,6 @@ export class InvitationSectionComponent implements OnInit {
 
   colorOptions = [
     { label: 'Background', value: 'BackgroundColor', currentColor: this.BackgroundColor },
-    { label: 'Text', value: 'TextColor', currentColor: this.TextColor },
     { label: 'Header', value: 'HeaderColor', currentColor: this.HeaderColor },
     { label: 'Prize', value: 'PrizeColor', currentColor: this.PrizeColor },
     { label: 'RoundInfo', value: 'RoundInfoColor', currentColor: this.RoundInfoColor },
@@ -111,7 +109,7 @@ export class InvitationSectionComponent implements OnInit {
     this.parseTimeString(this.gameService.actualGame()?.targetStartDate!),
     Validators.pattern('^([01]?[0-9]|2[0-3]):[0-5][0-9]$'))
   withOfferForm = new FormControl<boolean>(false)
-  invitationColors: { BackgroundColor: string; TextColor: string; HeaderColor: string; PrizeColor: string; RoundInfoColor: string; OfferColor: string; } | undefined;
+  invitationColors: { BackgroundColor: string; HeaderColor: string; PrizeColor: string; RoundInfoColor: string; OfferColor: string; } | undefined;
 
   ngOnInit() {
     this.colorService.colors$.subscribe(colors => {
@@ -196,7 +194,6 @@ export class InvitationSectionComponent implements OnInit {
     if (palette) {
       this.currentPalette = paletteId;
       this.BackgroundColor = palette.backgroundColor;
-      this.TextColor = palette.textColor;
       this.HeaderColor = palette.headerColor;
       this.PrizeColor = palette.prizeColor;
       this.RoundInfoColor = palette.roundInfoColor;
@@ -208,7 +205,6 @@ export class InvitationSectionComponent implements OnInit {
 
       this.colorService.updateColors('palette', '', {
         BackgroundColor: palette.backgroundColor,
-        TextColor: palette.textColor,
         HeaderColor: palette.headerColor,
         PrizeColor: palette.prizeColor,
         RoundInfoColor: palette.roundInfoColor,

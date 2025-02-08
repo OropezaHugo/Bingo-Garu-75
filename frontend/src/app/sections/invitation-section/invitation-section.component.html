@@ -33,7 +33,6 @@
     }
     <h3>Personalizar colores</h3>
     <button mat-stroked-button (click)="openColorPicker('BackgroundColor')">Fondo</button>
-    <button mat-stroked-button (click)="openColorPicker('TextColor')">Texto</button>
     <button mat-stroked-button (click)="openColorPicker('HeaderColor')">Encabezado</button>
     <button mat-stroked-button (click)="openColorPicker('PrizeColor')">Premios</button>
     <button mat-stroked-button (click)="openColorPicker('RoundInfoColor')">Información Ronda</button>
@@ -41,7 +40,7 @@
   </div>
 
   <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
-    <div class="invitation-pattern-info" [style.color]="TextColor">
+    <div class="invitation-pattern-info">
       <h1 [style.color]="HeaderColor">Black Bingo</h1>
       <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
     </div>
@@ -59,10 +58,10 @@
     <img src="Logo.png" class="water-mark">
 
     <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
-    <div class="invitation-pattern-info" [style.color]="RoundInfoColor">
-      <h3>{{gameService.gameCards().length}} cartones en venta</h3>
+    <div class="invitation-pattern-info" >
+      <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
       @if (withOfferForm.value === true) {
-        <h3>Compra al 2x1</h3>
+        <h3 [style.color]="OfferColor">Compra al 2x1</h3>
       }
     </div>
   </div>
@@ -78,7 +77,7 @@
           <div class="palette-preview">
             <div class="color-sample" [style.background-color]="palette.backgroundColor"></div>
             <div class="color-sample" [style.background-color]="palette.headerColor"></div>
-            <div class="color-sample" [style.background-color]="palette.textColor"></div>
+            <div class="color-sample" [style.background-color]="palette.prizeColor"></div>
           </div>
           <span>{{ palette.label }}</span>
         </button>
