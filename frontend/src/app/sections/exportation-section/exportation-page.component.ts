@@ -5,10 +5,13 @@ import { GameService } from '../../core/services/game.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-exportation-section',
-  imports: [PersonalBingoCardComponent, MatProgressBarModule],
+  imports: [PersonalBingoCardComponent, MatProgressBarModule, FormsModule],
   templateUrl: './exportation-page.component.html',
   styleUrl: './exportation-page.component.scss'
 })
@@ -16,10 +19,12 @@ export class ExportationPageComponent implements OnInit {
   @ViewChild('cardsGrid') cardsGrid!: ElementRef;
   cardsArray: Card[] = [];
   paginatedCards: Card[][] = [];
+  displayedCards: Card[] = [];
   cardsPerPage = 100;
   currentPage = 0;
   isExporting = false;
   statusMessage = '';
+  private updateSubject = new Subject<number>();
 
   constructor(private gameService: GameService) {}
 
@@ -32,6 +37,17 @@ export class ExportationPageComponent implements OnInit {
       }))
     }));
     this.paginateCards();
+    this.updateSubject.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(value => {
+      const newValue = Math.max(1, Math.min(1000, value));
+      if (this.cardsPerPage !== newValue) {
+        this.cardsPerPage = newValue;
+        this.currentPage = 0;
+        this.paginateCards();
+      }
+    });
   }
 
   paginateCards(): void {
@@ -39,39 +55,91 @@ export class ExportationPageComponent implements OnInit {
     for (let i = 0; i < this.cardsArray.length; i += this.cardsPerPage) {
       this.paginatedCards.push(this.cardsArray.slice(i, i + this.cardsPerPage));
     }
+    this.updateDisplayedCards();
+  }
+
+  updateDisplayedCards(): void {
+    this.displayedCards = this.paginatedCards[this.currentPage] || [];
   }
 
   changePage(pageIndex: number): void {
     this.currentPage = pageIndex;
+    this.updateDisplayedCards();
   }
 
-  exportToPDF(pageIndex: number) {
-    this.isExporting = true;
-    this.statusMessage = 'Generando PDF...';
-    this.currentPage = pageIndex;
-    setTimeout(() => {
-      const gridElement = this.cardsGrid.nativeElement;
-      html2canvas(gridElement, { scale: 1 }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210;
-        const pageHeight = 297;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+  updateCardsPerPage(value: number): void {
+    this.updateSubject.next(value);
+  }
 
-        while (heightLeft > 0) {
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-          position -= pageHeight;
-          if (heightLeft > 0) {
-            pdf.addPage();
-          }
+  async exportToPDF(pageIndex: number) {
+    this.isExporting = true;
+    this.statusMessage = 'Preparando el PDF...';
+
+    try {
+      const targetCards = this.paginatedCards[pageIndex];
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const margin = 10;
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const cardsPerPDFPage = 9;
+
+      const totalPDFPages = Math.ceil(targetCards.length / cardsPerPDFPage);
+
+      for (let pdfPageIndex = 0; pdfPageIndex < totalPDFPages; pdfPageIndex++) {
+        const startIndex = pdfPageIndex * cardsPerPDFPage;
+        const endIndex = Math.min(startIndex + cardsPerPDFPage, targetCards.length);
+        this.displayedCards = targetCards.slice(startIndex, endIndex);
+        await new Promise(resolve => setTimeout(resolve, 200));
+
+        this.statusMessage = `Generando página ${pdfPageIndex + 1} de ${totalPDFPages}...`;
+
+        const canvas = await html2canvas(this.cardsGrid.nativeElement, {
+          scale: 2,
+          backgroundColor: '#ffffff',
+          logging: false,
+          useCORS: true,
+          allowTaint: true
+        });
+
+        const availableWidth = pageWidth - (margin * 2);
+        const availableHeight = pageHeight - (margin * 2);
+        const imageAspect = canvas.height / canvas.width;
+
+        let finalWidth = availableWidth;
+        let finalHeight = finalWidth * imageAspect;
+
+        if (finalHeight > availableHeight) {
+          finalHeight = availableHeight;
+          finalWidth = finalHeight / imageAspect;
         }
 
-        pdf.save(`bingo-cards-page-${pageIndex + 1}.pdf`);
-        this.isExporting = false;
-      });
-    }, 100);
+        const xOffset = (pageWidth - finalWidth) / 2;
+        const yOffset = (pageHeight - finalHeight) / 2;
+
+        if (pdfPageIndex > 0) {
+          pdf.addPage();
+        }
+
+        pdf.addImage(
+          canvas.toDataURL('image/jpeg', 1.0),
+          'JPEG',
+          xOffset,
+          yOffset,
+          finalWidth,
+          finalHeight
+        );
+      }
+
+      this.displayedCards = this.paginatedCards[this.currentPage];
+      pdf.save(`bingo-cards-page-${pageIndex + 1}.pdf`);
+
+    } catch (error) {
+      console.error('Error al exportar:', error);
+      this.statusMessage = 'Error al generar el PDF';
+    } finally {
+      this.isExporting = false;
+      this.updateDisplayedCards();
+    }
   }
 }
+
