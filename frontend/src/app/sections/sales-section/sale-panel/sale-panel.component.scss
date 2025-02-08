@@ -5,6 +5,11 @@
   justify-content: center;
   gap: 1rem;
 }
+.sale-table-actions {
+  display: flex;
+  flex-direction: row;
+  place-content: space-around;
+}
 .next-step-div {
   display: flex;
   flex-direction: row;

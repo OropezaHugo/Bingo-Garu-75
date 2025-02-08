@@ -14,12 +14,15 @@
       <app-rectanglebutton (click)="sellCards()" text="Vender cartones seleccionados"></app-rectanglebutton>
     </div>
     <div>
-      <div class="sale-cards-panel-div">
+      <div class="sale-table-actions">
         <mat-form-field appearance="outline" class="serial-searcher">
-          <mat-label>Buscar por nombre...</mat-label>
+          <mat-label>Buscar por nombre/numero...</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre..." #input>
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
+        <button mat-stroked-button (click)="generateCSV()">Exportar ventas a .csv</button>
+      </div>
+      <div class="sale-cards-panel-div">
         <table mat-table [dataSource]="dataSource" class="example-table" matSort>
           <ng-container matColumnDef="cardNumber">
             <th class="serial-table-header" mat-header-cell *matHeaderCellDef mat-sort-header>
