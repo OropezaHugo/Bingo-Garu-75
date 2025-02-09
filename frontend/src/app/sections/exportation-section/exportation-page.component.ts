@@ -5,13 +5,17 @@ import { GameService } from '../../core/services/game.service';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FormsModule } from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-exportation-section',
-  imports: [PersonalBingoCardComponent, MatProgressBarModule, FormsModule],
+  imports: [PersonalBingoCardComponent, MatProgressBarModule, FormsModule, MatIconButton, MatIcon, MatSuffix, MatButton, ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatHint],
   templateUrl: './exportation-page.component.html',
   styleUrl: './exportation-page.component.scss'
 })
@@ -20,11 +24,11 @@ export class ExportationPageComponent implements OnInit {
   cardsArray: Card[] = [];
   paginatedCards: Card[][] = [];
   displayedCards: Card[] = [];
-  cardsPerPage = 100;
+  cardsPerPage = new FormControl<number>(100, [Validators.required, Validators.min(10), Validators.max(1000)]);
   currentPage = 0;
   isExporting = false;
   statusMessage = '';
-  private updateSubject = new Subject<number>();
+  private updateSubject = new Subject<void>();
 
   constructor(private gameService: GameService) {}
 
@@ -37,25 +41,18 @@ export class ExportationPageComponent implements OnInit {
       }))
     }));
     this.paginateCards();
-    this.updateSubject.pipe(
-      debounceTime(500),
-      distinctUntilChanged()
-    ).subscribe(value => {
-      const newValue = Math.max(1, Math.min(1000, value));
-      if (this.cardsPerPage !== newValue) {
-        this.cardsPerPage = newValue;
-        this.currentPage = 0;
-        this.paginateCards();
-      }
-    });
+
   }
 
   paginateCards(): void {
-    this.paginatedCards = [];
-    for (let i = 0; i < this.cardsArray.length; i += this.cardsPerPage) {
-      this.paginatedCards.push(this.cardsArray.slice(i, i + this.cardsPerPage));
+    if (this.cardsPerPage.valid && this.cardsPerPage.value !== null) {
+      this.paginatedCards = [];
+      for (let i = 0; i < this.cardsArray.length; i += this.cardsPerPage.value) {
+        this.paginatedCards.push(this.cardsArray.slice(i, i + this.cardsPerPage.value));
+      }
+      this.updateDisplayedCards();
     }
-    this.updateDisplayedCards();
+
   }
 
   updateDisplayedCards(): void {
@@ -67,8 +64,8 @@ export class ExportationPageComponent implements OnInit {
     this.updateDisplayedCards();
   }
 
-  updateCardsPerPage(value: number): void {
-    this.updateSubject.next(value);
+  updateCardsPerPage(): void {
+    this.updateSubject.next();
   }
 
   async exportToPDF(pageIndex: number) {
