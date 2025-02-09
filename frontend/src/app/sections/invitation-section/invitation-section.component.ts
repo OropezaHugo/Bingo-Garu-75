@@ -37,11 +37,11 @@ import { MatSelectModule } from '@angular/material/select';
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
 
-export enum FrameType {
-  NONE = 'none',
-  HALLOWEEN = 'halloween',
-  CHRISTMAS = 'christmas',
-  LUCES = 'luces'
+interface FrameOption {
+  value: string;
+  label: string;
+  imageUrl?: string;
+  isCustom?: boolean;
 }
 
 @Component({
@@ -83,7 +83,6 @@ export enum FrameType {
 })
 export class InvitationSectionComponent implements OnInit {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
-  frameTypeForm = new FormControl<FrameType>(FrameType.NONE);
   gameService = inject(GameService);
   roundService = inject(RoundService);
   snackBar = inject(SnackbarService);
@@ -101,12 +100,14 @@ export class InvitationSectionComponent implements OnInit {
   RoundInfoColor = INVITATION_COLOR_PALETTES.default.roundInfoColor;
   OfferColor = INVITATION_COLOR_PALETTES.default.offerColor;
 
-  frameOptions = [
-    { value: FrameType.NONE, label: 'Sin Marco' },
-    { value: FrameType.HALLOWEEN, label: 'Halloween' },
-    { value: FrameType.CHRISTMAS, label: 'Navidad' },
-    { value: FrameType.LUCES, label: 'Luces'}
+  frameOptions: FrameOption[] = [
+    { value: 'none', label: 'Sin Marco' },
+    { value: 'halloween', label: 'Halloween', imageUrl: 'Halloween.png' },
+    { value: 'christmas', label: 'Navidad', imageUrl: 'Navidad.png' }
   ];
+
+  frameTypeForm = new FormControl<string>('none');
+  customFrames: FrameOption[] = [];
 
   colorOptions = [
     { label: 'Background', value: 'BackgroundColor', currentColor: this.BackgroundColor },
@@ -137,16 +138,57 @@ export class InvitationSectionComponent implements OnInit {
     this.roundService.getRounds();
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      if (!file.type.startsWith('image/')) {
+        this.snackBar.error('Por favor seleccione un archivo de imagen válido');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target?.result as string;
+        const frameLabel = file.name.split('.')[0];
+
+        const newFrame: FrameOption = {
+          value: `custom-${Date.now()}`,
+          label: `Marco: ${frameLabel}`,
+          imageUrl: imageUrl,
+          isCustom: true
+        };
+
+        this.customFrames.push(newFrame);
+
+        this.frameOptions = [
+          ...this.frameOptions.filter(f => !f.isCustom),
+          ...this.customFrames
+        ];
+
+        this.frameTypeForm.setValue(newFrame.value);
+
+        this.snackBar.success('Marco cargado exitosamente');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   getFrameUrl(): string | null {
-    switch (this.frameTypeForm.value) {
-      case FrameType.HALLOWEEN:
-        return 'Halloween.png';
-      case FrameType.CHRISTMAS:
-        return 'Navidad.png';
-      case FrameType.LUCES:
-        return  'Luces.png'
-      default:
-        return null;
+    const selectedFrame = this.frameOptions.find(f => f.value === this.frameTypeForm.value);
+    return selectedFrame?.imageUrl || null;
+  }
+
+  removeCustomFrame(frameValue: string): void {
+    this.customFrames = this.customFrames.filter(f => f.value !== frameValue);
+    this.frameOptions = [
+      ...this.frameOptions.filter(f => !f.isCustom),
+      ...this.customFrames
+    ];
+
+    if (this.frameTypeForm.value === frameValue) {
+      this.frameTypeForm.setValue('none');
     }
   }
 
@@ -166,6 +208,7 @@ export class InvitationSectionComponent implements OnInit {
     }
     return result;
   }
+
   exportToImage() {
     const element = document.getElementById('content-to-export') as HTMLElement;
 
