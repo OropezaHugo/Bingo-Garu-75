@@ -34,15 +34,11 @@ import { Pattern } from '../../core/models/add-pattern-dialog-data';
 import { PatternNameListComponent } from "../../shared/pattern-name-list/pattern-name-list.component";
 import {Game} from '../../core/models/game';
 import { MatSelectModule } from '@angular/material/select';
+import { FrameSelectorComponent } from '../../shared/frame-selector/frame-selector.component';
+import { WatermarkSelectorComponent } from '../../shared/watermark-selector/watermark-selector.component';
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
 
-interface FrameOption {
-  value: string;
-  label: string;
-  imageUrl?: string;
-  isCustom?: boolean;
-}
 
 @Component({
   selector: 'app-invitation-section',
@@ -73,7 +69,9 @@ interface FrameOption {
     PatternNameListComponent,
     MatOption,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FrameSelectorComponent,
+    WatermarkSelectorComponent
 ],
   providers: [
     provideNativeDateAdapter()
@@ -89,6 +87,9 @@ export class InvitationSectionComponent implements OnInit {
   dialog = inject(MatDialog);
   router = inject(Router);
 
+  currentFrameUrl: string | null = null;
+  currentWatermarkUrl: string = 'Logo.png';
+
   formGroup: FormGroup | undefined;
   selectedElement: string | null = null;
   currentPalette: PaletteId = 'default';
@@ -99,15 +100,6 @@ export class InvitationSectionComponent implements OnInit {
   PrizeColor = INVITATION_COLOR_PALETTES.default.prizeColor;
   RoundInfoColor = INVITATION_COLOR_PALETTES.default.roundInfoColor;
   OfferColor = INVITATION_COLOR_PALETTES.default.offerColor;
-
-  frameOptions: FrameOption[] = [
-    { value: 'none', label: 'Sin Marco' },
-    { value: 'halloween', label: 'Halloween', imageUrl: 'Halloween.png' },
-    { value: 'christmas', label: 'Navidad', imageUrl: 'Navidad.png' }
-  ];
-
-  frameTypeForm = new FormControl<string>('none');
-  customFrames: FrameOption[] = [];
 
   colorOptions = [
     { label: 'Background', value: 'BackgroundColor', currentColor: this.BackgroundColor },
@@ -138,58 +130,12 @@ export class InvitationSectionComponent implements OnInit {
     this.roundService.getRounds();
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-
-      if (!file.type.startsWith('image/')) {
-        this.snackBar.error('Por favor seleccione un archivo de imagen válido');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string;
-        const frameLabel = file.name.split('.')[0];
-
-        const newFrame: FrameOption = {
-          value: `custom-${Date.now()}`,
-          label: `Marco: ${frameLabel}`,
-          imageUrl: imageUrl,
-          isCustom: true
-        };
-
-        this.customFrames.push(newFrame);
-
-        this.frameOptions = [
-          ...this.frameOptions.filter(f => !f.isCustom),
-          ...this.customFrames
-        ];
-
-        this.frameTypeForm.setValue(newFrame.value);
-
-        this.snackBar.success('Marco cargado exitosamente');
-      };
-      reader.readAsDataURL(file);
-    }
+  onFrameUrlChange(url: string | null): void {
+    this.currentFrameUrl = url;
   }
 
-  getFrameUrl(): string | null {
-    const selectedFrame = this.frameOptions.find(f => f.value === this.frameTypeForm.value);
-    return selectedFrame?.imageUrl || null;
-  }
-
-  removeCustomFrame(frameValue: string): void {
-    this.customFrames = this.customFrames.filter(f => f.value !== frameValue);
-    this.frameOptions = [
-      ...this.frameOptions.filter(f => !f.isCustom),
-      ...this.customFrames
-    ];
-
-    if (this.frameTypeForm.value === frameValue) {
-      this.frameTypeForm.setValue('none');
-    }
+  onWatermarkUrlChange(url: string): void {
+    this.currentWatermarkUrl = url;
   }
 
   parseTimeString(dateTimeString: string): string {

@@ -1,0 +1,29 @@
+<div class="watermark-controls">
+  <mat-form-field appearance="outline">
+    <mat-label>Marca de agua</mat-label>
+    <mat-select [formControl]="watermarkForm">
+      @for (option of watermarkOptions; track option.value) {
+        <mat-option [value]="option.value">
+          {{option.label}}
+          @if (option.isCustom) {
+            <button mat-icon-button (click)="removeCustomWatermark(option.value); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="watermarkInput.click()">
+    <mat-icon>upload</mat-icon>
+    Subir Marca de Agua
+  </button>
+  <input
+    #watermarkInput
+    type="file"
+    hidden
+    accept="image/*"
+    (change)="onFileSelected($event)"
+  >
+</div>

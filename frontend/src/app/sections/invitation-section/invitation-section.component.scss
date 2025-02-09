@@ -3,30 +3,69 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem 0;
-  gap: 1rem;
+  gap: 1.5rem;
+
 }
 
 .start-game-div {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+
+  .input-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    mat-form-field {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    mat-checkbox {
+      align-self: center;
+      margin-left: 1rem;
+    }
+  }
+
+  app-frame-selector,
+  app-watermark-selector {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }
 
 .generate-invitation-div {
+  position: relative;
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
-
   padding: 4rem 3rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   min-width: 800px;
   max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   color: #fff;
-
-  position: relative;
   overflow: hidden;
+
+  h1 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
 }
 
 .frame-overlay {
@@ -36,50 +75,8 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 10;
-}
-
-.frame-controls {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-}
-
-mat-option {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-mat-option button {
-  margin-left: 8px;
-}
-
-
-.generate-invitation-div h1,
-.generate-invitation-div h2,
-.generate-invitation-div h3,
-.generate-invitation-div h4 {
-  margin: 0.5rem 0;
-}
-
-.generate-invitation-div h1 {
-  font-size: 2.2rem;
-  font-weight: bold;
-}
-
-.generate-invitation-div h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-}
-
-.generate-invitation-div h3 {
-  font-size: 1.5rem;
-}
-
-.generate-invitation-div h4 {
-  font-size: 1.2rem;
+  z-index: 0;
+  opacity: 0.5;
 }
 
 .water-mark {
@@ -91,6 +88,7 @@ mat-option button {
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .invitation-pattern-info {
@@ -102,32 +100,40 @@ mat-option button {
   background: rgba(255, 255, 255, 0.1);
   margin: 0.5rem 0;
   width: 100%;
+  z-index: 2;
+
+  &:nth-child(even) {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+  }
 }
 
-.invitation-pattern-info:nth-child(even) {
-  border-bottom: 2px solid white;
-}
-
-.invitation-pattern-info,
-.rounds-section,
-.water-mark {
+.rounds-section {
   position: relative;
-  z-index: 1;
-}
+  z-index: 2;
 
-
-mat-divider {
-  background: rgba(255, 255, 255, 0.4);
-  height: 2px;
-  margin: 1rem 0;
+  mat-divider {
+    background: rgba(202, 130, 130, 0.4);
+    height: 2px;
+    margin: 1rem 0;
+  }
 }
 
 .color-customization {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 2rem 0;
+  width: 100%;
+  flex-wrap: wrap;
+
+  h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
 }
 
 .color-customization h3 {
@@ -244,4 +250,5 @@ button.mat-stroked-button:hover {
 .palette-selection {
   margin-top: 2rem;
 }
+
 

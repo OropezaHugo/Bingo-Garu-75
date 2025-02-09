@@ -24,35 +24,9 @@
     <mat-checkbox [formControl]="withOfferForm">
       Incluir Oferta 2x1
     </mat-checkbox>
-    <div class="frame-controls">
-      <mat-form-field appearance="outline">
-        <mat-label>Marco</mat-label>
-        <mat-select [formControl]="frameTypeForm">
-          @for (option of frameOptions; track option.value) {
-            <mat-option [value]="option.value">
-              {{option.label}}
-              @if (option.isCustom) {
-                <button mat-icon-button (click)="removeCustomFrame(option.value); $event.stopPropagation()">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              }
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-
-      <button mat-stroked-button (click)="fileInput.click()">
-        <mat-icon>upload</mat-icon>
-        Subir Marco
-      </button>
-      <input
-        #fileInput
-        type="file"
-        hidden
-        accept="image/*"
-        (change)="onFileSelected($event)"
-      >
     </div>
+    <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
+    <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
   </div>
   <div class="color-customization">
     @if (isColorPickerOpen) {
@@ -84,7 +58,11 @@
       </div>
     </div>
 
-    <img src="Logo.png" class="water-mark">
+    <img [src]="currentWatermarkUrl" class="water-mark">
+    @if (currentFrameUrl) {
+      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+    }
+
 
     <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
     <div class="invitation-pattern-info" >
@@ -93,8 +71,8 @@
         <h3 [style.color]="OfferColor">Compra al 2x1</h3>
       }
     </div>
-    @if (getFrameUrl()) {
-      <img [src]="getFrameUrl()" class="frame-overlay" [alt]="frameTypeForm.value">
+    @if (currentFrameUrl) {
+      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
     }
   </div>
 
