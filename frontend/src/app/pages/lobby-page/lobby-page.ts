@@ -1,16 +1,10 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NewPatternDialogData} from '../../core/models/add-pattern-dialog-data';
-import {PatternCardComponent} from '../../shared/pattern-card/pattern-card.component';
-import {MatDialog} from '@angular/material/dialog';
 
 import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {
-  LobbySettingsDialogComponent
-} from '../../shared/dialogs/lobby-settings-dialog/lobby-settings-dialog.component';
-import {PatternListComponentComponent} from '../../sections/pattern-section/pattern-list-component/pattern-list-component.component';
+import {MatButton} from '@angular/material/button';
+
 import { GameService } from '../../core/services/game.service';
-import {GamePatternsListComponent} from "../game/game-patterns-list/game-patterns-list.component";
+
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext} from '@angular/material/stepper';
 import {AttachSerialContentComponent} from '../../sections/serial-section/attach-serial-content/attach-serial-content.component';
 import {SalePanelComponent} from '../../sections/sales-section/sale-panel/sale-panel.component';
@@ -28,9 +22,6 @@ import {Router} from '@angular/router';
   imports: [
     MatIcon,
     MatButton,
-    MatIconButton,
-    PatternListComponentComponent,
-    GamePatternsListComponent,
     MatStepper,
     MatStep,
     AttachSerialContentComponent,

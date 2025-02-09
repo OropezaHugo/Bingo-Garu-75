@@ -1,6 +1,5 @@
-import {Component, inject, input, OnInit, signal} from '@angular/core';
+import {Component, input, OnInit} from '@angular/core';
 import {Card, CardBox, GameCardInfo} from '../../../core/models/card';
-import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sale-button',

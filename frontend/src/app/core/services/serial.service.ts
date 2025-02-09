@@ -18,10 +18,6 @@ export class SerialService {
   }
 
 
-  getColorsSerial(id: number) {
-    return this.http.get<SerialColorsDTO>(`${this.baseUrl}serial/colors/${id}`);
-  }
-
   createSerial(serial: NewSerialData) {
     return this.http.post<boolean>(`${this.baseUrl}Serial/cards`, serial)
   }

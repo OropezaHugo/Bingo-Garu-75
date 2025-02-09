@@ -5,7 +5,6 @@ import {Pattern} from '../../../core/models/add-pattern-dialog-data';
 import {RoundService} from '../../../core/services/round.service';
 import {
   MatExpansionPanel,
-  MatExpansionPanelDescription,
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
@@ -19,7 +18,6 @@ import {MatIcon} from '@angular/material/icon';
     PatternCardComponent,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
-    MatExpansionPanelDescription,
     MatExpansionPanel,
     MatIcon,
     MatIconButton

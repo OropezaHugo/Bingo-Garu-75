@@ -22,5 +22,5 @@ export const routes: Routes = [
       {path: "prizes", component: PrizesBoardComponent},
       {path: "history", component: HistoryComponent},
     ]},
-    {path: "**", redirectTo: "login"},
+    {path: "**", redirectTo: ""},
 ];

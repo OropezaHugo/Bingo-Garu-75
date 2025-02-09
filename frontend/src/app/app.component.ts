@@ -1,5 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
-import { HomePageComponent } from './pages/home-page/home-page.component';
+import {Component, OnInit} from '@angular/core';
 import { HeaderComponent } from "./shared/header/header.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { RouterOutlet } from '@angular/router';

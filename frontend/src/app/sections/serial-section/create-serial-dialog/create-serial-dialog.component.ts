@@ -3,7 +3,6 @@ import {MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RectanglebuttonComponent} from "../../../shared/buttons/rectanglebutton/rectanglebutton.component";
-import {MatTableDataSource} from '@angular/material/table';
 import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef} from '@angular/material/dialog';
 import {NewSerialData} from '../../../core/models/serial';
 

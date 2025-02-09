@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, inject, model, OnInit, signal, viewChild} from '@angular/core';
 import { GameService } from '../../../core/services/game.service';
-import {SaleButtonComponent} from '../sale-button/sale-button.component';
 import {Card, CardBox, GameCardInfo} from '../../../core/models/card';
 import {BingoCardComponent} from '../../../shared/bingo-card/bingo-card.component';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -18,7 +17,6 @@ import {
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
-import {Serial} from '../../../core/models/serial';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
@@ -29,7 +27,6 @@ import { ExportTwoCardsDialogComponent } from '../export-two-cards-dialog/export
 @Component({
   selector: 'app-sale-panel',
   imports: [
-    SaleButtonComponent,
     MatSortHeader,
     BingoCardComponent,
     MatPaginator,

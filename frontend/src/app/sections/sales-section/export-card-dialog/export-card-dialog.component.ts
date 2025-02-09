@@ -1,8 +1,7 @@
-import {Component, inject, model} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { Card, CardBox, } from '../../../core/models/card';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { BingoCardComponent } from "../../../shared/bingo-card/bingo-card.component";
 import { MatFormField, MatFormFieldModule, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { GameService } from '../../../core/services/game.service';

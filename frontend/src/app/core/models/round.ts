@@ -1,4 +1,4 @@
-import {Card, GameCardInfo} from './card';
+import {GameCardInfo} from './card';
 import {RoundPatternInfo} from './add-pattern-dialog-data';
 
 export interface Round {
