@@ -29,6 +29,6 @@ export class UnstartedGamesPanelComponent {
   router = inject(Router)
   loadGame() {
     localStorage.setItem('gameId', this.unstartedGame().id.toString())
-    this.router.navigateByUrl('/lobby')
+    this.router.navigateByUrl('/bingo/lobby')
   }
 }

@@ -45,7 +45,7 @@
   <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
     <div class="invitation-pattern-info">
       <h1 [style.color]="HeaderColor">Black Bingo</h1>
-      <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
+      <h1 [style.color]="HeaderColor">@if (dateForm.value !== null){ {{dateForm.value.toDateString()}}}-{{eventTimeForm.value}}</h1>
     </div>
 
     <div class="rounds-section" [style.color]="RoundInfoColor">

@@ -19,12 +19,14 @@
     <div>
       <div class="sale-table-actions">
         <mat-form-field appearance="outline" class="serial-searcher">
-          <mat-label>Buscar por nombre/numero...</mat-label>
+          <mat-label>Buscar por nombre/nº...</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre..." #input>
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
+        <button mat-icon-button (click)="updateTable()"><mat-icon>refresh</mat-icon></button>
         <button mat-stroked-button (click)="generateCSV()">Exportar ventas a .csv</button>
       </div>
+
       <div class="sale-cards-panel-div">
         <table mat-table [dataSource]="dataSource" class="example-table" matSort>
           <ng-container matColumnDef="cardNumber">
