@@ -16,9 +16,10 @@
 .generate-invitation-div {
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 
-
-  padding: 3rem 1rem;
+  padding: 4rem 3rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   min-width: 800px;
   max-width: 900px;
@@ -27,6 +28,17 @@
   position: relative;
   overflow: hidden;
 }
+
+.frame-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
 
 .generate-invitation-div h1,
 .generate-invitation-div h2,
@@ -78,6 +90,14 @@
 .invitation-pattern-info:nth-child(even) {
   border-bottom: 2px solid white;
 }
+
+.invitation-pattern-info,
+.rounds-section,
+.water-mark {
+  position: relative;
+  z-index: 1;
+}
+
 
 mat-divider {
   background: rgba(255, 255, 255, 0.4);

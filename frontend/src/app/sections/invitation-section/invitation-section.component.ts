@@ -7,7 +7,7 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, V
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatFormFieldModule, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {RectanglebuttonComponent} from '../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import {PatternsComponent} from '../../pages/patterns/patterns.component';
@@ -20,7 +20,7 @@ import {
   MatDatepickerInput, MatDatepickerModule,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatIcon} from '@angular/material/icon';
 import {DatePipe} from '@angular/common';
 import {MatDivider} from '@angular/material/divider';
@@ -33,8 +33,16 @@ import { RoundPatternsListComponent } from "../../pages/game/round-patterns-list
 import { Pattern } from '../../core/models/add-pattern-dialog-data';
 import { PatternNameListComponent } from "../../shared/pattern-name-list/pattern-name-list.component";
 import {Game} from '../../core/models/game';
+import { MatSelectModule } from '@angular/material/select';
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
+
+export enum FrameType {
+  NONE = 'none',
+  HALLOWEEN = 'halloween',
+  CHRISTMAS = 'christmas',
+  LUCES = 'luces'
+}
 
 @Component({
   selector: 'app-invitation-section',
@@ -62,7 +70,10 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     InputMask,
     ColorPickerComponent,
     RoundPatternsListComponent,
-    PatternNameListComponent
+    PatternNameListComponent,
+    MatOption,
+    MatSelectModule,
+    MatFormFieldModule
 ],
   providers: [
     provideNativeDateAdapter()
@@ -72,6 +83,7 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
 })
 export class InvitationSectionComponent implements OnInit {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
+  frameTypeForm = new FormControl<FrameType>(FrameType.NONE);
   gameService = inject(GameService);
   roundService = inject(RoundService);
   snackBar = inject(SnackbarService);
@@ -88,6 +100,13 @@ export class InvitationSectionComponent implements OnInit {
   PrizeColor = INVITATION_COLOR_PALETTES.default.prizeColor;
   RoundInfoColor = INVITATION_COLOR_PALETTES.default.roundInfoColor;
   OfferColor = INVITATION_COLOR_PALETTES.default.offerColor;
+
+  frameOptions = [
+    { value: FrameType.NONE, label: 'Sin Marco' },
+    { value: FrameType.HALLOWEEN, label: 'Halloween' },
+    { value: FrameType.CHRISTMAS, label: 'Navidad' },
+    { value: FrameType.LUCES, label: 'Luces'}
+  ];
 
   colorOptions = [
     { label: 'Background', value: 'BackgroundColor', currentColor: this.BackgroundColor },
@@ -116,6 +135,19 @@ export class InvitationSectionComponent implements OnInit {
       this.invitationColors = { ...colors };
     });
     this.roundService.getRounds();
+  }
+
+  getFrameUrl(): string | null {
+    switch (this.frameTypeForm.value) {
+      case FrameType.HALLOWEEN:
+        return 'Halloween.png';
+      case FrameType.CHRISTMAS:
+        return 'Navidad.png';
+      case FrameType.LUCES:
+        return  'Luces.png'
+      default:
+        return null;
+    }
   }
 
   parseTimeString(dateTimeString: string): string {

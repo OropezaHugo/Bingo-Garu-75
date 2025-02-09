@@ -24,6 +24,16 @@
     <mat-checkbox [formControl]="withOfferForm">
       Incluir Oferta 2x1
     </mat-checkbox>
+    <mat-form-field appearance="outline">
+      <mat-label>Marco</mat-label>
+      <mat-select [formControl]="frameTypeForm">
+        @for (option of frameOptions; track option.value) {
+          <mat-option [value]="option.value">
+            {{option.label}}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="color-customization">
     @if (isColorPickerOpen) {
@@ -64,6 +74,9 @@
         <h3 [style.color]="OfferColor">Compra al 2x1</h3>
       }
     </div>
+    @if (getFrameUrl()) {
+      <img [src]="getFrameUrl()" class="frame-overlay" alt="Frame">
+    }
   </div>
 
   <div class="palette-selection">
