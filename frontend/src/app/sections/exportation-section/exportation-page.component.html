@@ -1,25 +1,54 @@
+<div class="cards-per-page-control">
+  <div class="input-group">
+    <mat-form-field appearance="outline" >
+      <mat-label>Cartas por página:</mat-label>
+      <input
+        type="number"
+        matInput
+        [formControl]="cardsPerPage"
+        (change)="paginateCards()"
+        min="10"
+        max="1000"
+        class="cards-per-page-input">
+      <mat-hint>Rango: 10 - 1000</mat-hint>
+    </mat-form-field>
+
+  </div>
+  <div class="warning-message">
+    <i class="warning-icon">⚠️</i>
+    <span>Por defecto son 100 cartas por página (recomendado).
+      Aumentar este número puede ralentizar la aplicación y la generación del PDF.
+      Máximo permitido: 1000.</span>
+  </div>
+</div>
+
+
 <div class="pagination">
   @for (page of paginatedCards; track $index) {
-    <button (click)="exportToPDF($index)">
+    <button mat-stroked-button (click)="exportToPDF($index)">
       Export Page {{ $index + 1 }}
+      <mat-icon matSuffix>system_update_alt</mat-icon>
     </button>
+
   }
 </div>
 
 @if (isExporting) {
-  <p>{{ statusMessage }}</p>
-  <mat-progress-bar
-  mode="indeterminate"
-  color="primary"
-  ></mat-progress-bar>
+  <div class="export-progress">
+    <p>{{ statusMessage }}</p>
+    <mat-progress-bar
+      mode="indeterminate"
+      color="primary">
+    </mat-progress-bar>
+  </div>
 }
-
-
-<div #cardsGrid class="card-grid">
-  @for (card of paginatedCards[currentPage]; track $index) {
-    <app-personal-bingo-card
-      [card]="card"
-      [serialId]="currentPage * cardsPerPage + $index + 1">
-    </app-personal-bingo-card>
-  }
+<div class="export-container">
+  <div #cardsGrid class="card-grid">
+    @for (card of displayedCards; track $index) {
+      <app-personal-bingo-card
+        [card]="card"
+        [serialId]="currentPage * (cardsPerPage.value ?? 10)  + $index + 1">
+      </app-personal-bingo-card>
+    }
+  </div>
 </div>
