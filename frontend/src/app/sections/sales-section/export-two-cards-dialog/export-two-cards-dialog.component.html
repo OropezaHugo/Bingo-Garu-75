@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Exportar Cartas</h2>
+<mat-dialog-content>
+  <div class="export-content">
+    <form [formGroup]="searchForm">
+      <div class="search-section">
+        <div class="card-inputs">
+          <mat-form-field appearance="outline">
+            <mat-label>ID de la carta 1</mat-label>
+            <input matInput formControlName="cardId1Control" />
+            <mat-hint>Ingrese el ID de la primera carta</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>ID de la carta 2</mat-label>
+            <input matInput formControlName="cardId2Control" />
+            <mat-hint>Ingrese el ID de la segunda carta</mat-hint>
+          </mat-form-field>
+        </div>
+        <button mat-flat-button color="primary" (click)="onSearch()">Buscar</button>
+      </div>
+    </form>
+
+    @if (errorMessage) {
+      <div class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+    }
+
+    @if (previewCards.length > 0) {
+      <div class="preview-section">
+        <h3>Vista previa</h3>
+        <div class="cards-preview-container">
+          @for (card of previewCards; track card.cardNumber) {
+            <div class="card-preview-element">
+              <app-personal-bingo-card [card]="card"></app-personal-bingo-card>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="dialog-actions">
+  <div class="export-buttons">
+    <app-rectanglebutton
+      text="Exportar PDF"
+      color="primary"
+      [disabled]="previewCards.length === 0"
+      (click)="exportToPDF()"
+    ></app-rectanglebutton>
+    <app-rectanglebutton
+      text="Exportar PNG"
+      color="accent"
+      [disabled]="previewCards.length === 0"
+      (click)="exportToPNG()"
+    ></app-rectanglebutton>
+  </div>
+</mat-dialog-actions>
