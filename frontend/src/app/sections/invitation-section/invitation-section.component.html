@@ -24,6 +24,9 @@
     <mat-checkbox [formControl]="withOfferForm">
       Incluir Oferta 2x1
     </mat-checkbox>
+    </div>
+    <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
+    <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
   </div>
   <div class="color-customization">
     @if (isColorPickerOpen) {
@@ -55,7 +58,11 @@
       </div>
     </div>
 
-    <img src="Logo.png" class="water-mark">
+    <img [src]="currentWatermarkUrl" class="water-mark">
+    @if (currentFrameUrl) {
+      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+    }
+
 
     <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
     <div class="invitation-pattern-info" >
@@ -64,6 +71,9 @@
         <h3 [style.color]="OfferColor">Compra al 2x1</h3>
       }
     </div>
+    @if (currentFrameUrl) {
+      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+    }
   </div>
 
   <div class="palette-selection">

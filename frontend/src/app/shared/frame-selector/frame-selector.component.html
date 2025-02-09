@@ -1,0 +1,29 @@
+<div class="frame-controls">
+  <mat-form-field appearance="outline">
+    <mat-label>Marco</mat-label>
+    <mat-select [formControl]="frameTypeForm">
+      @for (option of frameOptions; track option.value) {
+        <mat-option [value]="option.value">
+          {{option.label}}
+          @if (option.isCustom) {
+            <button mat-icon-button (click)="removeCustomFrame(option.value); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="fileInput.click()">
+    <mat-icon>upload</mat-icon>
+    Subir Marco
+  </button>
+  <input
+    #fileInput
+    type="file"
+    hidden
+    accept="image/*"
+    (change)="onFileSelected($event)"
+  >
+</div>

@@ -7,7 +7,7 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, V
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatFormFieldModule, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {RectanglebuttonComponent} from '../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import {PatternsComponent} from '../../pages/patterns/patterns.component';
@@ -20,7 +20,7 @@ import {
   MatDatepickerInput, MatDatepickerModule,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatIcon} from '@angular/material/icon';
 import {DatePipe} from '@angular/common';
 import {MatDivider} from '@angular/material/divider';
@@ -33,8 +33,12 @@ import { RoundPatternsListComponent } from "../../pages/game/round-patterns-list
 import { Pattern } from '../../core/models/add-pattern-dialog-data';
 import { PatternNameListComponent } from "../../shared/pattern-name-list/pattern-name-list.component";
 import {Game} from '../../core/models/game';
+import { MatSelectModule } from '@angular/material/select';
+import { FrameSelectorComponent } from '../../shared/frame-selector/frame-selector.component';
+import { WatermarkSelectorComponent } from '../../shared/watermark-selector/watermark-selector.component';
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
+
 
 @Component({
   selector: 'app-invitation-section',
@@ -62,7 +66,12 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     InputMask,
     ColorPickerComponent,
     RoundPatternsListComponent,
-    PatternNameListComponent
+    PatternNameListComponent,
+    MatOption,
+    MatSelectModule,
+    MatFormFieldModule,
+    FrameSelectorComponent,
+    WatermarkSelectorComponent
 ],
   providers: [
     provideNativeDateAdapter()
@@ -77,6 +86,9 @@ export class InvitationSectionComponent implements OnInit {
   snackBar = inject(SnackbarService);
   dialog = inject(MatDialog);
   router = inject(Router);
+
+  currentFrameUrl: string | null = null;
+  currentWatermarkUrl: string = 'Logo.png';
 
   formGroup: FormGroup | undefined;
   selectedElement: string | null = null;
@@ -118,6 +130,14 @@ export class InvitationSectionComponent implements OnInit {
     this.roundService.getRounds();
   }
 
+  onFrameUrlChange(url: string | null): void {
+    this.currentFrameUrl = url;
+  }
+
+  onWatermarkUrlChange(url: string): void {
+    this.currentWatermarkUrl = url;
+  }
+
   parseTimeString(dateTimeString: string): string {
     let dateTime = new Date(dateTimeString);
     let result = ''
@@ -134,6 +154,7 @@ export class InvitationSectionComponent implements OnInit {
     }
     return result;
   }
+
   exportToImage() {
     const element = document.getElementById('content-to-export') as HTMLElement;
 
