@@ -94,26 +94,41 @@ export class ExportTwoCardsDialogComponent {
     const cardElements = document.querySelectorAll('.card-preview-element') as NodeListOf<HTMLElement>;
     if (cardElements.length === 0) return;
 
-    const scale = 4;
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'px',
+    const scale = 3;
+
+    const container = document.createElement('div');
+    container.style.display = 'flex';
+    container.style.flexDirection = 'row';
+    container.style.justifyContent = 'center';
+    container.style.width = 'fit-content';
+
+    cardElements.forEach(element => {
+      const clone = element.cloneNode(true) as HTMLElement;
+      container.appendChild(clone);
     });
 
-    for (let i = 0; i < cardElements.length; i++) {
-      const canvas = await html2canvas(cardElements[i], {
-        scale: scale,
-        width: cardElements[i].scrollWidth,
-        height: cardElements[i].scrollHeight,
-      });
+    document.body.appendChild(container);
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdfWidth = canvas.width / scale;
-      const pdfHeight = canvas.height / scale;
+    const canvas = await html2canvas(container, {
+      scale: scale,
+      width: container.scrollWidth,
+      height: container.scrollHeight,
+    });
 
-      if (i > 0) pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    }
+    document.body.removeChild(container);
+
+    const imgWidth = canvas.width / scale;
+    const imgHeight = canvas.height / scale;
+
+    const orientation = imgWidth > imgHeight ? 'landscape' : 'portrait';
+    const pdf = new jsPDF({
+      orientation: orientation,
+      unit: 'px',
+      format: [imgWidth, imgHeight]
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
     pdf.save(`cartas_${this.previewCards.map(card => card.cardNumber).join('_')}.pdf`);
   }
