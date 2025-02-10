@@ -21,5 +21,16 @@
         (click)="openContactDialog()">
       </app-text-button>
     </div>
+
+    <div class="nav-group">
+      <span class="subtitle">Desvincula tu dispositivo</span>
+      <app-text-button
+        class="nav-item font-medium weight-default"
+        [text]="'Log Out'"
+        [color]="'#000'"
+        [disabled]="false"
+        (click)="logout()">
+      </app-text-button>
+    </div>
   </nav>
 </footer>

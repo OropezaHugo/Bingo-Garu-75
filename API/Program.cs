@@ -1,4 +1,5 @@
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using API.Profiles;
 using API.Tools;
 using Core.Entities;
@@ -27,6 +28,16 @@ builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<Bingo75Context>()
     .AddDefaultTokenProviders();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureHttpsDefaults(adapterOptions =>
+    {
+        adapterOptions.ServerCertificate = new X509Certificate2(
+            "ssl/qwertyuiufvyivbjlbk.tryasp.net.pfx",
+            "qwerty"
+        );
+    });
+});
 var app = builder.Build();
 
 app.UseCors(policyBuilder =>
