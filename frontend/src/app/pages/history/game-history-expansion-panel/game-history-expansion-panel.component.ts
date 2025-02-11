@@ -1,6 +1,5 @@
 import {Component, inject, input, OnInit} from '@angular/core';
 import {HistoryService} from '../../../core/services/history.service';
-import {PrizeData} from '../../../core/models/round';
 import {
   MatExpansionPanel,
   MatExpansionPanelDescription,

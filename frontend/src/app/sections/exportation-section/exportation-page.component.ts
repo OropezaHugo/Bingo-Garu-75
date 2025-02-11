@@ -6,16 +6,15 @@ import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-exportation-section',
-  imports: [PersonalBingoCardComponent, MatProgressBarModule, FormsModule, MatIconButton, MatIcon, MatSuffix, MatButton, ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatHint],
+  imports: [PersonalBingoCardComponent, MatProgressBarModule, FormsModule, MatIcon, MatSuffix, MatButton, ReactiveFormsModule, MatInput, MatLabel, MatFormField, MatHint],
   templateUrl: './exportation-page.component.html',
   styleUrl: './exportation-page.component.scss'
 })

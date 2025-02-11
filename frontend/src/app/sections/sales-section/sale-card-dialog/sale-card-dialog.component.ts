@@ -1,7 +1,7 @@
 import {Component, inject, model} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions, MatDialogClose,
+  MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle
@@ -20,7 +20,6 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    MatDialogClose,
     SaleButtonComponent,
     MatFormField,
     MatLabel,

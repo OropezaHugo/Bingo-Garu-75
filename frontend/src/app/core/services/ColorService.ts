@@ -22,8 +22,4 @@ export class ColorService {
       ...newColors,
     });
   }
-
-  getCurrentColors() {
-    return this.colorsSource.value;
-  }
 }

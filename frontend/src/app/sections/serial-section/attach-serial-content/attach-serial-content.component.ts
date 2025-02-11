@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, inject, input, OnInit, viewChild} from '@angular/core';
-import {MatFormField, MatHint, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatSuffix} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
 import {MatIcon} from '@angular/material/icon';
 import {Serial} from '../../../core/models/serial';
@@ -20,7 +20,7 @@ import {SerialService} from '../../../core/services/serial.service';
 import {GameService} from '../../../core/services/game.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../../shared/dialogs/confir-dialog/confir-dialog.component';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {CreateSerialDialogComponent} from '../create-serial-dialog/create-serial-dialog.component';
 import {MatStepperNext} from '@angular/material/stepper';
 import {MatButton} from '@angular/material/button';
@@ -50,7 +50,6 @@ import {SnackbarService} from '../../../core/services/snackbar.service';
     MatNoDataRow,
     MatPaginator,
     RectanglebuttonComponent,
-    MatHint,
     ReactiveFormsModule,
     MatStepperNext,
     MatButton

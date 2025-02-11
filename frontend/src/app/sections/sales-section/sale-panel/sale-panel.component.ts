@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, inject, model, OnInit, signal, viewChild} from '@angular/core';
 import { GameService } from '../../../core/services/game.service';
-import {SaleButtonComponent} from '../sale-button/sale-button.component';
 import {Card, CardBox, GameCardInfo} from '../../../core/models/card';
 import {BingoCardComponent} from '../../../shared/bingo-card/bingo-card.component';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -8,7 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SaleCardDialogComponent} from '../sale-card-dialog/sale-card-dialog.component';
 import {RectanglebuttonComponent} from '../../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import { ExportCardDialogComponent } from '../export-card-dialog/export-card-dialog.component';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatStepperNext} from '@angular/material/stepper';
 import {
   MatCell, MatCellDef,
@@ -18,7 +17,6 @@ import {
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
-import {Serial} from '../../../core/models/serial';
 import {MatSort, MatSortHeader} from '@angular/material/sort';
 import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatIcon} from '@angular/material/icon';
@@ -29,7 +27,6 @@ import { ExportTwoCardsDialogComponent } from '../export-two-cards-dialog/export
 @Component({
   selector: 'app-sale-panel',
   imports: [
-    SaleButtonComponent,
     MatSortHeader,
     BingoCardComponent,
     MatPaginator,
@@ -53,7 +50,8 @@ import { ExportTwoCardsDialogComponent } from '../export-two-cards-dialog/export
     MatRowDef,
     MatNoDataRow,
     MatHeaderRowDef,
-    TitleCasePipe
+    TitleCasePipe,
+    MatIconButton
   ],
   templateUrl: './sale-panel.component.html',
   styleUrl: './sale-panel.component.scss'
@@ -85,17 +83,28 @@ export class SalePanelComponent implements OnInit, AfterViewInit{
     }
   }
  ngAfterViewInit() {
-    setTimeout(() => {
-      this.dataSource = new MatTableDataSource(this.gameService.gameCards())
-      this.dataSource.sort = this.sort()
-      this.dataSource.paginator = this.paginator()
-      this.dataSource.filterPredicate = (data, filter) => data.userName.trim().toLowerCase().includes(filter.trim()) || data.cardNumber.toString().includes(filter);
-    }, 1000)
+   this.gameService.getCardsByGameId()
+    this.gameService.createNewGame().subscribe({
+      next: value => {
+        this.dataSource = new MatTableDataSource(this.gameService.gameCards())
+        this.dataSource.sort = this.sort()
+        this.dataSource.paginator = this.paginator()
+        this.dataSource.filterPredicate = (data, filter) => data.userName.trim().toLowerCase().includes(filter.trim()) || data.cardNumber.toString().includes(filter);
+      }
+    })
 
  }
 
   ngOnInit() {
     this.gameService.getCardsByGameId()
+    this.gameService.createNewGame().subscribe({
+      next: value => {
+        this.dataSource = new MatTableDataSource(this.gameService.gameCards())
+        this.dataSource.sort = this.sort()
+        this.dataSource.paginator = this.paginator()
+        this.dataSource.filterPredicate = (data, filter) => data.userName.trim().toLowerCase().includes(filter.trim()) || data.cardNumber.toString().includes(filter);
+      }
+    })
 
   }
   selectCard(gameCard: GameCardInfo) {
@@ -131,18 +140,17 @@ export class SalePanelComponent implements OnInit, AfterViewInit{
           })
           this.selectedCards.set([])
           this.pageSize.set(25);
-          setTimeout(() => {
-            this.dataSource = new MatTableDataSource(this.gameService.gameCards())
-            this.dataSource.sort = this.sort()
-            this.dataSource.paginator = this.paginator()
-          }, 1000)
-
         }
       })
     }
   }
 
-
+  updateTable(){
+        this.dataSource = new MatTableDataSource(this.gameService.gameCards())
+        this.dataSource.sort = this.sort()
+        this.dataSource.paginator = this.paginator()
+        this.dataSource.filterPredicate = (data, filter) => data.userName.trim().toLowerCase().includes(filter.trim()) || data.cardNumber.toString().includes(filter);
+  }
   openExportDialog() {
     this.dialog.open(ExportCardDialogComponent, {
       width: '500px',

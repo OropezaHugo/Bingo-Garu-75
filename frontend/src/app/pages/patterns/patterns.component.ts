@@ -7,7 +7,7 @@ import { NewPatternDialogComponent } from '../../sections/pattern-section/new-pa
 import { PatternCardComponent } from "../../shared/pattern-card/pattern-card.component";
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatInput } from '@angular/material/input';
 

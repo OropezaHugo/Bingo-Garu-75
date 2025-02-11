@@ -1,25 +1,26 @@
-<div class="lobby-div">
-  @if (!gameService.actualGame()?.inProgress) {
-    <button mat-stroked-button (click)="cancelGame()">Deshacer todos los ajustes</button>
-  } @else if (gameService.actualGame()?.inProgress){
-    <button mat-stroked-button (click)="continueGameInProgress()">Continuar ultima partida</button>
-    <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
-  }
-  <h5>game code: {{gameService.actualGame()?.id}}</h5>
-</div>
-<mat-stepper [orientation]="stepperOrientation()">
-  <mat-step>
-    <ng-template matStepLabel>Configuracion inicial</ng-template>
-    @defer (on viewport) {
-      <app-game-configuration/>
-    } @placeholder {
-      <h1>Loading</h1>
+@defer (on timer(2s)) {
+  <div class="lobby-div">
+    @if (!gameService.actualGame()?.inProgress) {
+      <button mat-stroked-button (click)="cancelGame()">Deshacer todos los ajustes</button>
+    } @else if (gameService.actualGame()?.inProgress){
+      <button mat-stroked-button (click)="continueGameInProgress()">Continuar ultima partida</button>
+      <button mat-flat-button (click)="closeGameInProgress()">Cerrar partida en progreso</button>
     }
-  </mat-step>
+    <h5>game code: {{gameService.actualGame()?.id}}</h5>
+  </div>
+  <mat-stepper [orientation]="stepperOrientation()">
+    <mat-step>
+      <ng-template matStepLabel>Configuracion inicial</ng-template>
+      @defer (on viewport) {
+        <app-game-configuration/>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
     <mat-step>
       <ng-template matStepLabel>Adjuntar serial</ng-template>
       @defer (on viewport) {
-      <app-attach-serial-content [useToGenerate]="false"/>
+        <app-attach-serial-content [useToGenerate]="false"/>
       } @placeholder {
         <h1>Loading</h1>
       }
@@ -32,37 +33,37 @@
         <h1>Loading</h1>
       }
     </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Personalizacion y Exportacion</ng-template>
-    @defer (on viewport) {
-      @if (gameService.gameCards().length < 1) {
-        <h1>Adjunta un serial para poder exportarlo y/o personalizarlo</h1>
-      } @else {
-        <div>
-          <button mat-button (click)="toggleView()" class="toggle-btn">
-            <mat-icon>swap_horiz</mat-icon>
-            {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
-          </button>
+    <mat-step>
+      <ng-template matStepLabel>Personalizacion y Exportacion</ng-template>
+      @defer (on viewport) {
+        @if (gameService.gameCards().length < 1) {
+          <h1>Adjunta un serial para poder exportarlo y/o personalizarlo</h1>
+        } @else {
+          <div>
+            <button mat-button (click)="toggleView()" class="toggle-btn">
+              <mat-icon>swap_horiz</mat-icon>
+              {{ personalization ? 'Cambiar a Exportación' : 'Cambiar a Personalización' }}
+            </button>
 
-          @if (personalization) {
-            <app-personalization-section></app-personalization-section>
-          } @else {
-            <app-exportation-section></app-exportation-section>
-          }
-        </div>
-        <div class="next-step-div">
-          <button mat-raised-button matStepperNext>Siguiente</button>
-        </div>
+            @if (personalization) {
+              <app-personalization-section></app-personalization-section>
+            } @else {
+              <app-exportation-section></app-exportation-section>
+            }
+          </div>
+          <div class="next-step-div">
+            <button mat-raised-button matStepperNext>Siguiente</button>
+          </div>
 
+        }
+      } @placeholder {
+        <h1>Loading</h1>
       }
-    } @placeholder {
-      <h1>Loading</h1>
-    }
-  </mat-step>
+    </mat-step>
     <mat-step>
       <ng-template matStepLabel>Venta de Seriales</ng-template>
       @defer (on viewport) {
-      <app-sale-panel/>
+        <app-sale-panel/>
       } @placeholder {
         <h1>Loading</h1>
       }
@@ -71,18 +72,22 @@
     <mat-step>
       <ng-template matStepLabel>Adjuntar premios</ng-template>
       @defer (on viewport) {
-      <app-pattern-target-prize-section></app-pattern-target-prize-section>
+        <app-pattern-target-prize-section></app-pattern-target-prize-section>
       } @placeholder {
         <h1>Loading</h1>
       }
     </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Generar invitacion</ng-template>
-    @defer (on viewport) {
+    <mat-step>
+      <ng-template matStepLabel>Generar invitacion</ng-template>
+      @defer (on viewport) {
         <app-invitation-section/>
-    } @placeholder {
-      <h1>Loading</h1>
-    }
-  </mat-step>
-</mat-stepper>
+      } @placeholder {
+        <h1>Loading</h1>
+      }
+    </mat-step>
+  </mat-stepper>
 
+
+} @placeholder (){
+  <h2>Cargando</h2>
+}

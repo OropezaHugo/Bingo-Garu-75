@@ -1,4 +1,4 @@
-import {Component, effect, inject, input, model, OnInit, ViewChild} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {ConfirDialogComponent} from '../../shared/dialogs/confir-dialog/confir-dialog.component';
 import {GameService} from '../../core/services/game.service';
 import {RoundService} from '../../core/services/round.service';
@@ -10,27 +10,20 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {MatFormField, MatFormFieldModule, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {RectanglebuttonComponent} from '../../shared/buttons/rectanglebutton/rectanglebutton.component';
-import {PatternsComponent} from '../../pages/patterns/patterns.component';
-import {GamePatternInfoComponent} from '../prize-section/game-pattern-info/game-pattern-info.component';
 import html2canvas from 'html2canvas';
-import {MatButton, MatButtonModule, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {
   MatDatepicker,
   MatDatepickerActions, MatDatepickerApply, MatDatepickerCancel,
   MatDatepickerInput, MatDatepickerModule,
   MatDatepickerToggle
 } from '@angular/material/datepicker';
-import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
-import {MatIcon} from '@angular/material/icon';
+import {provideNativeDateAdapter} from '@angular/material/core';
 import {DatePipe} from '@angular/common';
 import {MatDivider} from '@angular/material/divider';
-import {InputMask} from 'primeng/inputmask';
 import { ColorPickerComponent } from "../../shared/color-picker/color-picker.component";
 import { INVITATION_COLOR_PALETTES } from '../../core/models/InvitationColorPallete';
 import { InvitationColorService } from '../../core/services/InvitationColorService';
-import { Round } from '../../core/models/round';
-import { RoundPatternsListComponent } from "../../pages/game/round-patterns-list/round-patterns-list.component";
-import { Pattern } from '../../core/models/add-pattern-dialog-data';
 import { PatternNameListComponent } from "../../shared/pattern-name-list/pattern-name-list.component";
 import {Game} from '../../core/models/game';
 import { MatSelectModule } from '@angular/material/select';
@@ -59,15 +52,10 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     MatDatepicker,
     MatDatepickerInput,
     MatSuffix,
-    MatIconButton,
-    MatIcon,
     DatePipe,
     MatDivider,
-    InputMask,
     ColorPickerComponent,
-    RoundPatternsListComponent,
     PatternNameListComponent,
-    MatOption,
     MatSelectModule,
     MatFormFieldModule,
     FrameSelectorComponent,
@@ -186,7 +174,7 @@ export class InvitationSectionComponent implements OnInit {
                 randomPatterns: this.gameService.actualGame()!.randomPatterns,
                 targetStartDate:this.dateForm.value !== null && this.eventTimeForm.value !== null ? this.combineDateAndTime(this.dateForm.value, this.eventTimeForm.value).toISOString() : undefined
               })
-              this.router.navigateByUrl('/game')
+              this.router.navigateByUrl('bingo/game')
             }
           })
         } else {

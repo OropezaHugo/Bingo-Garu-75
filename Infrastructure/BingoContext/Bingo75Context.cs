@@ -1,9 +1,10 @@
 using Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.BingoContext;
 
-public class Bingo75Context(DbContextOptions options): DbContext(options)
+public class Bingo75Context(DbContextOptions options): IdentityDbContext<AppUser>(options)
 {
     public DbSet<Card> Cards { get; set; }
     public DbSet<Game> Games { get; set; }

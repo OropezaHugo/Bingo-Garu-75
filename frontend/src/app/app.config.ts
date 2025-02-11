@@ -7,7 +7,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {errorInterceptor} from './core/interceptors/error.interceptor';
 import {InitService} from './core/services/init.service';
 import { providePrimeNG } from 'primeng/config';
-import {firstValueFrom, lastValueFrom} from 'rxjs';
+import {firstValueFrom} from 'rxjs';
+import {authInterceptor} from './core/interceptors/auth.interceptor';
 
 function initializeApp(initService: InitService){
   return () => firstValueFrom(initService.init())
@@ -17,7 +18,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(withInterceptors([
-      errorInterceptor
+      errorInterceptor,
+      authInterceptor
     ])),
     provideRouter(routes, withComponentInputBinding()),
     provideAnimationsAsync(),

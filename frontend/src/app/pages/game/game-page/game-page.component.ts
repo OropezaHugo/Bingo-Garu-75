@@ -1,34 +1,23 @@
-import {Component, inject, model, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {MatTab, MatTabChangeEvent, MatTabGroup} from '@angular/material/tabs';
-import {MockGameRounds, Round} from '../../../core/models/round';
+import {Round} from '../../../core/models/round';
 import {RoundTabComponent} from '../round-tab/round-tab.component';
-import {RoundRaffledNumbersComponent} from '../round-raffled-numbers/round-raffled-numbers.component';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirDialogComponent} from '../../../shared/dialogs/confir-dialog/confir-dialog.component';
-import {GamePatternsListComponent} from '../game-patterns-list/game-patterns-list.component';
-import {PatternTargetPrizesComponent} from '../../../sections/prize-section/pattern-target-prizes/pattern-target-prizes.component';
-import {GamePatternInfoComponent} from '../../../sections/prize-section/game-pattern-info/game-pattern-info.component';
 import {GameService} from '../../../core/services/game.service';
-import {BingoCardComponent} from '../../../shared/bingo-card/bingo-card.component';
-import {Card, CardBox, GameCardInfo} from '../../../core/models/card';
+import {GameCardInfo} from '../../../core/models/card';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {SaleButtonComponent} from '../../../sections/sales-section/sale-button/sale-button.component';
 import {RoundPatternInfo} from '../../../core/models/add-pattern-dialog-data';
 import {VerifyCardDialogComponent} from '../verify-card-dialog/verify-card-dialog.component';
 import {RoundService} from '../../../core/services/round.service';
-import {delay} from 'rxjs';
 import {Router} from '@angular/router';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {RoundPatternsListComponent} from '../round-patterns-list/round-patterns-list.component';
-import {MatIcon} from '@angular/material/icon';
 import {RounListInGameComponent} from '../roun-list-in-game/roun-list-in-game.component';
-import {PrizesBoardComponent} from '../../end-game/prizes-board/prizes-board.component';
 import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {RoundPrizesBoardComponent} from '../round-prizes-board/round-prizes-board.component';
-import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-game-page',
@@ -36,24 +25,15 @@ import {MatCheckbox} from '@angular/material/checkbox';
     MatTabGroup,
     MatTab,
     RoundTabComponent,
-    RoundRaffledNumbersComponent,
     MatButton,
-    GamePatternsListComponent,
-    PatternTargetPrizesComponent,
-    GamePatternInfoComponent,
-    BingoCardComponent,
     MatFormField,
     MatLabel,
     MatInput,
-    MatPaginator,
     SaleButtonComponent,
     ReactiveFormsModule,
-    RoundPatternsListComponent,
-    MatIconButton,
-    MatIcon,
+
     RounListInGameComponent,
-    PrizesBoardComponent,
-    MatCheckbox
+
   ],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
@@ -76,7 +56,7 @@ export class GamePageComponent implements OnInit {
     this.gameService.createNewGame().subscribe({
       next: result => {
         if (this.gameService.actualGame()?.finished) {
-          this.router.navigateByUrl('/prizes');
+          this.router.navigateByUrl('bingo/prizes');
         }
         this.roundService.getRounds()
         this.gameService.getCardsByGameId()
@@ -101,15 +81,6 @@ export class GamePageComponent implements OnInit {
         this.actualTab = index + 1;
       }
     })
-  }
-  switchActivePattern(pattern: RoundPatternInfo) {
-    pattern.active = !pattern.active;
-
-    if (pattern.active) {
-      this.activePatterns.push(pattern);
-    } else {
-      this.activePatterns = this.activePatterns.filter(value => value !== pattern);
-    }
   }
 
 
@@ -164,7 +135,7 @@ export class GamePageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.gameService.finishGame()
-        this.router.navigate(['/prizes'], {replaceUrl: true});
+        this.router.navigate(['/bingo/prizes'], {replaceUrl: true});
       }
     })
   }

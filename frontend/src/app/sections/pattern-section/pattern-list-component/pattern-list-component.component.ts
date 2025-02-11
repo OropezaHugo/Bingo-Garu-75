@@ -1,5 +1,5 @@
-import {Component, computed, effect, inject, input, OnInit, signal} from '@angular/core';
-import {MatButton, MatIconButton} from "@angular/material/button";
+import {Component, inject, input, OnInit} from '@angular/core';
+import { MatIconButton} from "@angular/material/button";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
@@ -8,8 +8,7 @@ import {PatternCardComponent} from "../../../shared/pattern-card/pattern-card.co
 import {
   EmptyPattern,
   EmptyPatternData,
-  ExamplePatterns,
-  NewPatternDialogData,
+
   Pattern
 } from '../../../core/models/add-pattern-dialog-data';
 import {NewPatternDialogComponent} from '../new-pattern-dialog/new-pattern-dialog.component';
@@ -21,7 +20,6 @@ import {AddPatternToRoundDialogComponent} from '../add-pattern-to-round-dialog/a
 @Component({
   selector: 'app-pattern-list-component',
     imports: [
-        MatButton,
         MatFormField,
         MatIcon,
         MatIconButton,

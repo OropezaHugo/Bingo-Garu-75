@@ -2,11 +2,11 @@ import {Component, inject, model} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose, MatDialogContent,
+  MatDialogContent,
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {PrizeData, Round, VerifyCardDialogData} from '../../../core/models/round';
+import {Round, VerifyCardDialogData} from '../../../core/models/round';
 import {BingoCardComponent} from '../../../shared/bingo-card/bingo-card.component';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';

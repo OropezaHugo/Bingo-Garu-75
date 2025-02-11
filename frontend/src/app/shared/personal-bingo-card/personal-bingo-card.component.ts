@@ -1,9 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import {Component, inject, input, OnInit} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
-import { SerialService } from '../../core/services/serial.service';
-import { ColorService } from '../../core/services/ColorService';
 import { Card } from '../../core/models/card';
-import { Subscription } from 'rxjs';
+import {SerialService} from '../../core/services/serial.service';
+import {ColorService} from '../../core/services/ColorService';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-personal-bingo-card',
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './personal-bingo-card.component.html',
   styleUrl: './personal-bingo-card.component.scss'
 })
-export class PersonalBingoCardComponent {
+export class PersonalBingoCardComponent implements OnInit {
  card = input.required<Card>()
  serialId = input<number>()
  boughtBy = input<string | undefined>()
@@ -22,11 +22,8 @@ export class PersonalBingoCardComponent {
  CardNameColor: string = '#000000';
  BoxNumberColor: string = '#000000';
  CardNumberColor: string = '#000000';
-
   private colorService = inject(ColorService);
   private colorSubscription?: Subscription;
-
-
   ngOnInit(): void {
     this.colorService.colors$.subscribe((colors: { StrokeColor: string; BoxFillColor: string; CardFillColor: string; CardNameColor: string; BoxNumberColor: string; CardNumberColor: string; }) => {
       this.StrokeColor = colors.StrokeColor;
@@ -37,15 +34,12 @@ export class PersonalBingoCardComponent {
       this.CardNumberColor = colors.CardNumberColor;
     });
   }
-
   ngOnDestroy(): void {
     if (this.colorSubscription) {
       this.colorSubscription.unsubscribe();
     }
   }
-
- constructor(private serialService: SerialService) {}
-
+  constructor(private serialService: SerialService) {}
   clickBox(event: MouseEvent, boxIndex: number) {
     const currentCard = this.card();
     if (currentCard && currentCard.content) {

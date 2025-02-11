@@ -4,13 +4,13 @@ import {CreateRoundsData, PostPrizeData, PrizeData, Round} from '../models/round
 import {GameService} from './game.service';
 import {RoundPatternInfo, Pattern} from '../models/add-pattern-dialog-data';
 import {map, Observable} from 'rxjs';
-import {Card} from '../models/card';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoundService {
-  baseUrl = "http://localhost:5075/";
+  baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
   actualRounds = signal<Round[]>([])
   gameService = inject(GameService);
