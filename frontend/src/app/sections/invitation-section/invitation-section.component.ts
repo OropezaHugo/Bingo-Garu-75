@@ -8,7 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatFormField, MatFormFieldModule, MatHint, MatLabel, MatSuffix} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatInput, MatInputModule} from '@angular/material/input';
 import {RectanglebuttonComponent} from '../../shared/buttons/rectanglebutton/rectanglebutton.component';
 import html2canvas from 'html2canvas';
 import {MatButton} from '@angular/material/button';
@@ -29,6 +29,9 @@ import {Game} from '../../core/models/game';
 import { MatSelectModule } from '@angular/material/select';
 import { FrameSelectorComponent } from '../../shared/frame-selector/frame-selector.component';
 import { WatermarkSelectorComponent } from '../../shared/watermark-selector/watermark-selector.component';
+import {MatSliderModule} from '@angular/material/slider';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
 
@@ -59,7 +62,10 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     MatSelectModule,
     MatFormFieldModule,
     FrameSelectorComponent,
-    WatermarkSelectorComponent
+    WatermarkSelectorComponent,
+    MatSliderModule,
+    MatInputModule,
+    MatSidenavModule
 ],
   providers: [
     provideNativeDateAdapter()
@@ -89,6 +95,11 @@ export class InvitationSectionComponent implements OnInit {
   RoundInfoColor = INVITATION_COLOR_PALETTES.default.roundInfoColor;
   OfferColor = INVITATION_COLOR_PALETTES.default.offerColor;
 
+  watermarkOpacity = new FormControl<number>(50, {
+    nonNullable: true,
+    validators: [Validators.min(1), Validators.max(100)]
+  });
+
   colorOptions = [
     { label: 'Background', value: 'BackgroundColor', currentColor: this.BackgroundColor },
     { label: 'Header', value: 'HeaderColor', currentColor: this.HeaderColor },
@@ -117,6 +128,11 @@ export class InvitationSectionComponent implements OnInit {
     });
     this.roundService.getRounds();
   }
+
+  getOpacityValue(): number {
+    return this.watermarkOpacity.value / 100;
+  }
+
 
   onFrameUrlChange(url: string | null): void {
     this.currentFrameUrl = url;

@@ -14,9 +14,7 @@
     <h2 class="card-title">O</h2>
     @for (box of card().content; track $index) {
       @if ($index == 12) {
-        <button class="star-box">
-          <mat-icon>star</mat-icon>
-        </button>
+        <img src="LogoCard.png" alt="Logo Black Bingo">
       } @else if (box.number === card().lastNumber) {
         <button class="last-number-marked-box" (click)="clickBox($event, $index)">
           {{box.number}}

@@ -1,12 +1,25 @@
-
 .pattern-section-div {
   display: flex;
   flex-direction: row;
-  place-content: space-evenly;
+  justify-content: space-evenly;
+  gap: 20px; /* Añade espacio entre los elementos */
+}
+
+/* Cuando la pantalla sea menor a 768px (modo móvil), los componentes se apilan */
+@media (max-width: 768px) {
+  .pattern-section-div {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  app-game-pattern-section-list,
+  app-pattern-list-component {
+    width: 100%; /* Asegura que ocupen todo el ancho disponible */
+  }
 }
 
 .next-step-div {
   display: flex;
   flex-direction: row;
-  place-content: end;
+  justify-content: flex-end;
 }
