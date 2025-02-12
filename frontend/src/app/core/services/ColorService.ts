@@ -11,7 +11,7 @@ export class ColorService {
     CardFillColor: '#7b2cbf',
     CardNameColor: '#fca311',
     BoxNumberColor: '#7b2cbf',
-    CardNumberColor: '#fca311',
+    CardNumberColor: '#7b2cbf',
   });
 
   colors$ = this.colorsSource.asObservable();

@@ -30,15 +30,26 @@ $secondary-color: #fca311;
   margin: 0;
   color: $primary-color;
 }
+
 .bingo-card-grid {
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  width: 90%;
-  aspect-ratio: 1;
+  width: 300px;
+  height: 300px;
+  aspect-ratio: 1 / 1;
   gap: 2px;
   place-items: center;
+
+  img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    background-color: $secondary-color;
+    border-radius: 0.5rem;
+  }
 }
+
 
 .box {
   border: 0;

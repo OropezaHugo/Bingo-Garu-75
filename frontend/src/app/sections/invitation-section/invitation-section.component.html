@@ -1,100 +1,128 @@
-<div class="invitation-section">
-  <div class="start-game-div" >
-    <mat-form-field appearance="outline">
-      <mat-label>Fecha del evento</mat-label>
-      <input matInput [matDatepicker]="datepicker" [formControl]="dateForm"/>
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker >
-        <mat-datepicker-actions>
-          <button mat-stroked-button matDatepickerCancel>Cancelar</button>
-          <button mat-flat-button matDatepickerApply>Aplicar</button>
-        </mat-datepicker-actions>
-      </mat-datepicker>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Hora del evento</mat-label>
-      <input matInput [formControl]="eventTimeForm" placeholder="hh:mm">
-      <mat-hint>formato 24h</mat-hint>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Dinero en premios(Bs)</mat-label>
-      <input matInput [formControl]="gamePricesForm" >
-    </mat-form-field>
-    <mat-checkbox [formControl]="withOfferForm">
-      Incluir Oferta 2x1
-    </mat-checkbox>
-    </div>
-    <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
-    <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
-  </div>
-  <div class="color-customization">
-    @if (isColorPickerOpen) {
-      <app-color-picker #colorPicker
-        (colorChange)="onColorChange($event)">
-      </app-color-picker>
-    }
-    <h3>Personalizar colores</h3>
-    <button mat-stroked-button (click)="openColorPicker('BackgroundColor')">Fondo</button>
-    <button mat-stroked-button (click)="openColorPicker('HeaderColor')">Encabezado</button>
-    <button mat-stroked-button (click)="openColorPicker('PrizeColor')">Premios</button>
-    <button mat-stroked-button (click)="openColorPicker('RoundInfoColor')">Información Ronda</button>
-    <button mat-stroked-button (click)="openColorPicker('OfferColor')">Oferta</button>
-  </div>
-
-  <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
-    <div class="invitation-pattern-info">
-      <h1 [style.color]="HeaderColor">Black Bingo</h1>
-      <h1 [style.color]="HeaderColor">@if (dateForm.value !== null){ {{dateForm.value.toDateString()}}}-{{eventTimeForm.value}}</h1>
-    </div>
-
-    <div class="rounds-section" [style.color]="RoundInfoColor">
-      <div class="rounds-section" [style.color]="RoundInfoColor">
-        <h2 style="text-align: center">Rondas y Premios</h2>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="true" class="color-customization-sidenav">
+    <div class="sidenav-content">
+      <div class="color-customization">
+        <h3>Personalizar colores</h3>
+        @if (isColorPickerOpen) {
+          <app-color-picker #colorPicker
+            (colorChange)="onColorChange($event)">
+          </app-color-picker>
+        }
+        <div class="color-buttons">
+          <button mat-stroked-button (click)="openColorPicker('BackgroundColor')">Fondo</button>
+          <button mat-stroked-button (click)="openColorPicker('HeaderColor')">Encabezado</button>
+          <button mat-stroked-button (click)="openColorPicker('PrizeColor')">Premios</button>
+          <button mat-stroked-button (click)="openColorPicker('RoundInfoColor')">Información Ronda</button>
+          @if (withOfferForm.value === true) {
+            <button mat-stroked-button (click)="openColorPicker('OfferColor')">Oferta</button>
+          }
+        </div>
       </div>
-      <mat-divider></mat-divider>
-      <div class="rounds-container">
-        <app-pattern-name-list></app-pattern-name-list>
+
+      <div class="palette-selection">
+        <h3>Diseños Predefinidos</h3>
+        <div class="palette-grid">
+          @for (palette of colorPalettes; track palette.id) {
+            <button
+              class="palette-button"
+              [class.active]="currentPalette === palette.id"
+              (click)="applyPalette(palette.id)">
+              <div class="palette-preview">
+                <div class="color-sample" [style.background-color]="palette.backgroundColor"></div>
+                <div class="color-sample" [style.background-color]="palette.headerColor"></div>
+                <div class="color-sample" [style.background-color]="palette.prizeColor"></div>
+              </div>
+              <span>{{ palette.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="images-for-invitation">
+        <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
+       <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
       </div>
     </div>
-
-    <img [src]="currentWatermarkUrl" class="water-mark">
-    @if (currentFrameUrl) {
-      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
-    }
+  </mat-sidenav>
 
 
-    <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
-    <div class="invitation-pattern-info" >
-      <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
-      @if (withOfferForm.value === true) {
-        <h3 [style.color]="OfferColor">Compra al 2x1</h3>
-      }
-    </div>
-    @if (currentFrameUrl) {
-      <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
-    }
-  </div>
+  <mat-sidenav-content>
+    <div class="invitation-section">
+      <div class="start-game-div">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha del evento</mat-label>
+          <input matInput [matDatepicker]="datepicker" [formControl]="dateForm"/>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-stroked-button matDatepickerCancel>Cancelar</button>
+              <button mat-flat-button matDatepickerApply>Aplicar</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
 
-  <div class="palette-selection">
-    <h3>Diseños Predefinidos</h3>
-    <div class="palette-grid">
-      @for (palette of colorPalettes; track palette.id) {
-        <button
-          class="palette-button"
-          [class.active]="currentPalette === palette.id"
-          (click)="applyPalette(palette.id)">
-          <div class="palette-preview">
-            <div class="color-sample" [style.background-color]="palette.backgroundColor"></div>
-            <div class="color-sample" [style.background-color]="palette.headerColor"></div>
-            <div class="color-sample" [style.background-color]="palette.prizeColor"></div>
+        <mat-form-field appearance="outline">
+          <mat-label>Hora del evento</mat-label>
+          <input matInput [formControl]="eventTimeForm" placeholder="hh:mm">
+          <mat-hint>formato 24h</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Dinero en premios(Bs)</mat-label>
+          <input matInput [formControl]="gamePricesForm">
+        </mat-form-field>
+
+        <mat-checkbox [formControl]="withOfferForm">
+          Incluir Oferta 2x1
+        </mat-checkbox>
+
+        <mat-label>Opacidad de marca de agua</mat-label>
+        <mat-slider>
+          <input matSliderThumb [formControl]="watermarkOpacity" min="1" max="100">
+        </mat-slider>
+      </div>
+
+      <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
+        <div class="invitation-pattern-info">
+          <h1 [style.color]="HeaderColor">Black Bingo</h1>
+          <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
+        </div>
+
+        <div class="rounds-section" [style.color]="RoundInfoColor">
+          <div class="rounds-section" [style.color]="RoundInfoColor">
+            <h2 style="text-align: center">Rondas y Premios</h2>
           </div>
-          <span>{{ palette.label }}</span>
-        </button>
-      }
+          <mat-divider></mat-divider>
+          <div class="rounds-container">
+            <app-pattern-name-list></app-pattern-name-list>
+          </div>
+        </div>
+
+        <img [src]="currentWatermarkUrl"
+          class="water-mark"
+          [style.opacity]="getOpacityValue()">
+
+        @if (currentFrameUrl) {
+          <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+        }
+
+
+        <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
+        <div class="invitation-pattern-info" >
+          <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
+          @if (withOfferForm.value === true) {
+            <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+          }
+        </div>
+        @if (currentFrameUrl) {
+          <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+        }
+      </div>
+
+      <button mat-stroked-button (click)="exportToImage(); updateTargetStartDate()">Export invitation</button>
+
+      <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
     </div>
-
-  <button mat-stroked-button (click)="exportToImage(); updateTargetStartDate()">Export invitation</button>
-
-  <app-rectanglebutton (click)="startGame()" text="Iniciar Partida"/>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
