@@ -7,6 +7,7 @@ import {MatIcon} from '@angular/material/icon';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import {PatternService} from '../../../core/services/pattern.service';
 
 @Component({
   selector: 'app-round-tab',
@@ -25,6 +26,7 @@ import {MatInput} from '@angular/material/input';
 })
 export class RoundTabComponent implements OnInit {
   roundService = inject(RoundService);
+  patternService = inject(PatternService);
   round = input.required<Round>();
   lastNumber = 0
   animate: boolean = true
@@ -40,6 +42,23 @@ export class RoundTabComponent implements OnInit {
 
   raffleNumber() {
     this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)
+    this.roundService.getPrizesByRoundId(this.round().id!).subscribe({
+      next: (r) => {
+        r.forEach((prize) => {
+          this.patternService.getPatternById(prize.patternId!).subscribe({
+            next: (pattern) => {
+              this.roundService.updatePatternInRound({
+                id: pattern.id,
+                active: false,
+                targetPrice: 0,
+                patternName: pattern.patternName,
+                patternMatrix: pattern.patternMatrix
+              }, this.round().id!).subscribe()
+            }
+          })
+        })
+      }
+    })
     this.round().raffleNumbers.push(this.lastNumber)
     this.roundService.updateRoundData(this.round())
     this.animate = true
