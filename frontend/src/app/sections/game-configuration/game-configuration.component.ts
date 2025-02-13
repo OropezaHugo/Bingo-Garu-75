@@ -41,6 +41,7 @@ export class GameConfigurationComponent {
     hasBonus: new FormControl<boolean>(false),
     automaticRaffle: new FormControl<boolean>(false),
     sharedPrizes: new FormControl<boolean>(false),
+    disableRaffle: new FormControl<boolean>(false),
   })
   createRounds(){
     this.dialog.open(ConfirDialogComponent, {
@@ -55,6 +56,8 @@ export class GameConfigurationComponent {
           && this.roundsFormGroup.value.automaticRaffle !== null
           && this.roundsFormGroup.value.sharedPrizes !== undefined
           && this.roundsFormGroup.value.sharedPrizes !== null
+          && this.roundsFormGroup.value.disableRaffle !== undefined
+          && this.roundsFormGroup.value.disableRaffle !== null
         ) {
           this.roundService.postRounds({
             roundQuantity: this.roundsFormGroup.value.roundNumber,
@@ -66,7 +69,7 @@ export class GameConfigurationComponent {
             id: this.gameService.actualGame()!.id,
             automaticRaffle: this.roundsFormGroup.value.automaticRaffle,
             sharePrizes: this.roundsFormGroup.value.sharedPrizes,
-            randomPatterns: this.gameService.actualGame()!.randomPatterns,
+            randomPatterns: this.roundsFormGroup.value.disableRaffle,
           })
         }
         else {
