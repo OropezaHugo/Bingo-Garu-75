@@ -1,0 +1,5 @@
+<label class="upload-btn">
+  <input #fileInput type="file" hidden accept="image/*" (change)="onFileSelected($event)">
+  <mat-icon>upload</mat-icon>
+  <span>{{ label }}</span>
+</label>

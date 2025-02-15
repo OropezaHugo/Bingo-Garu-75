@@ -1,41 +1,10 @@
-.frame-controls {
+.selector-container {
   display: flex;
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  margin-bottom: 1.5rem;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.frame-selector {
-  min-width: 240px;
-  flex-grow: 1;
-}
-
-/* Estilos para el botón de subida de imagen */
-.upload-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.06);
-  transition: all 0.2s ease;
-  font-size: 14px;
-  font-weight: 500;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-  }
-
-  mat-icon {
-    font-size: 20px;
-  }
 }

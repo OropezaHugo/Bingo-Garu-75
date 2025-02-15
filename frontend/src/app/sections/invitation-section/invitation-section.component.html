@@ -39,8 +39,21 @@
       </div>
 
       <div class="images-for-invitation">
-        <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
-       <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
+        <div class="selector-group">
+          <app-frame-selector (frameUrlChange)="onFrameUrlChange($event)"></app-frame-selector>
+          <app-add-frame
+            label="Subir Marco"
+            (fileSelected)="onFrameFileSelected($event)">
+          </app-add-frame>
+        </div>
+
+        <div class="selector-group">
+          <app-watermark-selector (watermarkUrlChange)="onWatermarkUrlChange($event)"></app-watermark-selector>
+          <app-add-frame
+            label="Subir Marca de Agua"
+            (fileSelected)="onWatermarkFileSelected($event)">
+          </app-add-frame>
+        </div>
       </div>
     </div>
   </mat-sidenav>

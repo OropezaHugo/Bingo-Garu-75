@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SnackbarService } from '../../core/services/snackbar.service';
-import { MatIcon } from '@angular/material/icon';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { AddFrameComponent } from '../add-frame/add-frame.component';
+import { DropdownOption, GenericDropdownComponent } from '../generic-dropdown/generic-dropdown.component';
 
 interface WatermarkOption {
   value: string;
@@ -14,75 +12,50 @@ interface WatermarkOption {
 
 @Component({
   selector: 'app-watermark-selector',
-  imports: [MatIcon, MatFormField, MatLabel, MatSelect, MatOption, ReactiveFormsModule],
+  imports: [GenericDropdownComponent, AddFrameComponent],
   templateUrl: './watermark-selector.component.html',
   styleUrl: './watermark-selector.component.scss'
 })
 export class WatermarkSelectorComponent {
   @Output() watermarkUrlChange = new EventEmitter<string>();
 
-  watermarkOptions: WatermarkOption[] = [
-    { value: 'default', label: 'Logo Por Defecto', imageUrl: 'Logo.png' }
+  watermarkOptions: DropdownOption[] = [
+    { value: 'none',  label: 'Sin Watermark', imageUrl: 'translucent.png'},
+    { value: 'default', label: 'Logo Por Defecto', imageUrl: 'Logo.png' },
+    { value: 'secondary', label: 'Logo 2 el regreso', imageUrl: 'Logo2.png'}
   ];
 
-  customWatermarks: WatermarkOption[] = [];
-  watermarkForm = new FormControl<string>('default');
+  customWatermarks: DropdownOption[] = [];
 
-  constructor(private snackBar: SnackbarService) {
-    this.watermarkForm.valueChanges.subscribe(() => {
-      this.emitWatermarkUrl();
-    });
+  constructor(private snackBar: SnackbarService) {}
+
+  onWatermarkChange(value: string) {
+    const selectedWatermark = this.watermarkOptions.find(w => w.value === value);
+    this.watermarkUrlChange.emit(selectedWatermark?.imageUrl || 'Logo.png');
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
+  onWatermarkUploaded(event: { file: File, dataUrl: string }) {
+    const watermarkLabel = event.file.name.split('.')[0];
+    const newWatermark: DropdownOption = {
+      value: `custom-${Date.now()}`,
+      label: `Marca de agua: ${watermarkLabel}`,
+      imageUrl: event.dataUrl,
+      isCustom: true
+    };
 
-      if (!file.type.startsWith('image/')) {
-        this.snackBar.error('Por favor seleccione un archivo de imagen válido');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string;
-        const watermarkLabel = file.name.split('.')[0];
-
-        const newWatermark: WatermarkOption = {
-          value: `custom-${Date.now()}`,
-          label: `Marca de agua: ${watermarkLabel}`,
-          imageUrl: imageUrl,
-          isCustom: true
-        };
-
-        this.customWatermarks.push(newWatermark);
-        this.watermarkOptions = [
-          ...this.watermarkOptions.filter(w => !w.isCustom),
-          ...this.customWatermarks
-        ];
-
-        this.watermarkForm.setValue(newWatermark.value);
-        this.snackBar.success('Marca de agua cargada exitosamente');
-      };
-      reader.readAsDataURL(file);
-    }
+    this.customWatermarks.push(newWatermark);
+    this.watermarkOptions = [
+      ...this.watermarkOptions.filter(w => !w.isCustom),
+      ...this.customWatermarks
+    ];
+    this.snackBar.success('Marca de agua cargada exitosamente');
   }
 
-  removeCustomWatermark(watermarkValue: string): void {
+  removeCustomWatermark(watermarkValue: string) {
     this.customWatermarks = this.customWatermarks.filter(w => w.value !== watermarkValue);
     this.watermarkOptions = [
       ...this.watermarkOptions.filter(w => !w.isCustom),
       ...this.customWatermarks
     ];
-
-    if (this.watermarkForm.value === watermarkValue) {
-      this.watermarkForm.setValue('default');
-    }
-  }
-
-  private emitWatermarkUrl(): void {
-    const selectedWatermark = this.watermarkOptions.find(w => w.value === this.watermarkForm.value);
-    this.watermarkUrlChange.emit(selectedWatermark?.imageUrl || 'Logo.png');
   }
 }

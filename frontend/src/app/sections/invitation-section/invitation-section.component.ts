@@ -31,6 +31,7 @@ import { FrameSelectorComponent } from '../../shared/frame-selector/frame-select
 import { WatermarkSelectorComponent } from '../../shared/watermark-selector/watermark-selector.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { AddFrameComponent } from "../../shared/add-frame/add-frame.component";
 
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
@@ -65,7 +66,8 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     WatermarkSelectorComponent,
     MatSliderModule,
     MatInputModule,
-    MatSidenavModule
+    MatSidenavModule,
+    AddFrameComponent
 ],
   providers: [
     provideNativeDateAdapter()
@@ -138,8 +140,18 @@ export class InvitationSectionComponent implements OnInit {
     this.currentFrameUrl = url;
   }
 
+  onFrameFileSelected(event: { file: File, dataUrl: string }) {
+    this.currentFrameUrl = event.dataUrl;
+    this.snackBar.success('Frame cargado exitosamente');
+  }
+
   onWatermarkUrlChange(url: string): void {
     this.currentWatermarkUrl = url;
+  }
+
+  onWatermarkFileSelected(event: { file: File, dataUrl: string }) {
+    this.currentWatermarkUrl = event.dataUrl;
+    this.snackBar.success('Marca de agua cargada exitosamente');
   }
 
   parseTimeString(dateTimeString: string): string {
