@@ -8,10 +8,13 @@
     Incluir ronda bonus
   </mat-checkbox>
   <mat-checkbox [formControl]="roundsFormGroup.controls.automaticRaffle">
-    activar tombola automatica
+    Activar tombola automatica
   </mat-checkbox>
   <mat-checkbox [formControl]="roundsFormGroup.controls.sharedPrizes">
-    activar premios compartidos
+    Activar premios compartidos
+  </mat-checkbox>
+  <mat-checkbox [formControl]="roundsFormGroup.controls.disableRaffle">
+    Deshabilitar tómbola
   </mat-checkbox>
   <button mat-raised-button (click)="createRounds()">Confirmar Configuracion</button>
 </div>

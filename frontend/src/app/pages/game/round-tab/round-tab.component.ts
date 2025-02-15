@@ -5,7 +5,7 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {RoundService} from '../../../core/services/round.service';
 import {MatIcon} from '@angular/material/icon';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {PatternService} from '../../../core/services/pattern.service';
 
@@ -19,12 +19,14 @@ import {PatternService} from '../../../core/services/pattern.service';
     MatIcon,
     MatFormField,
     MatInput,
+    MatHint,
     ReactiveFormsModule,
   ],
   templateUrl: './round-tab.component.html',
   styleUrl: './round-tab.component.scss'
 })
 export class RoundTabComponent implements OnInit {
+  numberToSet = new FormControl<number>(1, [Validators.min(1), Validators.max(75)]);
   roundService = inject(RoundService);
   patternService = inject(PatternService);
   round = input.required<Round>();
@@ -40,6 +42,16 @@ export class RoundTabComponent implements OnInit {
     this.lastNumber = this.round().raffleNumbers[this.round().raffleNumbers.length - 1] ?? 0
   }
 
+  setNumber() {
+    if (this.numberToSet !== null && this.numberToSet !== undefined && this.numberToSet.valid) {
+      if (!this.round().raffleNumbers.includes(this.numberToSet.value!)) {
+        this.lastNumber = this.numberToSet.value!
+        this.round().raffleNumbers.push(this.lastNumber)
+        this.roundService.updateRoundData(this.round())
+        this.animate = true
+      }
+    }
+  }
   raffleNumber() {
     this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)
     this.roundService.getPrizesByRoundId(this.round().id!).subscribe({

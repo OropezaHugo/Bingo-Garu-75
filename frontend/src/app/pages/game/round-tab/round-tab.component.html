@@ -1,6 +1,15 @@
 <div class="round-content-div">
   <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
-  @if (roundService.gameService.actualGame()?.automaticRaffle) {
+  @if (roundService.gameService.actualGame()?.randomPatterns) {
+    <mat-form-field appearance="outline">
+      <mat-label>
+        Inserta un Numero
+      </mat-label>
+      <input matInput [formControl]="numberToSet" min="1" max="75" type="number">
+      <mat-hint>1 - 75</mat-hint>
+    </mat-form-field>
+    <button mat-flat-button (click)="setNumber()">Ingresar Número</button>
+  } @else if (roundService.gameService.actualGame()?.automaticRaffle) {
     <div class="raffle-actions">
       <mat-form-field appearance="outline">
         <mat-label>Intervalo(seg)</mat-label>
