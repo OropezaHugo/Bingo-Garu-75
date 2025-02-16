@@ -50,6 +50,7 @@ export class RoundTabComponent implements OnInit {
         this.round().raffleNumbers.push(this.lastNumber)
         this.roundService.updateRoundData(this.round())
         this.animate = true
+        this.numberToSet.setValue(null)
       }
     }
   }
@@ -93,6 +94,8 @@ export class RoundTabComponent implements OnInit {
         return;
       }
       this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)
+      this.saveActivePatterns()
+
       this.round().raffleNumbers.push(this.lastNumber)
       this.roundService.updateRoundData(this.round())
       this.timeLeft = this.intervalTime.value ?? 2

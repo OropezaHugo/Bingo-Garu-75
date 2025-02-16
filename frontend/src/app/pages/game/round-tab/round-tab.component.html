@@ -1,11 +1,16 @@
 <div class="round-content-div">
   <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
+  <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
+    <h2>
+      {{lastNumber}}
+    </h2>
+  </div>
   @if (roundService.gameService.actualGame()?.randomPatterns) {
     <mat-form-field appearance="outline">
       <mat-label>
         Inserta un Numero
       </mat-label>
-      <input matInput [formControl]="numberToSet" min="1" max="75" type="number">
+      <input matInput (keydown.enter)="setNumber()" [formControl]="numberToSet" min="1" max="75" type="number">
       <mat-hint>1 - 75</mat-hint>
     </mat-form-field>
     <button mat-flat-button (click)="setNumber()">Ingresar Número</button>
@@ -19,18 +24,9 @@
       <button [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="pauseRaffle(); pause.disabled = true; start.disabled = false" #pause><mat-icon>pause</mat-icon></button>
       <h3>{{timeLeft}}s</h3>
     </div>
-    <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
-      <h2>
-        {{lastNumber}}
-      </h2>
-    </div>
+
   } @else {
     <button [disabled]="round().raffleNumbers.length > 74" mat-flat-button (click)="raffleNumber()">Gira la tombola</button>
-    <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
-      <h2>
-        {{lastNumber}}
-      </h2>
-    </div>
   }
 </div>
 

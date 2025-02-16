@@ -1,8 +1,11 @@
 
 <button mat-icon-button (click)="reloadRoundPatterns()"><mat-icon>cached</mat-icon></button>
   <div class="in-game-patterns">
-
-    @for (pattern of roundPatterns; track $index) {
-      <app-round-pattern-in-game [pattern]="pattern" [roundId]="round().id!"/>
+    @if (roundPatterns.length < 1) {
+      <h1>Ronda Terminada</h1>
+    } @else {
+      @for (pattern of roundPatterns; track $index) {
+        <app-round-pattern-in-game [pattern]="pattern" [roundId]="round().id!"/>
+      }
     }
   </div>
