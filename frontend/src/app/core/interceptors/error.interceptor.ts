@@ -4,6 +4,7 @@ import {SnackbarService} from '../services/snackbar.service';
 import {inject} from '@angular/core';
 import {Router} from '@angular/router';
 
+
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const snackBar = inject(SnackbarService);

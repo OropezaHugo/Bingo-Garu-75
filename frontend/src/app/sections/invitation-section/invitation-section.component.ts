@@ -32,6 +32,8 @@ import { WatermarkSelectorComponent } from '../../shared/watermark-selector/wate
 import {MatSliderModule} from '@angular/material/slider';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { AddFrameComponent } from "../../shared/add-frame/add-frame.component";
+import { PatterColumnsListComponent } from '../../shared/patter-columns-list/patter-columns-list.component';
+import { PatternMatixListComponent } from "../../shared/pattern-matix-list/pattern-matix-list.component";
 
 
 type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
@@ -67,7 +69,9 @@ type PaletteId = keyof typeof INVITATION_COLOR_PALETTES;
     MatSliderModule,
     MatInputModule,
     MatSidenavModule,
-    AddFrameComponent
+    AddFrameComponent,
+    PatterColumnsListComponent,
+    PatternMatixListComponent
 ],
   providers: [
     provideNativeDateAdapter()
@@ -85,6 +89,7 @@ export class InvitationSectionComponent implements OnInit {
 
   currentFrameUrl: string | null = null;
   currentWatermarkUrl: string = 'Logo.png';
+  displayFormat = new FormControl<'list' | 'columns' | 'matrix'>('list');
 
   formGroup: FormGroup | undefined;
   selectedElement: string | null = null;

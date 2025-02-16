@@ -4,12 +4,7 @@
     <div class="round-invitation-div">
         @if (patternsByRound().has(round.id!)) {
           @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
-
-              <h3>{{ pattern.patternName }} <mat-icon>@if (pattern.patternMatrix.includes(false)) {
-                change_history
-              } @else {
-                check_box_outline_blank
-              }</mat-icon></h3>
+              <h3>{{ pattern.patternName }}</h3>
               <h4>{{ pattern.targetPrice }} Bs</h4>
           }
         } @else {

@@ -96,42 +96,129 @@
         </mat-slider>
       </div>
 
-      <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
-        <div class="invitation-pattern-info">
-          <h1 [style.color]="HeaderColor">Black Bingo</h1>
-          <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
-        </div>
+      <div class="format-toggle">
+        <button mat-button
+          [class.active]="displayFormat.value === 'list'"
+          (click)="displayFormat.setValue('list')">
+          Formato 1
+        </button>
+        <button mat-button
+          [class.active]="displayFormat.value === 'columns'"
+          (click)="displayFormat.setValue('columns')">
+          Formato 2
+        </button>
+        <button mat-button
+          [class.active]="displayFormat.value === 'matrix'"
+          (click)="displayFormat.setValue('matrix')">
+          Formato 3
+      </button>
+      </div>
 
-        <div class="rounds-section" [style.color]="RoundInfoColor">
+      @if (displayFormat.value === 'list') {
+        <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
+          <div class="invitation-pattern-info">
+            <h1 [style.color]="HeaderColor">Black Bingo</h1>
+            <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
+          </div>
+
           <div class="rounds-section" [style.color]="RoundInfoColor">
             <h2 style="text-align: center">Rondas y Premios</h2>
+            <div class="rounds-container">
+                <app-pattern-name-list></app-pattern-name-list>
+            </div>
           </div>
-          <mat-divider></mat-divider>
-          <div class="rounds-container">
-            <app-pattern-name-list></app-pattern-name-list>
+
+          <img [src]="currentWatermarkUrl"
+            class="water-mark"
+            [style.opacity]="getOpacityValue()">
+
+          @if (currentFrameUrl) {
+            <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+          }
+
+
+          <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
+          <div class="invitation-pattern-info" >
+            <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
+            @if (withOfferForm.value === true) {
+              <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+            }
           </div>
-        </div>
-
-        <img [src]="currentWatermarkUrl"
-          class="water-mark"
-          [style.opacity]="getOpacityValue()">
-
-        @if (currentFrameUrl) {
-          <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
-        }
-
-
-        <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
-        <div class="invitation-pattern-info" >
-          <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
-          @if (withOfferForm.value === true) {
-            <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+          @if (currentFrameUrl) {
+            <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
           }
         </div>
-        @if (currentFrameUrl) {
-          <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+      } @if(displayFormat.value === 'columns') {
+        <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
+          <div>
+            <h1 style="text-align: center" [style.color]="HeaderColor">Black Bingo</h1>
+          </div>
+          <div class="invitation-pattern-info">
+            @if (withOfferForm.value === true) {
+              <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+            }
+            <h3 [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h3>
+          </div>
+
+          <div class="rounds-section" [style.color]="RoundInfoColor">
+            <h2 style="text-align: center">Rondas y Premios</h2>
+            <div class="rounds-container">
+              <app-patter-columns-list></app-patter-columns-list>
+            </div>
+          </div>
+
+          <img [src]="currentWatermarkUrl"
+            class="water-mark"
+            [style.opacity]="getOpacityValue()">
+
+          @if (currentFrameUrl) {
+            <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+          }
+
+          <div class="invitation-pattern-info" >
+            <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
+            <h3 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h3>
+          </div>
+          @if (currentFrameUrl) {
+            <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+          }
+        </div>
+        } @if(displayFormat.value === 'matrix') {
+          <div id="content-to-export" class="generate-invitation-div" [style.background-color]="BackgroundColor">
+            <div class="invitation-pattern-info">
+              <h1 [style.color]="HeaderColor">Black Bingo</h1>
+              <h1 [style.color]="HeaderColor">{{ dateForm.value | date }}-{{eventTimeForm.value}}</h1>
+            </div>
+
+            <div class="rounds-section" [style.color]="RoundInfoColor">
+              <h2 style="text-align: center">Rondas y Premios</h2>
+              <div class="rounds-container">
+                  <app-pattern-matix-list></app-pattern-matix-list>
+              </div>
+            </div>
+
+            <img [src]="currentWatermarkUrl"
+              class="water-mark"
+              [style.opacity]="getOpacityValue()">
+
+            @if (currentFrameUrl) {
+              <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+            }
+
+
+            <h1 style="text-align: center" [style.color]="PrizeColor">Llevate hasta {{gamePricesForm.value}} Bs</h1>
+            <div class="invitation-pattern-info" >
+              <h3 [style.color]="RoundInfoColor">{{gameService.gameCards().length}} cartones en venta</h3>
+              @if (withOfferForm.value === true) {
+                <h3 [style.color]="OfferColor">Compra al 2x1</h3>
+              }
+            </div>
+            @if (currentFrameUrl) {
+              <img [src]="currentFrameUrl" class="frame-overlay" alt="frame">
+            }
+          </div>
         }
-      </div>
+
 
       <button mat-stroked-button (click)="exportToImage(); updateTargetStartDate()">Export invitation</button>
 

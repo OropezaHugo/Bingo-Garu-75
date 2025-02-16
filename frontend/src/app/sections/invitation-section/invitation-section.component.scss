@@ -169,7 +169,7 @@ $large-desktop: 1200px;
   align-items: center;
   padding: 1rem;
   gap: 1.5rem;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 
   @include tablet {
@@ -204,7 +204,7 @@ $large-desktop: 1200px;
   padding: 4rem 3rem;
   min-width: 300px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1500px;
   margin: 0 auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   color: #fff;
