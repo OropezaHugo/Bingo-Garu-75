@@ -46,6 +46,7 @@ export class RoundTabComponent implements OnInit {
     if (this.numberToSet !== null && this.numberToSet !== undefined && this.numberToSet.valid) {
       if (!this.round().raffleNumbers.includes(this.numberToSet.value!)) {
         this.lastNumber = this.numberToSet.value!
+        this.saveActivePatterns()
         this.round().raffleNumbers.push(this.lastNumber)
         this.roundService.updateRoundData(this.round())
         this.animate = true
@@ -54,6 +55,13 @@ export class RoundTabComponent implements OnInit {
   }
   raffleNumber() {
     this.lastNumber = this.roundService.raffleNumber(this.round().raffleNumbers)
+    this.saveActivePatterns()
+    this.round().raffleNumbers.push(this.lastNumber)
+    this.roundService.updateRoundData(this.round())
+    this.animate = true
+  }
+
+  saveActivePatterns() {
     this.roundService.getPrizesByRoundId(this.round().id!).subscribe({
       next: (r) => {
         r.forEach((prize) => {
@@ -71,11 +79,7 @@ export class RoundTabComponent implements OnInit {
         })
       }
     })
-    this.round().raffleNumbers.push(this.lastNumber)
-    this.roundService.updateRoundData(this.round())
-    this.animate = true
   }
-
   startRaffle(): void {
     if (this.intervalId || this.round().raffleNumbers.length === 75) {
       return;
