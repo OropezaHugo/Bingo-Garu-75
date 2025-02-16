@@ -1,6 +1,6 @@
 .round-invitation-div {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   place-content: space-between;
   padding: 0 1rem;
 }

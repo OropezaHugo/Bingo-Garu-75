@@ -1,0 +1,41 @@
+
+<div class="rounds-columns-container">
+  @if (rounds()!.length > 0) {
+    @for (round of rounds(); track round.id) {
+      <div class="round-column">
+        <div class="round-header">
+          <h2>{{ round.roundName }}</h2>
+        </div>
+
+        <!-- Lista de patrones -->
+        <div class="patterns-container">
+          @if (patternsByRound().has(round.id!)) {
+            <div class="pattern-list">
+              @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
+                <div class="pattern-item">
+                  <span class="pattern-name">{{ pattern.patternName }}</span>
+                  <span class="pattern-price">{{ pattern.targetPrice }} Bs</span>
+                </div>
+              }
+            </div>
+
+            @if ((patternsByRound().get(round.id!) ?? []).length > 0) {
+              <div class="grid-container">
+                @for (cell of patternsByRound().get(round.id!)![0].patternMatrix; track $index) {
+                  <div class="grid-cell" [class.active]="cell"></div>
+                }
+              </div>
+            }
+          } @else {
+            <div class="pattern-item">Cargando patrones...</div>
+          }
+        </div>
+      </div>
+      @if (!$last) {
+        <mat-divider vertical></mat-divider>
+      }
+    }
+  } @else {
+    <p>No hay rondas disponibles.</p>
+  }
+</div>
