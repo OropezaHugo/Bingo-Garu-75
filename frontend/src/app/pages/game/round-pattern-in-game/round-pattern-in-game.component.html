@@ -4,10 +4,12 @@
 
   </div>
   <h3 class="pattern-name-text">{{pattern().patternName}}</h3>
+  <h3 class="pattern-name-text">{{pattern().targetPrice}}Bs</h3>
 } @else {
   <div >
     <app-pattern-card [editable]="false" [pattern]="pattern().patternMatrix"></app-pattern-card>
     <h3 class="pattern-name-text">{{pattern().patternName}}</h3>
+    <h3 class="pattern-name-text">{{pattern().targetPrice}}Bs</h3>
   </div>
 }
 

@@ -6,6 +6,10 @@ $secondary-color: #fca311;
   100% { background-color: white; }
 }
 
+.pattern-name-text {
+  color: $primary-color;
+  text-align: center;
+}
 .has-winner {
 
   text-align: center;
