@@ -100,7 +100,7 @@ export class RoundService {
 
   isBingoValidAndNotPassedOnAnyPattern(patternInfos: RoundPatternInfo[], cardContent: number[], raffleNumbers: number[]): boolean {
     let result = false
-    patternInfos.forEach(pattern => {
+    patternInfos.filter(p => p.active).forEach(pattern => {
       if (this.isBingoValidAndNotPassed(pattern.patternMatrix, cardContent, raffleNumbers)) {
         result = true
       }

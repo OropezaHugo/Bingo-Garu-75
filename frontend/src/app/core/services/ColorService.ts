@@ -16,7 +16,7 @@ export class ColorService {
 
   colors$ = this.colorsSource.asObservable();
 
-  updateColors(element: string, color: string, newColors: Partial<Record<string, string>>) {
+  updateColors(newColors: Partial<Record<string, string>>) {
     this.colorsSource.next({
       ...this.colorsSource.value,
       ...newColors,

@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ColorService } from '../../core/services/ColorService';
 import { DEFAULT_COLOR_PALETTES } from '../../core/models/ColorPalletes';
+import { SerialService } from '../../core/services/serial.service';
+import { Serial } from '../../core/models/serial';
 
 type PaletteId = keyof typeof DEFAULT_COLOR_PALETTES;
 
@@ -12,11 +14,13 @@ type PaletteId = keyof typeof DEFAULT_COLOR_PALETTES;
   templateUrl: './personalization-page.component.html',
   styleUrl: './personalization-page.component.scss'
 })
-export class PersonalizationPageComponent {
+export class PersonalizationPageComponent implements OnInit, AfterViewInit {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
   isColorPickerOpen = true;
-  formGroup: FormGroup;
+
   selectedElement: string | null = null;
+  serialService = inject(SerialService)
+  serial: Serial | undefined = undefined
   currentPalette: PaletteId = 'default';
 
   StrokeColor = DEFAULT_COLOR_PALETTES.default.StrokeColor;
@@ -29,20 +33,42 @@ export class PersonalizationPageComponent {
   boxes: string[] = Array(25).fill('').map((_, index) => `${index + 1}`);
 
   colorOptions = [
-    { label: 'Border Color', value: 'StrokeColor', currentColor: this.StrokeColor },
-    { label: 'Box Background', value: 'BoxFillColor', currentColor: this.BoxFillColor },
-    { label: 'Card Background', value: 'CardFillColor', currentColor: this.CardFillColor },
-    { label: 'Card Title Color', value: 'CardNameColor', currentColor: this.CardNameColor },
-    { label: 'Box Number Color', value: 'BoxNumberColor', currentColor: this.BoxNumberColor },
-    { label: 'Card Number Color', value: 'CardNumberColor', currentColor: this.CardNumberColor }
+    { label: 'Border Color', value: 'strokeColor', currentColor: this.StrokeColor },
+    { label: 'Box Background', value: 'boxFillColor', currentColor: this.BoxFillColor },
+    { label: 'Card Background', value: 'cardFillColor', currentColor: this.CardFillColor },
+    { label: 'Card Title Color', value: 'cardNameColor', currentColor: this.CardNameColor },
+    { label: 'Box Number Color', value: 'boxNumberColor', currentColor: this.BoxNumberColor },
+    { label: 'Card Number Color', value: 'cardNumberColor', currentColor: this.CardNumberColor }
   ];
 
-  constructor(private fb: FormBuilder, private colorService: ColorService) {
-    this.formGroup = this.fb.group({
-      color: ['#ffffff']
-    });
-  }
 
+  ngOnInit(): void {
+      this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
+        next: v => {
+          this.serial = v
+          this.StrokeColor = v.strokeColor
+          this.BoxFillColor = v.boxFillColor
+          this.BoxNumberColor = v.boxNumberColor
+          this.CardFillColor = v.cardFillColor
+          this.CardNumberColor = v.cardNumberColor
+          this.CardNameColor = v.cardNameColor
+        }
+      })
+  }
+  ngAfterViewInit(): void {
+    this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
+      next: v => {
+        this.serial = v
+        this.StrokeColor = v.strokeColor
+        this.BoxFillColor = v.boxFillColor
+        this.BoxNumberColor = v.boxNumberColor
+        this.CardFillColor = v.cardFillColor
+        this.CardNumberColor = v.cardNumberColor
+        this.CardNameColor = v.cardNameColor
+        this.serialService.serial.set(v)
+      }
+    })
+  }
   selectElement(element: string, currentColor: string): void {
     this.selectedElement = element;
     if (this.colorPicker) {
@@ -71,15 +97,33 @@ export class PersonalizationPageComponent {
       this.colorOptions.forEach(option => {
         option.currentColor = palette[option.value as keyof typeof palette];
       });
-
-      this.colorService.updateColors('palette', '', {
-        StrokeColor: palette.StrokeColor,
-        BoxFillColor: palette.BoxFillColor,
-        CardFillColor: palette.CardFillColor,
-        CardNameColor: palette.CardNameColor,
-        BoxNumberColor: palette.BoxNumberColor,
-        CardNumberColor: palette.CardNumberColor
-      });
+      this.serialService.updateSerial({
+        serialName: this.serial?.serialName!,
+        boxFillColor: this.BoxFillColor,
+        boxNumberColor: this.BoxNumberColor,
+        cardFillColor: this.CardFillColor,
+        cardNameColor: this.CardNameColor,
+        cardNumberColor: this.CardNumberColor,
+        cardQuantity: this.serial?.cardQuantity!,
+        creationDate: this.serial?.creationDate!,
+        id: this.serial?.id!,
+        strokeColor: this.StrokeColor
+      }).subscribe({
+        next: ser => {
+          this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
+            next: v => {
+              this.serial = v
+              this.StrokeColor = v.strokeColor
+              this.BoxFillColor = v.boxFillColor
+              this.BoxNumberColor = v.boxNumberColor
+              this.CardFillColor = v.cardFillColor
+              this.CardNumberColor = v.cardNumberColor
+              this.CardNameColor = v.cardNameColor
+              this.serialService.serial.set(v)
+            }
+          })
+        }
+      })
     }
   }
 
@@ -93,7 +137,35 @@ export class PersonalizationPageComponent {
         option.currentColor = event.color;
       }
 
-      this.colorService.updateColors(event.element, event.color, { [event.element]: event.color });
+      this.serialService.updateSerial({
+
+        serialName: this.serial?.serialName!,
+        boxFillColor: this.BoxFillColor,
+        boxNumberColor: this.BoxNumberColor,
+        cardFillColor: this.CardFillColor,
+        cardNameColor: this.CardNameColor,
+        cardNumberColor: this.CardNumberColor,
+        cardQuantity: this.serial?.cardQuantity!,
+        creationDate: this.serial?.creationDate!,
+        id: this.serial?.id!,
+        strokeColor: this.StrokeColor,
+        [event.element]: event.color
+      }).subscribe({
+        next: ser => {
+          this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
+            next: v => {
+              this.serial = v
+              this.StrokeColor = v.strokeColor
+              this.BoxFillColor = v.boxFillColor
+              this.BoxNumberColor = v.boxNumberColor
+              this.CardFillColor = v.cardFillColor
+              this.CardNumberColor = v.cardNumberColor
+              this.CardNameColor = v.cardNameColor
+              this.serialService.serial.set(v)
+            }
+          })
+        }
+      })
     }
   }
 

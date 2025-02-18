@@ -7,6 +7,7 @@ import {GameCardInfo} from '../models/card';
 import {PrizeData} from '../models/round';
 import {SnackbarService} from './snackbar.service';
 import {environment} from '../../../environments/environment';
+import { SerialService } from './serial.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class GameService {
   gameCards = signal<GameCardInfo[]>([])
   gamePrizes = signal<PrizeData[]>([])
   snackBar = inject(SnackbarService)
+  serialService = inject(SerialService)
 
   getGameById(id: number) {
     return this.http.get<Game>(`${this.baseUrl}Game/${id}`).pipe(
@@ -100,6 +102,11 @@ export class GameService {
               this.getGameById(this.actualGame()!.id).subscribe({
                 next: () => {
                   this.getCardsByGameId()
+                  this.serialService.getSerialById(serial.id).subscribe({
+                    next: ser => {
+                      this.serialService.serial.set(ser)
+                    }
+                  })
                 }
               })
               this.snackBar.success("serial adjunto correctamente")
@@ -117,6 +124,11 @@ export class GameService {
         return this.http.get<GameCardInfo[]>(`${this.baseUrl}Card/game/${this.actualGame()?.id}`).subscribe({
           next: value => {
             this.gameCards.set(value)
+            this.serialService.getSerialById(value[0].serialId).subscribe({
+              next: ser => {
+                this.serialService.serial.set(ser)
+              }
+            })
           }
         })
       }

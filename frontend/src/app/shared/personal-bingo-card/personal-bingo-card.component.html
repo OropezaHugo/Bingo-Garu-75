@@ -14,13 +14,13 @@
     <h2 class="card-title" [style.color]="CardNameColor">O</h2>
     @for (box of card().content; track $index) {
       @if ($index == 12) {
-        <img src="LogoCard.png" alt="Logo Black Bingo">
+        <img src="LogoCard.png" alt="Logo Black Bingo" [style.background-color]="BoxFillColor">
       } @else if (box.marked) {
-        <button class="marked-box" [style.color]="BoxFillColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor" (click)="clickBox($event, $index)">
+        <button class="marked-box" [style.color]="BoxFillColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor">
           {{box.number}}
         </button>
       } @else {
-        <button class="unmarked-box" [style.color]="BoxNumberColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor" (click)="clickBox($event, $index)">
+        <button class="unmarked-box" [style.color]="BoxNumberColor" [style.background-color]="BoxFillColor" [style.border-color]="StrokeColor">
           {{box.number}}
         </button>
       }

@@ -18,7 +18,9 @@ export class SerialService {
   getSerials() {
     return this.http.get<Serial[]>(`${this.baseUrl}Serial`)
   }
-
+  getSerialById(serialId: number) {
+    return this.http.get<Serial>(`${this.baseUrl}Serial/${serialId}`)
+  }
 
   createSerial(serial: NewSerialData) {
     return this.http.post<boolean>(`${this.baseUrl}Serial/cards`, serial)
