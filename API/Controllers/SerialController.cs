@@ -76,12 +76,14 @@ public class SerialController
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<bool>> UpdateSerial(int id, PutSerialDTO serialDto)
+    public async Task<ActionResult<Serial>> UpdateSerial(int id, PutSerialDTO serialDto)
     {
         var serial = await repository.GetByIdAsync(id);
         if (serial == null) return NotFound();
         repository.UpdateAsync(mapper.Map<Serial>((serialDto, id)));
-        return await repository.SaveChangesAsync();
+        await repository.SaveChangesAsync();
+        serial = await repository.GetByIdAsync(id);
+        return Ok(serial);
     }
 
     [HttpPost("game")]
