@@ -126,6 +126,7 @@ export class GamePageComponent implements OnInit {
         }
       }
     })
+    this.roundService.refreshPatterns(this.activeRound()!.id!)
   }
   finishGame(){
     let dialogRef = this.dialog.open(ConfirDialogComponent, {
