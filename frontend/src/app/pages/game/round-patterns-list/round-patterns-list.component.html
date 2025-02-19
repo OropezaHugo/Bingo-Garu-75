@@ -11,7 +11,7 @@
       <div class="pattern-data-div">
         <app-pattern-card [editable]="false" [pattern]="pattern.patternMatrix"></app-pattern-card>
         <h3 class="pattern-name-text">{{pattern.patternName}}</h3>
-        <button mat-flat-button (click)="removeFromRound(pattern)" >Quitar de la partida</button>
+        <button mat-flat-button (click)="removeFromRound(pattern)" >Quitar de la {{round().roundName}}</button>
       </div>
     }
   </div>

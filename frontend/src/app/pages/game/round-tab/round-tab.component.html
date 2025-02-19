@@ -1,5 +1,8 @@
 <div class="round-content-div">
-  <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
+  <div class="bingo-numbers">
+    <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
+  </div>
+
   <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
     <h2>
       {{lastNumber}}
