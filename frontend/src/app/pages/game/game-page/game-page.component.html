@@ -1,7 +1,9 @@
 
     <mat-tab-group (selectedTabChange)="loadRound($event)" [(selectedIndex)]="actualTab" fitInkBarToContent>
       @for (round of roundService.actualRounds(); track $index) {
-        <mat-tab  [label]="round.roundName" [disabled]="disableRounds[$index]">
+        <mat-tab  [label]="round.roundName" [disabled]="!round.active">
+          @if (round.active) {
+
           <div class="game-div">
             <div class="round-tab-content">
               <app-round-tab [round]="round"></app-round-tab>
@@ -24,12 +26,22 @@
                 </div>
               </div>
               <div class="game-actions-div">
-                <button (click)="endRound($index)" mat-stroked-button>Finalizar ronda</button>
+                <button (click)="endRound(round, $index)" mat-stroked-button>Finalizar ronda</button>
                 <button (click)="finishGame()" mat-flat-button>Terminar partida</button>
                 <button (click)="openBottomPrizes(round)" mat-stroked-button>ver premios</button>
               </div>
             </div>
           </div>
+          } @else {
+            <div class="inactive-round-button">
+              <div>
+                <h1>{{round.roundName}} finalizada</h1>
+                <button (click)="nextRound($index)" mat-raised-button>Siguiente ronda</button>
+                <button (click)="finishGame()" mat-flat-button>Terminar partida</button>
+                <button (click)="openBottomPrizes(round)" mat-stroked-button>ver premios</button>
+              </div>
+            </div>
+          }
         </mat-tab>
       }
     </mat-tab-group>

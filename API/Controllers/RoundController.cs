@@ -46,7 +46,8 @@ public class RoundController
             repository.AddAsync(new Round()
             {
                 GameId = gameId,
-                RoundName = "Round " + i,
+                RoundName = "Ronda " + i,
+                Active = true
             });
             i += 1;
         }
@@ -56,7 +57,8 @@ public class RoundController
             repository.AddAsync(new Round()
             {
                 GameId = gameId,
-                RoundName = "Bonus Round",
+                RoundName = "Ronda Bonus",
+                Active = true,
             });
         }
         return Ok(await repository.SaveChangesAsync());
