@@ -33,6 +33,12 @@ export class PersonalBingoCardComponent implements OnInit {
       this.BoxNumberColor = colors.BoxNumberColor;
       this.CardNumberColor = colors.CardNumberColor;
     });
+        this.StrokeColor = this.serialService.serial()!.strokeColor;
+      this.BoxFillColor = this.serialService.serial()!.boxFillColor;
+      this.CardFillColor = this.serialService.serial()!.cardFillColor;
+      this.CardNameColor = this.serialService.serial()!.cardNameColor;
+      this.BoxNumberColor = this.serialService.serial()!.boxNumberColor;
+      this.CardNumberColor = this.serialService.serial()!.cardNumberColor;
   }
   ngOnDestroy(): void {
     if (this.colorSubscription) {
@@ -40,11 +46,5 @@ export class PersonalBingoCardComponent implements OnInit {
     }
   }
   constructor(private serialService: SerialService) {}
-  clickBox(event: MouseEvent, boxIndex: number) {
-    const currentCard = this.card();
-    if (currentCard && currentCard.content) {
-      currentCard.content[boxIndex].marked = !currentCard.content[boxIndex].marked;
-    }
-  }
 
 }

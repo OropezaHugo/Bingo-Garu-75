@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Round } from '../../core/models/round';
 import { RoundPatternInfo } from '../../core/models/add-pattern-dialog-data';
 import { RoundService } from '../../core/services/round.service';
+import { InvitationColorService } from '../../core/services/InvitationColorService';
 
 @Component({
   selector: 'app-patter-columns-list',
@@ -17,14 +18,18 @@ import { RoundService } from '../../core/services/round.service';
 export class PatterColumnsListComponent implements OnInit {
   rounds = signal<Round[]>([]);
   patternsByRound = signal<Map<number, RoundPatternInfo[]>>(new Map());
+  offerColor = signal<string>('#e91e63')
 
-  constructor(private roundService: RoundService) {
+  constructor(private roundService: RoundService, private invitationColorService: InvitationColorService) {
     effect(() => {
       const currentRounds = this.roundService.actualRounds();
       if (currentRounds.length > 0) {
         this.rounds.set(currentRounds);
         this.loadPatterns(currentRounds);
       }
+    });
+    this.invitationColorService.colors$.subscribe(colors => {
+      this.offerColor.set(colors.OfferColor);
     });
   }
 

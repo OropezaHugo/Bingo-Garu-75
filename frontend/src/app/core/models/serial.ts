@@ -6,7 +6,7 @@ export interface Serial {
   strokeColor: string;
   boxFillColor: string;
   cardFillColor: string;
-  CardNameColor: string;
+  cardNameColor: string;
   boxNumberColor: string;
   cardNumberColor: string;
 }
