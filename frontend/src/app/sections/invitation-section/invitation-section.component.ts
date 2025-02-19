@@ -179,7 +179,7 @@ export class InvitationSectionComponent implements OnInit {
   exportToImage() {
     const element = document.getElementById('content-to-export') as HTMLElement;
 
-    html2canvas(element).then((canvas) => {
+    html2canvas(element, { scale: 2}).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.download = `invitation-game-${this.gameService.actualGame()?.id}.png`;
@@ -187,6 +187,7 @@ export class InvitationSectionComponent implements OnInit {
       link.click();
     });
   }
+
   startGame() {
     this.gameService.everyRoundHasAPattern().subscribe({
       next: result => {
