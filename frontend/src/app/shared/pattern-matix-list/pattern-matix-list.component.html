@@ -16,7 +16,11 @@
               </div>
               <div class="grid-container">
                 @for (cell of pattern.patternMatrix; track $index) {
-                  <div class="grid-cell" [class.active]="cell"></div>
+                  <div
+                    class="grid-cell"
+                    [class.active]="cell"
+                    [style.background-color]="cell ? offerColor() : ''"
+                  ></div>
                 }
               </div>
             }
