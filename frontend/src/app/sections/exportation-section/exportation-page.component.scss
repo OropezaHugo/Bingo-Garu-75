@@ -1,7 +1,7 @@
 .cards-per-page-control {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 1.5rem;
   padding: 1rem;
   background-color: #f8f9fa;
@@ -64,7 +64,7 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 300px);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 20px;
   background: white;
@@ -73,8 +73,7 @@
 
 
 app-personal-bingo-card {
-  width: 100%;
-  max-width: 300px; // Limitamos el tamaño máximo de cada carta
+  width: 80%;
   aspect-ratio: 1;
   page-break-inside: avoid;
   break-inside: avoid;

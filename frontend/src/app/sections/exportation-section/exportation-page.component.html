@@ -26,10 +26,9 @@
 <div class="pagination">
   @for (page of paginatedCards; track $index) {
     <button mat-stroked-button (click)="exportToPDF($index)">
-      Export Page {{ $index + 1 }}
+      Export Page {{ $index + 1 }} ({{ getCardRange($index)[0] }} - {{ getCardRange($index)[1] }})
       <mat-icon matSuffix>system_update_alt</mat-icon>
     </button>
-
   }
 </div>
 

@@ -137,5 +137,18 @@ export class ExportationPageComponent implements OnInit {
       this.updateDisplayedCards();
     }
   }
+
+  getCardRange(pageIndex: number): [number, number] {
+    if (!this.cardsPerPage.value) return [0, 0];
+    const totalCards = this.cardsArray.length;
+    const cardsPerPage = this.cardsPerPage.value;
+    const startCard = totalCards - (pageIndex * cardsPerPage);
+    const endCard = Math.max(
+      startCard - cardsPerPage + 1,
+      1
+    );
+
+    return [startCard, endCard];
+  }
 }
 
