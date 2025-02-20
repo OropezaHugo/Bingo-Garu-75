@@ -3,6 +3,10 @@ $secondary-color: #fca311;
 $accent-light: #9d4edd;
 .pattern-name-text {
   color: $secondary-color;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 .pattern-section-title {
   color: $primary-color;
