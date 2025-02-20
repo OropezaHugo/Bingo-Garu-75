@@ -1,3 +1,4 @@
+/* bingo-personalization.component.scss */
 .personalization-container {
   display: grid;
   grid-template-areas:
@@ -19,199 +20,141 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
   }
+}
 
-  .preview-section {
-    grid-area: preview-section;
+/* Estilos para la sección de previsualización */
+.preview-section {
+  grid-area: preview-section;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+
+  .card-preview {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+  }
 
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-    }
+  .form-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
 
-    .card-preview {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+/* Estilos para los botones de color */
+.color-buttons {
+  grid-area: color-buttons;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 
-    .form-section {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-
-      .export-section {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
-      }
-
-      .json-input-container {
-        background-color: #f7fafc;
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid #e2e8f0;
-
-        .json-textarea {
-          width: 100%;
-          padding: 0.75rem;
-          border: 1px solid #cbd5e0;
-          border-radius: 4px;
-          font-family: monospace;
-          resize: vertical;
-          margin-bottom: 1rem;
-
-          &:focus {
-            outline: none;
-            border-color: #5a67d8;
-            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
-          }
-        }
-
-        .json-input-actions {
-          display: flex;
-          gap: 0.75rem;
-
-          button {
-            flex: 1;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: all 0.2s ease-in-out;
-
-            &.apply-button {
-              background-color: #5a67d8;
-              color: white;
-              border: none;
-
-              &:hover {
-                background-color: #434190;
-              }
-            }
-
-            &.cancel-button {
-              background-color: #e2e8f0;
-              color: #4a5568;
-              border: 1px solid #cbd5e0;
-
-              &:hover {
-                background-color: #cbd5e0;
-              }
-            }
-          }
-        }
-      }
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 14px;
     }
   }
 
-  .color-buttons {
-    grid-area: color-buttons;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+  button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background-color: #5a67d8;
+    color: #ffffff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
 
-    @media screen and (max-width: 768px) {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      button {
-        padding: 0.5rem 1rem;
-        font-size: 14px;
-      }
+    &:hover {
+      background-color: #434190;
+      transform: scale(1.05);
     }
 
-    button {
-      padding: 0.75rem 1.5rem;
-      border: none;
-      background-color: #5a67d8;
-      color: #ffffff;
-      border-radius: 6px;
+    &.selected {
+      background-color: #2b6cb0;
+      box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.6);
+    }
+  }
+}
+
+/* Estilos para la sección de paletas */
+.palette-selection {
+  grid-area: palette-selection;
+  text-align: center;
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 1rem;
+    color: #2d3748;
+    font-weight: 600;
+  }
+
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+
+    .palette-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       cursor: pointer;
-      font-size: 16px;
-      font-weight: 500;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
 
       &:hover {
-        background-color: #434190;
+        border-color: #5a67d8;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transform: scale(1.05);
       }
 
-      &.selected {
-        background-color: #2b6cb0;
-        box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.6);
+      &.active {
+        border-color: #5a67d8;
+        box-shadow: 0 4px 8px rgba(90, 103, 216, 0.3);
       }
-    }
-  }
 
-  .palette-selection {
-    grid-area: palette-selection;
-    text-align: center;
-
-    h3 {
-      font-size: 20px;
-      margin-bottom: 1rem;
-      color: #2d3748;
-      font-weight: 600;
-    }
-
-    .palette-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-
-      .palette-button {
+      .palette-preview {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        background-color: #ffffff;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+        gap: 4px;
+        margin-bottom: 8px;
 
-        &:hover {
-          border-color: #5a67d8;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          transform: scale(1.05);
+        .color-sample {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
         }
+      }
 
-        &.active {
-          border-color: #5a67d8;
-          box-shadow: 0 4px 8px rgba(90, 103, 216, 0.3);
-        }
-
-        .palette-preview {
-          display: flex;
-          gap: 4px;
-          margin-bottom: 8px;
-
-          .color-sample {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-          }
-        }
-
-        span {
-          font-size: 14px;
-          font-weight: 500;
-          color: #4a5568;
-        }
+      span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #4a5568;
       }
     }
   }
 }
 
+/* Estilos para la carta de bingo */
 .bingo-card {
   max-width: 320px;
   padding: 20px;
@@ -283,6 +226,128 @@
   }
 }
 
+/* Estilos para la sección de exportación/importación */
+.export-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  h4 {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2d3748;
+  }
+
+  .json-display {
+    width: 100%;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #333;
+    resize: none;
+    margin-bottom: 8px;
+
+    &:focus {
+      outline: none;
+      border-color: #5a67d8;
+      box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+    }
+  }
+
+  .export-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .import-button {
+      display: flex;
+      align-items: center;
+      background-color: #5a67d8;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+
+      &:hover {
+        background-color: #434190;
+        transform: scale(1.05);
+      }
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+}
+
+/* Estilos para el contenedor de entrada JSON */
+.json-input-container {
+  background-color: #f7fafc;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+
+  .json-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    font-family: monospace;
+    resize: vertical;
+    margin-bottom: 1rem;
+
+    &:focus {
+      outline: none;
+      border-color: #5a67d8;
+      box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
+    }
+  }
+
+  .json-input-actions {
+    display: flex;
+    gap: 0.75rem;
+
+    button {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+
+      &.apply-button {
+        background-color: #5a67d8;
+        color: white;
+        border: none;
+
+        &:hover {
+          background-color: #434190;
+        }
+      }
+
+      &.cancel-button {
+        background-color: #e2e8f0;
+        color: #4a5568;
+        border: 1px solid #cbd5e0;
+
+        &:hover {
+          background-color: #cbd5e0;
+        }
+      }
+    }
+  }
+}
+
+/* Estilos para botón de exportación */
 .export-button {
   width: 40px;
   height: 40px;
@@ -294,5 +359,5 @@
 }
 
 .export-button mat-icon {
-  font-size: 24px
+  font-size: 24px;
 }
