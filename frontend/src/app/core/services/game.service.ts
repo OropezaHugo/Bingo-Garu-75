@@ -40,7 +40,6 @@ export class GameService {
         this.http.get<PrizeData[]>(`${this.baseUrl}Prize/game/${this.actualGame()?.id}`).subscribe({
           next: (result) => {
             if (result) {
-              console.log(result);
               this.gamePrizes.set(result);
             }
           }

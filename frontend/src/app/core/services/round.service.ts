@@ -13,6 +13,7 @@ export class RoundService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient)
   actualRounds = signal<Round[]>([])
+  actualRoundPatterns = signal<RoundPatternInfo[]>([])
   gameService = inject(GameService);
 
   raffleNumber(raffled: number[]) {
@@ -25,7 +26,13 @@ export class RoundService {
   getPatternsByRoundId(roundId: number) {
     return this.http.get<Pattern[]>(`${this.baseUrl}Pattern/round/${roundId}`)
   }
-
+  refreshPatterns(roundId: number) {
+    this.getPatternsInfoByRoundId(roundId).subscribe({
+      next: result => {
+        this.actualRoundPatterns.set(result.filter(pattern => pattern.active));
+      }
+    })
+  }
   getPatternsInfoByRoundId(roundId: number) {
     return this.http.get<RoundPatternInfo[]>(`${this.baseUrl}Pattern/round/${roundId}/info`)
   }
@@ -67,6 +74,11 @@ export class RoundService {
         return this.http.get<Round[]>(`${this.baseUrl}Round/game/${this.gameService.actualGame()?.id}`).subscribe({
           next: result => {
             this.actualRounds.set(result)
+            let roundId = result.find(r => r.active)?.id
+            if (roundId !== undefined) {
+              this.refreshPatterns(roundId);
+            }
+
           }
         })
       }
@@ -98,9 +110,9 @@ export class RoundService {
     return (!(asserts > 0) && withLastNumber);
   }
 
-  isBingoValidAndNotPassedOnAnyPattern(patternInfos: RoundPatternInfo[], cardContent: number[], raffleNumbers: number[]): boolean {
+  isBingoValidAndNotPassedOnAnyPattern(cardContent: number[], raffleNumbers: number[]): boolean {
     let result = false
-    patternInfos.filter(p => p.active).forEach(pattern => {
+    this.actualRoundPatterns().forEach(pattern => {
       if (this.isBingoValidAndNotPassed(pattern.patternMatrix, cardContent, raffleNumbers)) {
         result = true
       }

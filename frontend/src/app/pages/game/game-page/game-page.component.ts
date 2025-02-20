@@ -40,8 +40,7 @@ import {RoundPrizesBoardComponent} from '../round-prizes-board/round-prizes-boar
 })
 export class GamePageComponent implements OnInit {
 
-  rounds: Round[] = []
-  disableRounds: boolean[] = []
+
   dialog = inject(MatDialog);
   gameService = inject(GameService)
   roundService = inject(RoundService)
@@ -62,23 +61,25 @@ export class GamePageComponent implements OnInit {
         this.gameService.getCardsByGameId()
       }
     })
-    this.rounds = this.roundService.actualRounds();
-    this.activeRound.set(this.roundService.actualRounds()[0])
-    this.rounds.forEach(() => {this.disableRounds.push(false);});
+
+  }
+  nextRound(index: number) {
+    this.actualTab = index + 1;
   }
   getPaginatedList() {
     return this.gameService.gameCards()
         .filter(card =>
             card.cardNumber.toString().includes(this.cardForm.value?.toString() ?? ''))
   }
-  endRound(index: number) {
+  endRound(round: Round, index: number) {
     let dialogRef = this.dialog.open(ConfirDialogComponent, {
         data: false
     })
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
-        this.disableRounds[index] = true;
         this.actualTab = index + 1;
+        round.active = false
+        this.roundService.updateRoundData(round);
       }
     })
   }
@@ -86,7 +87,6 @@ export class GamePageComponent implements OnInit {
 
   verifyCardDialog(card: GameCardInfo) {
     this.roundService.getRounds()
-    this.rounds = this.roundService.actualRounds();
     this.activeRound.set(this.roundService.actualRounds().find(round => round.id == this.activeRound()?.id))
     this.roundService.getPatternsInfoByRoundId(this.activeRound()!.id!).subscribe( {
       next: result => {
@@ -118,8 +118,7 @@ export class GamePageComponent implements OnInit {
     })
   }
   loadRound(event: MatTabChangeEvent) {
-    this.rounds = this.roundService.actualRounds();
-    this.activeRound.set(this.rounds[event.index]);
+    this.activeRound.set(this.roundService.actualRounds()[event.index]);
     this.roundService.getPatternsInfoByRoundId(this.activeRound()!.id!).subscribe( {
       next: result => {
         if (result) {
@@ -127,6 +126,7 @@ export class GamePageComponent implements OnInit {
         }
       }
     })
+    this.roundService.refreshPatterns(this.activeRound()!.id!)
   }
   finishGame(){
     let dialogRef = this.dialog.open(ConfirDialogComponent, {

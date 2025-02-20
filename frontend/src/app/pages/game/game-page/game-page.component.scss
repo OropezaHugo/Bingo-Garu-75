@@ -45,6 +45,13 @@ h4 {
   overflow-x: scroll;
 
 }
+.inactive-round-button {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  place-content: center;
+  padding: 1rem;
+}
 
 .in-game-card-cell {
   background-color: $primary-color;
