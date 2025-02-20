@@ -1,4 +1,57 @@
 <div class="personalization-container">
+  <div class="preview-section">
+    <div class="card-preview">
+      <div class="bingo-card"
+            [style.background-color]="CardFillColor"
+            [style.color]="CardNumberColor">
+        <div class="card-header" [style.color]="CardNameColor">
+          BlackBingo
+        </div>
+        <div class="card-number" [style.color]="CardNumberColor">
+          Nº1
+        </div>
+        <div class="card-grid" [style.border-color]="StrokeColor">
+          @for (box of boxes; track box) {
+            <div class="box"
+                  [style.background-color]="BoxFillColor"
+                  [style.color]="BoxNumberColor">
+              {{ box }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="export-section">
+        <button mat-icon-button (click)="exportColorsToClipboard()" class="export-button">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toggleJsonInput()" class="export-button">
+          <mat-icon matSuffix>content_paste_go</mat-icon>
+        </button>
+      </div>
+      @if(showJsonInput) {
+        <div class="json-input-container">
+          <textarea
+            [style.color]="colorConfigText"
+            class="json-textarea"
+            placeholder="Pega el JSON de configuración de colores"
+            rows="8"
+          ></textarea>
+          <div class="json-input-actions">
+            <button (click)="applyJsonColors()" class="apply-button">
+              Aplicar colores
+            </button>
+            <button (click)="toggleJsonInput()" class="cancel-button">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
   <div class="color-buttons">
     @if (isColorPickerOpen) {
       <app-color-picker #colorPicker
@@ -24,43 +77,23 @@
       Numero de la Carta
     </button>
   </div>
-<div class="preview-section">
-  <div class="bingo-card"
-        [style.background-color]="CardFillColor"
-        [style.color]="CardNumberColor">
-    <div class="card-header" [style.color]="CardNameColor">
-      BlackBingo
-    </div>
-    <div class="card-number" [style.color]="CardNumberColor">
-      Nº1
-    </div>
-    <div class="card-grid" [style.border-color]="StrokeColor">
-      @for (box of boxes; track box) {
-        <div class="box"
-              [style.background-color]="BoxFillColor"
-              [style.color]="BoxNumberColor">
-          {{ box }}
-        </div>
+
+  <div class="palette-selection">
+    <h3>Diseños Predefinidos</h3>
+    <div class="palette-grid">
+      @for (palette of colorPalettes; track palette.id) {
+        <button
+          class="palette-button"
+          [class.active]="currentPalette === palette.id"
+          (click)="applyPalette(palette.id)">
+          <div class="palette-preview">
+            <div class="color-sample" [style.background-color]="palette.StrokeColor"></div>
+            <div class="color-sample" [style.background-color]="palette.CardFillColor"></div>
+            <div class="color-sample" [style.background-color]="palette.BoxFillColor"></div>
+          </div>
+          <span>{{ palette.label }}</span>
+        </button>
       }
     </div>
-  </div>
-</div>
-
-<div class="palette-selection">
-  <h3>Diseños Predefinidos</h3>
-  <div class="palette-grid">
-    @for (palette of colorPalettes; track palette.id) {
-      <button
-        class="palette-button"
-        [class.active]="currentPalette === palette.id"
-        (click)="applyPalette(palette.id)">
-        <div class="palette-preview">
-          <div class="color-sample" [style.background-color]="palette.StrokeColor"></div>
-          <div class="color-sample" [style.background-color]="palette.CardFillColor"></div>
-          <div class="color-sample" [style.background-color]="palette.BoxFillColor"></div>
-        </div>
-        <span>{{ palette.label }}</span>
-      </button>
-    }
   </div>
 </div>

@@ -5,23 +5,29 @@ import { ColorService } from '../../core/services/ColorService';
 import { DEFAULT_COLOR_PALETTES } from '../../core/models/ColorPalletes';
 import { SerialService } from '../../core/services/serial.service';
 import { Serial } from '../../core/models/serial';
+import { SnackbarService } from '../../core/services/snackbar.service';
+import {MatIcon} from '@angular/material/icon';
+
 
 type PaletteId = keyof typeof DEFAULT_COLOR_PALETTES;
 
 @Component({
   selector: 'app-personalization-section',
-  imports: [ColorPickerComponent],
+  imports: [ColorPickerComponent, MatIcon],
   templateUrl: './personalization-page.component.html',
   styleUrl: './personalization-page.component.scss'
 })
 export class PersonalizationPageComponent implements OnInit, AfterViewInit {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
   isColorPickerOpen = true;
+  showJsonInput = false;
+  colorConfigText = '#333333'; // Color default para el texto del área JSON
 
   selectedElement: string | null = null;
   serialService = inject(SerialService)
   serial: Serial | undefined = undefined
   currentPalette: PaletteId = 'default';
+  snackbar = inject(SnackbarService)
 
   StrokeColor = DEFAULT_COLOR_PALETTES.default.StrokeColor;
   BoxFillColor = DEFAULT_COLOR_PALETTES.default.BoxFillColor;
@@ -41,6 +47,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
     { label: 'Card Number Color', value: 'cardNumberColor', currentColor: this.CardNumberColor }
   ];
 
+  copiedToClipboard = false;
 
   ngOnInit(): void {
       this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
@@ -55,6 +62,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
         }
       })
   }
+
   ngAfterViewInit(): void {
     this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
       next: v => {
@@ -69,6 +77,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
       }
     })
   }
+
   selectElement(element: string, currentColor: string): void {
     this.selectedElement = element;
     if (this.colorPicker) {
@@ -97,36 +106,9 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
       this.colorOptions.forEach(option => {
         option.currentColor = palette[option.value as keyof typeof palette];
       });
-      this.serialService.updateSerial({
-        serialName: this.serial?.serialName!,
-        boxFillColor: this.BoxFillColor,
-        boxNumberColor: this.BoxNumberColor,
-        cardFillColor: this.CardFillColor,
-        cardNameColor: this.CardNameColor,
-        cardNumberColor: this.CardNumberColor,
-        cardQuantity: this.serial?.cardQuantity!,
-        creationDate: this.serial?.creationDate!,
-        id: this.serial?.id!,
-        strokeColor: this.StrokeColor
-      }).subscribe({
-        next: ser => {
-          this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
-            next: v => {
-              this.serial = v
-              this.StrokeColor = v.strokeColor
-              this.BoxFillColor = v.boxFillColor
-              this.BoxNumberColor = v.boxNumberColor
-              this.CardFillColor = v.cardFillColor
-              this.CardNumberColor = v.cardNumberColor
-              this.CardNameColor = v.cardNameColor
-              this.serialService.serial.set(v)
-            }
-          })
-        }
-      })
+      this.updateSerialColors();
     }
   }
-
 
   onColorChange(event: { color: string; element: string | null }): void {
     if (event.element && event.color) {
@@ -137,40 +119,154 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
         option.currentColor = event.color;
       }
 
-      this.serialService.updateSerial({
-
-        serialName: this.serial?.serialName!,
-        boxFillColor: this.BoxFillColor,
-        boxNumberColor: this.BoxNumberColor,
-        cardFillColor: this.CardFillColor,
-        cardNameColor: this.CardNameColor,
-        cardNumberColor: this.CardNumberColor,
-        cardQuantity: this.serial?.cardQuantity!,
-        creationDate: this.serial?.creationDate!,
-        id: this.serial?.id!,
-        strokeColor: this.StrokeColor,
-        [event.element]: event.color
-      }).subscribe({
-        next: ser => {
-          this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
-            next: v => {
-              this.serial = v
-              this.StrokeColor = v.strokeColor
-              this.BoxFillColor = v.boxFillColor
-              this.BoxNumberColor = v.boxNumberColor
-              this.CardFillColor = v.cardFillColor
-              this.CardNumberColor = v.cardNumberColor
-              this.CardNameColor = v.cardNameColor
-              this.serialService.serial.set(v)
-            }
-          })
-        }
-      })
+      this.updateSerialColors(event.element, event.color);
     }
+  }
+
+  updateSerialColors(changedProperty?: string, changedValue?: string): void {
+    if (!this.serial || !this.serial.id) {
+      this.snackbar.error("No hay un serial seleccionado para actualizar");
+      return;
+    }
+
+    const updateData: Serial = {
+      serialName: this.serial.serialName,
+      boxFillColor: this.BoxFillColor,
+      boxNumberColor: this.BoxNumberColor,
+      cardFillColor: this.CardFillColor,
+      cardNameColor: this.CardNameColor,
+      cardNumberColor: this.CardNumberColor,
+      cardQuantity: this.serial.cardQuantity,
+      creationDate: this.serial.creationDate,
+      id: this.serial.id,
+      strokeColor: this.StrokeColor
+    };
+
+    if (changedProperty && changedValue) {
+      const tempUpdate: {[key: string]: any} = updateData;
+      tempUpdate[changedProperty] = changedValue;
+
+      Object.assign(updateData, tempUpdate);
+    }
+
+    this.serialService.updateSerial(updateData).subscribe({
+      next: () => {
+        if (this.serial && this.serial.id) {
+          this.serialService.getSerialById(this.serial.id).subscribe({
+            next: v => {
+              this.serial = v;
+              this.StrokeColor = v.strokeColor;
+              this.BoxFillColor = v.boxFillColor;
+              this.BoxNumberColor = v.boxNumberColor;
+              this.CardFillColor = v.cardFillColor;
+              this.CardNumberColor = v.cardNumberColor;
+              this.CardNameColor = v.cardNameColor;
+              this.serialService.serial.set(v);
+            }
+          });
+        }
+      },
+      error: (err) => {
+        this.snackbar.error("Error al actualizar los colores");
+        console.error("Error actualizando colores:", err);
+      }
+    });
   }
 
   openColorPicker(element: string): void {
     this.isColorPickerOpen = true;
     this.selectElement(element, (this as any)[element]);
+  }
+
+  exportColorsToClipboard(): void {
+    const colorData = {
+      StrokeColor: this.StrokeColor,
+      BoxFillColor: this.BoxFillColor,
+      CardFillColor: this.CardFillColor,
+      CardNameColor: this.CardNameColor,
+      BoxNumberColor: this.BoxNumberColor,
+      CardNumberColor: this.CardNumberColor,
+    };
+
+    navigator.clipboard.writeText(JSON.stringify(colorData, null, 2))
+      .then(() => {
+        this.copiedToClipboard = true;
+        setTimeout(() => {
+          this.copiedToClipboard = false;
+        }, 3000);
+        this.snackbar.success("Colores copiados correctamente")
+      })
+      .catch(err => {
+        this.snackbar.error("Error al copiar al portapapeles");
+      });
+  }
+
+  // Nuevas funciones para manejar la importación de JSON
+  toggleJsonInput(): void {
+    this.showJsonInput = !this.showJsonInput;
+  }
+
+  applyJsonColors(): void {
+    try {
+      const jsonTextarea = document.querySelector('.json-textarea') as HTMLTextAreaElement;
+      if (!jsonTextarea || !jsonTextarea.value.trim()) {
+        this.snackbar.error("Por favor ingresa un JSON válido");
+        return;
+      }
+
+      const colorData = JSON.parse(jsonTextarea.value);
+
+      // Verificación de la estructura del JSON
+      const requiredKeys = ['StrokeColor', 'BoxFillColor', 'CardFillColor', 'CardNameColor', 'BoxNumberColor', 'CardNumberColor'];
+      const missingKeys = requiredKeys.filter(key => !colorData.hasOwnProperty(key));
+
+      if (missingKeys.length > 0) {
+        this.snackbar.error(`JSON inválido. Faltan las siguientes propiedades: ${missingKeys.join(', ')}`);
+        return;
+      }
+
+      // Validar que son valores de color hexadecimales
+      const isValidHexColor = (color: string) => /^#([0-9A-F]{3}){1,2}$/i.test(color);
+      const invalidColors = Object.entries(colorData)
+        .filter(([key, value]) => requiredKeys.includes(key) && !isValidHexColor(value as string))
+        .map(([key]) => key);
+
+      if (invalidColors.length > 0) {
+        this.snackbar.error(`Valores de color inválidos en: ${invalidColors.join(', ')}`);
+        return;
+      }
+
+      // Aplicar los colores
+      this.StrokeColor = colorData.StrokeColor;
+      this.BoxFillColor = colorData.BoxFillColor;
+      this.CardFillColor = colorData.CardFillColor;
+      this.CardNameColor = colorData.CardNameColor;
+      this.BoxNumberColor = colorData.BoxNumberColor;
+      this.CardNumberColor = colorData.CardNumberColor;
+
+      // Actualizar los colores en las opciones
+      this.colorOptions.forEach(option => {
+        const colorKey = option.value === 'strokeColor' ? 'StrokeColor' :
+                        option.value === 'boxFillColor' ? 'BoxFillColor' :
+                        option.value === 'cardFillColor' ? 'CardFillColor' :
+                        option.value === 'cardNameColor' ? 'CardNameColor' :
+                        option.value === 'boxNumberColor' ? 'BoxNumberColor' : 'CardNumberColor';
+
+        option.currentColor = colorData[colorKey];
+      });
+
+      // Actualizar los colores en el serial
+      this.updateSerialColors();
+
+      // Cerrar el panel de importación
+      this.showJsonInput = false;
+      this.snackbar.success("Colores importados correctamente");
+
+      // Resetear la paleta actual ya que estamos usando colores personalizados
+      this.currentPalette = 'default';
+    } catch (error) {
+      this.snackbar.error("Error al importar colores. Verifica que el JSON sea válido");
+      console.error('Error parsing JSON:', error);
+    }
   }
 }
