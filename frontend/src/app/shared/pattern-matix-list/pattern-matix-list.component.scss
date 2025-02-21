@@ -41,6 +41,9 @@
   align-items: center;
   gap: 0.5rem;
   text-align: center;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
 }
 .pattern-icon {
   font-size: 1.2rem;
@@ -48,6 +51,7 @@
   height: 1.2rem;
 }
 .pattern-price {
+  margin-top: 10px;
   font-weight: bold;
 }
 mat-divider {
