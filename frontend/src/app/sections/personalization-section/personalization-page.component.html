@@ -21,7 +21,6 @@
         </div>
       </div>
     </div>
-
     <div class="form-section">
       <div class="export-section">
         <h4>Colores actuales (JSON)</h4>
@@ -40,19 +39,21 @@
       </div>
 
       @if(showJsonInput) {
-        <div class="json-input-container">
+        <div class="export-section">
+          <h4>Importar configuración de colores</h4>
           <textarea
-            [style.color]="colorConfigText"
             class="json-textarea"
             placeholder="Pega el JSON de configuración de colores"
             rows="8">
           </textarea>
-          <div class="json-input-actions">
-            <button (click)="applyJsonColors()" class="apply-button">
-              Aplicar colores
+          <div class="export-actions json-input-actions">
+            <button (click)="applyJsonColors()" class="import-button apply-button">
+              <mat-icon>check_circle</mat-icon>
+              <span>Aplicar colores</span>
             </button>
             <button (click)="toggleJsonInput()" class="cancel-button">
-              Cancelar
+              <mat-icon>cancel</mat-icon>
+              <span>Cancelar</span>
             </button>
           </div>
         </div>
