@@ -21,7 +21,8 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
   @ViewChild('colorPicker') colorPicker!: ColorPickerComponent;
   isColorPickerOpen = true;
   showJsonInput = false;
-  colorConfigText = '#333333'; // Color default para el texto del área JSON
+  colorConfigText = '#333333';
+  currentColorJSON = '';
 
   selectedElement: string | null = null;
   serialService = inject(SerialService)
@@ -47,8 +48,6 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
     { label: 'Card Number Color', value: 'cardNumberColor', currentColor: this.CardNumberColor }
   ];
 
-  copiedToClipboard = false;
-
   ngOnInit(): void {
       this.serialService.getSerialById(this.serialService.serial()?.id!).subscribe({
         next: v => {
@@ -59,6 +58,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
           this.CardFillColor = v.cardFillColor
           this.CardNumberColor = v.cardNumberColor
           this.CardNameColor = v.cardNameColor
+          this.updateColorJSON();
         }
       })
   }
@@ -74,6 +74,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
         this.CardNumberColor = v.cardNumberColor
         this.CardNameColor = v.cardNameColor
         this.serialService.serial.set(v)
+        this.updateColorJSON();
       }
     })
   }
@@ -107,6 +108,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
         option.currentColor = palette[option.value as keyof typeof palette];
       });
       this.updateSerialColors();
+      this.updateColorJSON();
     }
   }
 
@@ -120,7 +122,21 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
       }
 
       this.updateSerialColors(event.element, event.color);
+      this.updateColorJSON();
     }
+  }
+
+  updateColorJSON(): void {
+    const colorData = {
+      StrokeColor: this.StrokeColor,
+      BoxFillColor: this.BoxFillColor,
+      CardFillColor: this.CardFillColor,
+      CardNameColor: this.CardNameColor,
+      BoxNumberColor: this.BoxNumberColor,
+      CardNumberColor: this.CardNumberColor,
+    };
+
+    this.currentColorJSON = JSON.stringify(colorData, null, 2);
   }
 
   updateSerialColors(changedProperty?: string, changedValue?: string): void {
@@ -162,6 +178,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
               this.CardNumberColor = v.cardNumberColor;
               this.CardNameColor = v.cardNameColor;
               this.serialService.serial.set(v);
+              this.updateColorJSON();
             }
           });
         }
@@ -176,29 +193,6 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
   openColorPicker(element: string): void {
     this.isColorPickerOpen = true;
     this.selectElement(element, (this as any)[element]);
-  }
-
-  exportColorsToClipboard(): void {
-    const colorData = {
-      StrokeColor: this.StrokeColor,
-      BoxFillColor: this.BoxFillColor,
-      CardFillColor: this.CardFillColor,
-      CardNameColor: this.CardNameColor,
-      BoxNumberColor: this.BoxNumberColor,
-      CardNumberColor: this.CardNumberColor,
-    };
-
-    navigator.clipboard.writeText(JSON.stringify(colorData, null, 2))
-      .then(() => {
-        this.copiedToClipboard = true;
-        setTimeout(() => {
-          this.copiedToClipboard = false;
-        }, 3000);
-        this.snackbar.success("Colores copiados correctamente")
-      })
-      .catch(err => {
-        this.snackbar.error("Error al copiar al portapapeles");
-      });
   }
 
   // Nuevas funciones para manejar la importación de JSON
@@ -257,6 +251,7 @@ export class PersonalizationPageComponent implements OnInit, AfterViewInit {
 
       // Actualizar los colores en el serial
       this.updateSerialColors();
+      this.updateColorJSON();
 
       // Cerrar el panel de importación
       this.showJsonInput = false;

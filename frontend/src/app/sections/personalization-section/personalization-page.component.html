@@ -2,8 +2,8 @@
   <div class="preview-section">
     <div class="card-preview">
       <div class="bingo-card"
-            [style.background-color]="CardFillColor"
-            [style.color]="CardNumberColor">
+           [style.background-color]="CardFillColor"
+           [style.color]="CardNumberColor">
         <div class="card-header" [style.color]="CardNameColor">
           BlackBingo
         </div>
@@ -13,38 +13,47 @@
         <div class="card-grid" [style.border-color]="StrokeColor">
           @for (box of boxes; track box) {
             <div class="box"
-                  [style.background-color]="BoxFillColor"
-                  [style.color]="BoxNumberColor">
+                 [style.background-color]="BoxFillColor"
+                 [style.color]="BoxNumberColor">
               {{ box }}
             </div>
           }
         </div>
       </div>
     </div>
-
     <div class="form-section">
       <div class="export-section">
-        <button mat-icon-button (click)="exportColorsToClipboard()" class="export-button">
-          <mat-icon>content_copy</mat-icon>
-        </button>
-        <button mat-icon-button (click)="toggleJsonInput()" class="export-button">
-          <mat-icon matSuffix>content_paste_go</mat-icon>
-        </button>
+        <h4>Colores actuales (JSON)</h4>
+        <textarea
+          class="json-display"
+          readonly
+          [value]="currentColorJSON"
+          rows="8">
+        </textarea>
+        <div class="export-actions">
+          <button mat-button (click)="toggleJsonInput()" class="import-button">
+            <mat-icon>content_paste_go</mat-icon>
+            <span>Importar colores</span>
+          </button>
+        </div>
       </div>
+
       @if(showJsonInput) {
-        <div class="json-input-container">
+        <div class="export-section">
+          <h4>Importar configuración de colores</h4>
           <textarea
-            [style.color]="colorConfigText"
             class="json-textarea"
             placeholder="Pega el JSON de configuración de colores"
-            rows="8"
-          ></textarea>
-          <div class="json-input-actions">
-            <button (click)="applyJsonColors()" class="apply-button">
-              Aplicar colores
+            rows="8">
+          </textarea>
+          <div class="export-actions json-input-actions">
+            <button (click)="applyJsonColors()" class="import-button apply-button">
+              <mat-icon>check_circle</mat-icon>
+              <span>Aplicar colores</span>
             </button>
             <button (click)="toggleJsonInput()" class="cancel-button">
-              Cancelar
+              <mat-icon>cancel</mat-icon>
+              <span>Cancelar</span>
             </button>
           </div>
         </div>
