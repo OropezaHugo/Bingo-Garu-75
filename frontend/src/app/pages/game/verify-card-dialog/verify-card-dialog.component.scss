@@ -1,5 +1,8 @@
 .formated-text {
-  white-space: pre-line;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 196px;
 }
 .verify-content {
   display: flex;
