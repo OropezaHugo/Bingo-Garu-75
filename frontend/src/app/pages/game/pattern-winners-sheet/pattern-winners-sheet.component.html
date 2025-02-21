@@ -1,0 +1,14 @@
+@if (data.cards.length < 1 ) {
+  <h1>{{data.pattern.patternName}}</h1>
+  <h2>No hay ganadores en esta jugada</h2>
+} @else {
+  <h3 >Ganadores de {{data.pattern.patternName}}</h3>
+  <div class="prizes-list-panel">
+    <mat-divider/>
+    @for (card of data.cards; track $index) {
+      <h1>Nº {{card.cardNumber}}</h1>
+      <mat-divider/>
+    }
+  </div>
+
+}

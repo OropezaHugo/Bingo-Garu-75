@@ -5,7 +5,7 @@
       <h1>Ronda Terminada</h1>
     } @else {
       @for (pattern of roundPatterns; track $index) {
-        <app-round-pattern-in-game [pattern]="pattern" [roundId]="round().id!"/>
+        <app-round-pattern-in-game (click)="checkWinners(pattern)" [pattern]="pattern" [roundId]="round().id!"/>
       }
     }
   </div>
