@@ -9,6 +9,10 @@ $secondary-color: #fca311;
 .pattern-name-text {
   color: $primary-color;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 196px;
 }
 .has-winner {
 

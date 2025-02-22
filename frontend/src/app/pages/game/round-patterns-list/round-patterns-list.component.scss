@@ -15,4 +15,8 @@
 
 .pattern-name-text {
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 196px;
 }

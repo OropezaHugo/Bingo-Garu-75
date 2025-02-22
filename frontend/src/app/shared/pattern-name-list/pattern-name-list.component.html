@@ -4,8 +4,10 @@
     <div class="round-invitation-div">
         @if (patternsByRound().has(round.id!)) {
           @for (pattern of patternsByRound().get(round.id!) ?? []; track pattern.patternName) {
-              <h3>{{ pattern.patternName }}</h3>
-              <h4>{{ pattern.targetPrice }} Bs</h4>
+              <div class="pattern-flex-container">
+                <h3>{{ pattern.patternName }}</h3>
+                <h4>{{ pattern.targetPrice }} Bs</h4>
+              </div>
           }
         } @else {
           <div class="pattern-item">Cargando patrones...</div>
