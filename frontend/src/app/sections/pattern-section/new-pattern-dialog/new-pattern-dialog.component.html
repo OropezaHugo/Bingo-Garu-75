@@ -1,17 +1,20 @@
 <h1 class="dialog-tittle" mat-dialog-title>
-  Nuevo Patron
+  Nuevo Patrón
 </h1>
 <h2 class="dialog-subtitle">
-  Personaliza tu patron
+  Personaliza tu patrón
 </h2>
+
 <mat-dialog-content style="padding-top: 1rem">
   <mat-form-field appearance="outline">
-    <mat-label>Nombre del patron</mat-label>
-    <input matInput [(ngModel)]="dialogModel().patternName" maxlength="30" [required]="true"/>
+    <mat-label>Nombre del patrón</mat-label>
+    <input matInput [(ngModel)]="dialogModel().patternName" maxlength="30" required/>
   </mat-form-field>
+
   <app-pattern-card [editable]="true" [pattern]="dialogModel().patternMatrix"></app-pattern-card>
 </mat-dialog-content>
+
 <mat-dialog-actions>
   <button mat-button (click)="cancel()">Cancelar</button>
-  <button mat-button  [mat-dialog-close]="dialogModel()">Listo</button>
+  <button mat-button [disabled]="!isValidName() || !isValidPattern()" (click)="confirm()">Listo</button>
 </mat-dialog-actions>

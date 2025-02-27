@@ -1,4 +1,5 @@
 import {Component, input} from '@angular/core';
+import { SnackbarService } from '../../core/services/snackbar.service';
 
 @Component({
   selector: 'app-pattern-card',
@@ -15,6 +16,5 @@ export class PatternCardComponent {
     if (this.editable()) {
       this.pattern()[boxIndex]= !this.pattern()[boxIndex];
     }
-
   }
 }
