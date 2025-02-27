@@ -21,7 +21,7 @@ export const EmptyPattern: NewPatternDialogData = {
   patternMatrix: [
     false, false, false, false, false,
     false, false, false, false, false,
-    false, false, false, false, false,
+    false, false, true, false, false,
     false, false, false, false, false,
     false, false, false, false, false,
   ],
@@ -30,7 +30,7 @@ export const EmptyPattern: NewPatternDialogData = {
 export const EmptyPatternData: boolean[] = [
     false, false, false, false, false,
     false, false, false, false, false,
-    false, false, false, false, false,
+    false, false, true, false, false,
     false, false, false, false, false,
     false, false, false, false, false,
 ]
