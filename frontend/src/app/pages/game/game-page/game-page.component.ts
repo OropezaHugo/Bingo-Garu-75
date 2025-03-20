@@ -87,6 +87,9 @@ export class GamePageComponent implements OnInit {
 
   verifyCardDialog(card: GameCardInfo) {
     this.roundService.getRounds()
+    if (this.activeRound() === undefined) {
+      this.activeRound.set(this.roundService.actualRounds()[this.actualTab]);
+    }
     this.activeRound.set(this.roundService.actualRounds().find(round => round.id == this.activeRound()?.id))
     this.roundService.getPatternsInfoByRoundId(this.activeRound()!.id!).subscribe( {
       next: result => {
