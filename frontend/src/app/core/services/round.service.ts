@@ -78,7 +78,6 @@ export class RoundService {
             if (roundId !== undefined) {
               this.refreshPatterns(roundId);
             }
-
           }
         })
       }
@@ -94,20 +93,28 @@ export class RoundService {
   }
 
   isBingoValidAndNotPassed(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]): boolean {
-    let asserts = patternMatrix.filter(value => value).length
+    const lastNumber = raffleNumbers[raffleNumbers.length - 1];
     let withLastNumber = false;
-    patternMatrix.forEach((patternMatrixCell, index) => {
-      if (patternMatrixCell) {
-        if (raffleNumbers.includes(cardContent[index]) || index === 12) {
-          if (raffleNumbers.length > 0 && cardContent[index] == raffleNumbers[raffleNumbers.length - 1])
-          {
-            withLastNumber = true;
-          }
-          asserts -= 1
-        }
+    const neededIndexes = patternMatrix.reduce((acc, val, idx) => {
+      if (val) acc.push(idx);
+      return acc;
+    }, [] as number[]);
+
+    for (const idx of neededIndexes) {
+      const numberAtIndex = cardContent[idx];
+
+      if (idx === 12) continue;
+
+      if (!raffleNumbers.includes(numberAtIndex)) {
+        return false;
       }
-    })
-    return (!(asserts > 0) && withLastNumber);
+
+      if (numberAtIndex === lastNumber) {
+        withLastNumber = true;
+      }
+    }
+
+    return withLastNumber;
   }
 
   isBingoValidAndNotPassedOnAnyPattern(cardContent: number[], raffleNumbers: number[]): boolean {
@@ -121,15 +128,22 @@ export class RoundService {
   }
 
   isBingoValid(patternMatrix: boolean[], cardContent: number[], raffleNumbers: number[]) {
-    let asserts = patternMatrix.filter(value => value).length
-    patternMatrix.forEach((patternMatrixCell, index) => {
-      if (patternMatrixCell) {
-        if (raffleNumbers.includes(cardContent[index]) || index === 12) {
-          asserts -= 1
-        }
+    const neededIndexes = patternMatrix.reduce((acc, val, idx) => {
+      if (val) acc.push(idx);
+      return acc;
+    }, [] as number[]);
+
+    for (const idx of neededIndexes) {
+      const numberAtIndex = cardContent[idx];
+
+      if (idx === 12) continue;
+
+      if (!raffleNumbers.includes(numberAtIndex)) {
+        return false;
       }
-    })
-    return (!(asserts > 0));
+
+    }
+    return true;
   }
 
   existsAnyWinnerInRoundPattern(roundId: number, patternId: number) {

@@ -58,7 +58,7 @@ export class VerifyCardDialogComponent {
   bottomSheet = inject(MatBottomSheet);
   prizeFormGroup = new FormGroup({
     patternControl: new FormControl<RoundPatternInfo | undefined>(undefined, Validators.required),
-    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+    userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.maxLength(30)]),
     amountControl: new FormControl<number>(0, Validators.required)
   })
 
@@ -97,7 +97,7 @@ export class VerifyCardDialogComponent {
   givePrize() {
     if (this.prizeFormGroup.value.patternControl
     && this.prizeFormGroup.value.userNameControl
-    && this.prizeFormGroup.value.userNameControl.trim().length > 3) {
+    && this.prizeFormGroup.value.userNameControl.trim().length > 0) {
       this.roundService.postPrize({
         cardId: this.verificationData().card.cardId,
         roundId: this.verificationData().round.id!,

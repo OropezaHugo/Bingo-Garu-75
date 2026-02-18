@@ -3,11 +3,22 @@
     <app-round-raffled-numbers [lastNumber]="lastNumber" [raffledNumbers]="round().raffleNumbers"/>
   </div>
 
-  <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
-    <h2>
-      {{lastNumber}}
-    </h2>
+  <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center">
+    <div class="last-raffled-number" [class.animated]="animate" (animationend)="resetAnimation()">
+      <h2>
+        {{lastNumber}}
+      </h2>
+    </div>
+    @if (roundService.gameService.actualGame()?.automaticRaffle) {
+      <div class="contador">
+        <h1>{{timeLeft}}s</h1>
+      </div>
+    }
+      <button [style]="roundService.gameService.actualGame()?.automaticRaffle ? '' : 'display: none'" [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="startRaffle(); start.disabled = true; pause.disabled = false" #start><mat-icon>play_arrow</mat-icon></button>
+      <button [style]="roundService.gameService.actualGame()?.automaticRaffle ? '' : 'display: none'" [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="pauseRaffle(); pause.disabled = true; start.disabled = false" #pause><mat-icon>pause</mat-icon></button>
   </div>
+
+
   @if (roundService.gameService.actualGame()?.randomPatterns) {
     <mat-form-field appearance="outline">
       <mat-label>
@@ -23,9 +34,6 @@
         <mat-label>Intervalo(seg)</mat-label>
         <input  (keyup)="pauseRaffle(); start.disabled = false; pause.disabled = true" matInput [formControl]="intervalTime" type="number">
       </mat-form-field>
-      <button [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="startRaffle(); start.disabled = true; pause.disabled = false" #start><mat-icon>play_arrow</mat-icon></button>
-      <button [disabled]="round().raffleNumbers.length > 74" mat-icon-button (click)="pauseRaffle(); pause.disabled = true; start.disabled = false" #pause><mat-icon>pause</mat-icon></button>
-      <h3>{{timeLeft}}s</h3>
     </div>
 
   } @else {

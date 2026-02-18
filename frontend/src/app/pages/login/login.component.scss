@@ -1,9 +1,66 @@
+$primary-color: #7b2cbf;
+$secondary-color: #fca311;
+$background-color: #f4f4f9;
+$input-border-radius: 8px;
+$card-border-radius: 16px;
+
 .login-card {
+  max-width: 400px;
+  margin: 5rem auto;
+  padding: 2rem;
+  border-radius: $card-border-radius;
+  background-color: white;
+  box-shadow: 0 10px 25px rgba(123, 44, 191, 0.2);
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 15px 30px rgba(123, 44, 191, 0.3);
+  }
+
+  h3 {
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
 }
+
 .login-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1.2rem;
+
+  mat-form-field {
+    width: 100%;
+
+    .mat-form-field-outline {
+      border-radius: $input-border-radius;
+    }
+
+    .mat-form-field-label {
+      color: $primary-color;
+    }
+
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  .input-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: $secondary-color;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: $input-border-radius;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($secondary-color, 10%);
+    }
+  }
 }

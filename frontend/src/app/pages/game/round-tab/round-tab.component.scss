@@ -1,3 +1,12 @@
+.contador {
+
+  background: yellow;
+  border: 2px solid black;
+  text-align: center;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+}
 .round-content-div {
   display: flex;
   flex-direction: row;

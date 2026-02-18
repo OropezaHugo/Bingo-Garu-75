@@ -38,11 +38,11 @@ export class LoginComponent {
     password: [''],
   });
   onSubmit() {
-    this.accountService.login(this.loginForm.value).subscribe({
-      next: () => {
-        this.accountService.getUserInfo().subscribe()
-        this.router.navigateByUrl('/');
-      }
-    })
+    if (this.loginForm.value.email !== undefined
+      && this.loginForm.value.password !== undefined
+    && this.loginForm.value.email !== null
+      && this.loginForm.value.password !== null){
+      this.accountService.login({email: this.loginForm.value.email, password: this.loginForm.value.password})
+    }
   }
 }

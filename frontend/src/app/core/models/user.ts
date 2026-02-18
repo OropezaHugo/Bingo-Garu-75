@@ -10,3 +10,8 @@ export interface AuthToken {
   expiresIn: number
   tokenType: string
 }
+
+export interface LoginVal {
+  email: string
+  password: string
+}

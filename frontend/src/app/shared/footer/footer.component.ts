@@ -33,10 +33,6 @@ export class FooterComponent {
   }
 
   logout() {
-    this.accountService.logout().subscribe({
-      next: () => {
-        this.router.navigateByUrl('/login');
-      }
-    })
+    this.accountService.logout()
   }
 }
