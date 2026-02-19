@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   let userService = inject(AccountService)
   let router = inject(Router)
   if (userService.userData() === undefined) {
-    router.navigate(['/login']);
+    router.navigate(['/']);
     return false;
   }
   return true;

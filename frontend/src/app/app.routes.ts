@@ -11,7 +11,6 @@ import {LoginComponent} from './pages/login/login.component';
 import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  {path: "login", component: LoginComponent},
   { path: "", component: HomePageComponent, pathMatch: 'full'},
   {path: "bingo", canActivate: [authGuard], children: [
       { path: "serials", component: AttachSerialContentComponent },
