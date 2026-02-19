@@ -59,7 +59,7 @@ export class VerifyCardDialogComponent {
   prizeFormGroup = new FormGroup({
     patternControl: new FormControl<RoundPatternInfo | undefined>(undefined, Validators.required),
     userNameControl: new FormControl<string>(this.verificationData().card.userName, [Validators.required, Validators.maxLength(30)]),
-    amountControl: new FormControl<number>(0, Validators.required)
+    amountControl: new FormControl<number>(0, [Validators.required, Validators.min(0.1)])
   })
 
   mapCard(card: GameCardInfo): Card {
@@ -93,11 +93,26 @@ export class VerifyCardDialogComponent {
       }
     })
   }
+  verifyWithMachinePattern(pattern: RoundPatternInfo) {
+    this.machineResponse = 'Bingo valido para patrones:\n'
+
+    if (this.roundService.isBingoValidAndNotPassed(
+      pattern.patternMatrix,
+      this.verificationData().card.contentMatrix,
+      this.verificationData().raffledNumbers
+    ))
+    {
+      return true
+    }
+    return false;
+  }
 
   givePrize() {
     if (this.prizeFormGroup.value.patternControl
     && this.prizeFormGroup.value.userNameControl
-    && this.prizeFormGroup.value.userNameControl.trim().length > 0) {
+    && this.prizeFormGroup.value.userNameControl.trim().length > 2
+    && this.prizeFormGroup.valid
+    && this.verifyWithMachinePattern(this.prizeFormGroup.value.patternControl)) {
       this.roundService.postPrize({
         cardId: this.verificationData().card.cardId,
         roundId: this.verificationData().round.id!,
@@ -116,6 +131,8 @@ export class VerifyCardDialogComponent {
       })
       this.snackBar.success('premio registrado')
       this.dialogRef.close()
+    } else {
+      this.snackBar.error('premio invalido')
     }
     return
   }
