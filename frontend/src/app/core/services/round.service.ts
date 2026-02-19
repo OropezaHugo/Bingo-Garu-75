@@ -5,6 +5,7 @@ import {GameService} from './game.service';
 import {RoundPatternInfo, Pattern} from '../models/add-pattern-dialog-data';
 import {map, Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {SnackbarService} from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,8 @@ export class RoundService {
   actualRounds = signal<Round[]>([])
   actualRoundPatterns = signal<RoundPatternInfo[]>([])
   gameService = inject(GameService);
+  snackBar = inject(SnackbarService)
+
 
   raffleNumber(raffled: number[]) {
     let randomNumber = Math.floor(Math.random() * 75) + 1;
@@ -164,6 +167,7 @@ export class RoundService {
         return this.http.post<boolean>(`${this.baseUrl}Round/game/${this.gameService.actualGame()?.id}`, roundsData).subscribe({
           next: result => {
             this.getRounds()
+            this.snackBar.success("configuracion guardada exitosamente")
           }
         })
       }
