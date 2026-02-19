@@ -1,13 +1,15 @@
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using API.PostDTOs;
 using API.Profiles;
-using API.Tools;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.BingoContext;
 using Infrastructure.Implementations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,17 +19,42 @@ builder.Services.AddDbContext<Bingo75Context>(optionsBuilder =>
     var connectionString = builder.Configuration.GetConnectionString("Bingo75ConnectionString");
     optionsBuilder.UseSqlServer(connectionString);
 });
+var secretKey = builder.Configuration["Jwt:SecretKey"];
+if (secretKey != null)
+{
+    var key = Encoding.UTF8.GetBytes(secretKey);
+
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+        });
+}
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IRoundPatternsRepository, RoundPatternsRepository>();
 builder.Services.AddScoped<IGameCardsRepository, GameCardsRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddAutoMapper(typeof(PatternProfile));
 builder.Services.AddAuthentication();
 builder.Services.AddControllers();
-builder.Services.AddIdentityApiEndpoints<AppUser>()
-    .AddEntityFrameworkStores<Bingo75Context>()
-    .AddDefaultTokenProviders();
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SelfOrCoachAccess", policyBuilder => 
+        policyBuilder.Requirements.Add(new EmptyRequirement()));
+});
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.ConfigureHttpsDefaults(adapterOptions =>
@@ -50,13 +77,8 @@ app.UseCors(policyBuilder =>
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapControllers();
-app.MapGroup("api").MapIdentityApi<AppUser>();
-app.MapFallbackToController("Index", "Fallback");
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-    await SeedUsers.CreateUsers(userManager);
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
 

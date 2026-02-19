@@ -13,10 +13,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.73.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +35,107 @@
     <_ContentIncludedByDefault Remove="publish\appsettings.Development.json" />
     <_ContentIncludedByDefault Remove="publish\appsettings.json" />
     <_ContentIncludedByDefault Remove="publish\wwwroot\prerendered-routes.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\3rdpartylicenses.txt" />
+    <_ContentIncludedByDefault Remove="wwwroot\Anghelo.jpeg" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-2C7YVQ56.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-2GA35ISM.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-2PPFUFFT.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-45RL6Y7L.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-54OZLBWW.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-5FZRUFQ3.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-62YX4LHW.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-6X24GZT7.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-77SL5GUN.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-7IH63SC2.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-7JS2DVUF.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-AHBB32YR.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-D2JQSVD5.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-D65OQIHR.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-DKU2QXFN.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-DRPMKK5A.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-EQDQRRRY.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-F2CISL3L.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-FK6H3RFT.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-GI4X7ISX.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-HQ23H2GA.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-IMSMKEO5.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-IMV2IS5R.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-IYSM456H.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-KVM3QGDP.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-LJQMWI27.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-M5WL3CDI.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-N6GTRHNT.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-NF2RNMQ7.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-OHNVPUGN.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-PM3QAI3C.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-PPPR7CY4.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-QMQTSFHS.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-RMI4F52D.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-RW4VPSTS.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-SDOSTIGG.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-T4WQKDRY.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-VWC4Q6JS.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-VZV7HFW6.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-X5GZFH7L.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-X74LRSVF.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-Y24TVV6V.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-ZKXGEYWB.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-ZRABAQ4E.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+    <_ContentIncludedByDefault Remove="wwwroot\Halloween.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Hyugo.jpeg" />
+    <_ContentIncludedByDefault Remove="wwwroot\index.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\Logo.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\Logo2.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\LogoCard.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\main-ZQU6RAZW.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\Navidad.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\polyfills-FFHMD2TL.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\prerendered-routes.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\styles-HP2HMYL2.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\translucent.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\WlecomeImage.png" />
+    <_ContentIncludedByDefault Remove="publish\API.staticwebassets.endpoints.json" />
+    <_ContentIncludedByDefault Remove="wwwroot\main-BDBRUE3R.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-27GFSIAX.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-2GEJUMLE.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-2QG2KKZT.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-5O73PUAI.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-AXDNQG2C.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-CCDEOAH4.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-CNUNRILL.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-CU4TJ7QB.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-GERKNX4T.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-GR4NGYNJ.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-H2UWILUN.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-HDMQYCGS.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-JIBAI7IJ.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-KDE3TPMQ.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-KDH62YWY.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-LUSOQFVY.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-M57NOGCG.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-M7FTGOSZ.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-MMUGDN7M.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-NBDIIZZJ.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-NOMR7PZ3.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-NU2A7QJP.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-OZSTY4BB.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-QV3Y26AI.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-QZQJTNDE.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-R2M66EFY.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-SMCWEAGE.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-TSAQ5O4M.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-UOJ5YF63.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-WZKB46KX.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-XG3UALY2.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-XOEBCXBA.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-XZVALCT5.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-Y7PLAL6H.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-YK3LM2CS.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-ZJTO4D6S.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\chunk-ZOA6UMP6.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\main-AWQOJFQE.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\main-L3VZ4D4M.js" />
   </ItemGroup>
 
 </Project>
