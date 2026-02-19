@@ -15,7 +15,7 @@ import {InvitationSectionComponent} from '../../sections/invitation-section/invi
 import {PatternSectionComponent} from '../../sections/pattern-section/pattern-section.component';
 import {GameConfigurationComponent} from '../../sections/game-configuration/game-configuration.component';
 import {Router} from '@angular/router';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-lobby-page',
@@ -33,7 +33,8 @@ import {Router} from '@angular/router';
     InvitationSectionComponent,
     PatternSectionComponent,
     GameConfigurationComponent,
-    MatStepperNext
+    MatStepperNext,
+    MatProgressSpinnerModule
   ],
   templateUrl: './lobby-page.html',
   styleUrl: './lobby-page.scss'
