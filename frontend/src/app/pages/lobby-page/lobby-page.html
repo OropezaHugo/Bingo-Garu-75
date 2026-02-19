@@ -14,7 +14,14 @@
       @defer (on viewport) {
         <app-game-configuration/>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
     <mat-step>
@@ -22,7 +29,14 @@
       @defer (on viewport) {
         <app-attach-serial-content [useToGenerate]="false"/>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
     <mat-step>
@@ -30,7 +44,14 @@
       @defer (on viewport) {
         <app-pattern-section/>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
     <mat-step>
@@ -57,7 +78,14 @@
 
         }
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
     <mat-step>
@@ -65,7 +93,14 @@
       @defer (on viewport) {
         <app-sale-panel/>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
 
@@ -74,7 +109,14 @@
       @defer (on viewport) {
         <app-pattern-target-prize-section></app-pattern-target-prize-section>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
     <mat-step>
@@ -82,12 +124,26 @@
       @defer (on viewport) {
         <app-invitation-section/>
       } @placeholder {
-        <h1>Loading</h1>
+        <div class="loading-container">
+          <mat-progress-spinner
+            diameter="100"
+            mode="indeterminate">
+          </mat-progress-spinner>
+
+          <p class="loading-text">Cargando</p>
+        </div>
       }
     </mat-step>
   </mat-stepper>
 
 
 } @placeholder (){
-  <h2>Cargando</h2>
+  <div class="loading-container">
+    <mat-progress-spinner
+      diameter="100"
+      mode="indeterminate">
+    </mat-progress-spinner>
+
+    <p class="loading-text">Cargando configuración del juego...</p>
+  </div>
 }
