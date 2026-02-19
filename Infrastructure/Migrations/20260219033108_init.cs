@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RoundsPatterns : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,8 @@ namespace Infrastructure.Migrations
                     RandomPatterns = table.Column<bool>(type: "bit", nullable: false),
                     SharePrizes = table.Column<bool>(type: "bit", nullable: false),
                     InProgress = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TargetStartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Finished = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -48,8 +50,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SerialName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    SerialName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreationDate = table.Column<DateOnly>(type: "date", nullable: true),
                     StrokeColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BoxFillColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardFillColor = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -63,6 +65,22 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rounds",
                 columns: table => new
                 {
@@ -70,6 +88,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoundName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false),
                     RaffleNumbers = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -239,6 +258,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoundPatterns");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Cards");

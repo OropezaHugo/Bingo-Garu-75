@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.BingoContext;
 
-public class Bingo75Context(DbContextOptions options): IdentityDbContext<AppUser>(options)
+public class Bingo75Context(DbContextOptions options): DbContext(options)
 {
     public DbSet<Card> Cards { get; set; }
     public DbSet<Game> Games { get; set; }
@@ -14,6 +14,7 @@ public class Bingo75Context(DbContextOptions options): IdentityDbContext<AppUser
     public DbSet<Prize> Prizes { get; set; }
     public DbSet<Round> Rounds { get; set; }
     public DbSet<Serial> Serials { get; set; }
+    public DbSet<AppUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
