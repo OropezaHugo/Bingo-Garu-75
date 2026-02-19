@@ -48,6 +48,7 @@ import {MatBottomSheet} from '@angular/material/bottom-sheet';
   styleUrl: './verify-card-dialog.component.scss'
 })
 export class VerifyCardDialogComponent {
+  validPatterns: RoundPatternInfo[] = [];
   readonly dialogRef = inject(MatDialogRef<VerifyCardDialogComponent>);
   readonly data = inject<VerifyCardDialogData>(MAT_DIALOG_DATA);
   readonly verificationData = model(this.data);
@@ -75,6 +76,7 @@ export class VerifyCardDialogComponent {
 
   verifyWithMachine() {
     this.machineResponse = 'Bingo valido para patrones:\n'
+    this.validPatterns = [];
     this.verificationData().patterns.forEach(pattern => {
       if (this.roundService.isBingoValidAndNotPassed(
         pattern.patternMatrix,
@@ -83,6 +85,7 @@ export class VerifyCardDialogComponent {
         ))
       {
         this.machineResponse += (`"${pattern.patternName}".\n`)
+        this.validPatterns.push(pattern);
       }
       else if (this.roundService.isBingoValid(
         pattern.patternMatrix,
@@ -90,8 +93,12 @@ export class VerifyCardDialogComponent {
         this.verificationData().raffledNumbers
       )) {
         this.machineResponse += (`"${pattern.patternName}"  PISADO.\n`)
+        this.validPatterns.push(pattern);
       }
     })
+    if(this.validPatterns.length === 1) {
+        this.prizeFormGroup.controls.patternControl.setValue(this.validPatterns[0]);
+      }
   }
 
   givePrize() {
