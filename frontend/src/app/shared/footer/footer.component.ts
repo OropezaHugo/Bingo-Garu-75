@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {AccountService} from '../../core/services/account.service';
 import {LoginComponent} from '../../pages/login/login.component';
 import {GoogleUserInfo} from '../../core/models/user';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-footer',
@@ -27,7 +28,8 @@ export class FooterComponent implements OnInit {
   }
 
   loginWithGoogle() {
-    window.location.href = 'http://localhost:5075/api/auth/login'; // Backend de .NET
+
+    window.location.href = window.location.origin + '/api/auth/login'; // Backend de .NET
   }
 
   logout() {

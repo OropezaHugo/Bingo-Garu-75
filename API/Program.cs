@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,6 +66,19 @@ builder.WebHost.ConfigureKestrel(options =>
         );
     });
 });
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File(
+        "logs/log-.txt",
+        rollingInterval: RollingInterval.Day,
+        fileSizeLimitBytes: 10_000_000,
+        rollOnFileSizeLimit: true,
+        retainedFileCountLimit: 30
+    )
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 app.UseCors(policyBuilder =>
@@ -74,11 +88,14 @@ app.UseCors(policyBuilder =>
         .AllowAnyHeader()
         .AllowCredentials();
 });
-app.UseDefaultFiles();
-app.UseStaticFiles();
-app.MapControllers();
+
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
+
+app.MapControllers();
+app.MapFallbackToFile("index.html");
 app.Run();
 

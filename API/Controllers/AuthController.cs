@@ -23,7 +23,7 @@ public class AuthController(
     public IActionResult Login()
     {
         var clientId = configuration["GoogleOAuth:ClientId"];
-        var redirectUri = "http://localhost:5075/api/auth/callback"; 
+        var redirectUri = "https://tion-profits-tests-portland.trycloudflare.com/api/auth/callback"; 
 
         var googleAuthUrl = $"https://accounts.google.com/o/oauth2/auth?" +
                             $"client_id={clientId}&" +
@@ -45,7 +45,7 @@ public class AuthController(
 
         var clientId = configuration["GoogleOAuth:ClientId"];
         var clientSecret = configuration["GoogleOAuth:ClientSecret"];
-        var redirectUri = "http://localhost:5075/api/auth/callback"; 
+        var redirectUri = "https://tion-profits-tests-portland.trycloudflare.com/api/auth/callback"; 
 
         using var httpClient = new HttpClient();
         var tokenResponse = await httpClient.PostAsync("https://oauth2.googleapis.com/token",
@@ -60,7 +60,7 @@ public class AuthController(
         
         if (!tokenResponse.IsSuccessStatusCode)
         {
-            return BadRequest("Error obteniendo el token de Google.");
+            return BadRequest(tokenResponse.Content.ReadAsStream());
         }
 
         var responseJson = await tokenResponse.Content.ReadAsStringAsync();
@@ -117,7 +117,7 @@ public class AuthController(
             SameSite = SameSiteMode.Lax
         });
 
-        return Redirect($"http://localhost:4200/");
+        return Redirect($"https://tion-profits-tests-portland.trycloudflare.com/");
     }
     
     [HttpGet("email/{email}")]
