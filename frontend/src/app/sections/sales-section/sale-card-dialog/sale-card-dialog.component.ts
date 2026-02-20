@@ -34,6 +34,7 @@ export class SaleCardDialogComponent {
   readonly dialogRef = inject(MatDialogRef<SaleCardDialogComponent>);
   readonly data = inject<GameCardInfo[]>(MAT_DIALOG_DATA);
   readonly cards = model(this.data);
+  hasSoldCards = this.cards().some(card => card.sold);
 
   userForm = new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]);
   onNoClick(): void {
@@ -55,5 +56,20 @@ export class SaleCardDialogComponent {
       }))
       this.dialogRef.close(this.cards());
     }
+  }
+
+  cancelSale() {
+    this.cards.set(this.cards().map<GameCardInfo>((card: GameCardInfo) => {
+      return {
+        sold: false,
+        userName: '',
+        cardId: card.cardId,
+        gameId: card.gameId,
+        contentMatrix: card.contentMatrix,
+        cardNumber: card.cardNumber,
+        serialId: card.serialId,
+      };
+    }))
+    this.dialogRef.close(this.cards());
   }
 }
