@@ -1,8 +1,9 @@
 <h2 mat-dialog-title>Cartas a vender:</h2>
 <mat-dialog-content class="dialog-content-div">
+  <p>Azul = vendido</p>
   <div class="selected-cards-div">
     @for (card of cards(); track $index){
-      <app-sale-button [viewOnly]="true" [gameCard]="card"/>
+      <app-sale-button [selected]="card.sold" [viewOnly]="true" [gameCard]="card"/>
     }
   </div>
   <mat-form-field appearance="outline">
@@ -16,6 +17,10 @@
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar venta</button>
-  <button mat-button  (click)="onSubmit()">Finalizar venta</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button  (click)="onSubmit()">Vender</button>
+  @if (hasSoldCards) {
+    <button mat-button  (click)="cancelSale()">Rembolzar</button>
+  }
+
 </mat-dialog-actions>
